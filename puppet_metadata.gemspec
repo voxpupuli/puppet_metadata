@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
   s.files       = Dir['lib/**/*.rb']
 
   s.add_runtime_dependency 'metadata-json-lint', '~> 2.0'
+  s.add_runtime_dependency 'semantic_puppet', '~> 1.0'
 
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'

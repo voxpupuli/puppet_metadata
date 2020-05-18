@@ -81,5 +81,21 @@ module PuppetMetadata
 
       Hash[unsupported.compact]
     end
+
+    def requirements
+      @requirements ||= begin
+        return {} if metadata['requirements'].nil?
+
+        require 'semantic_puppet'
+
+        reqs = metadata['requirements'].map do |requirement|
+          next unless requirement['name']
+          version_requirement = requirement['version_requirement'] || '>= 0'
+          [requirement['name'], SemanticPuppet::VersionRange.parse(version_requirement)]
+        end
+
+        Hash[reqs.compact]
+      end
+    end
   end
 end

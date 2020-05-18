@@ -104,6 +104,12 @@ describe PuppetMetadata::Metadata do
       it { expect(subject.os_release_supported?('Debian', '10')).to be(true) }
 
       it { expect(subject.eol_operatingsystems(at)).to eq({'Ubuntu' => ['14.04']}) }
+
+      it { expect(subject.requirements).to eq({'puppet' => SemanticPuppet::VersionRange.parse('>= 5.5.8 < 7.0.0')}) }
+      it { expect(subject.requirements['puppet']).not_to include(SemanticPuppet::Version.parse('5.5.7')) }
+      it { expect(subject.requirements['puppet']).to include(SemanticPuppet::Version.parse('5.5.10')) }
+      it { expect(subject.requirements['puppet']).to include(SemanticPuppet::Version.parse('6.0.10')) }
+      it { expect(subject.requirements['puppet']).not_to include(SemanticPuppet::Version.parse('7.0.10')) }
     end
   end
 end
