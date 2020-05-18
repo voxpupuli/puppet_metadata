@@ -72,7 +72,14 @@ module PuppetMetadata
 
     def eol_operatingsystems(at = nil)
       at ||= Date.today
-      Hash[operatingsystems.map { |os, rels| rels&.filter { |rel| OperatingSystem.eol?(os, rel, at) } }]
+
+      unsupported = operatingsystems.map do |os, rels|
+        next unless rels
+        eol = rels.select { |rel| OperatingSystem.eol?(os, rel, at) }
+        [os, eol] if eol.any?
+      end
+
+      Hash[unsupported.compact]
     end
   end
 end

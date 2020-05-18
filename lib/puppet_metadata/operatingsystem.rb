@@ -12,9 +12,11 @@ module PuppetMetadata
       '3' => '2010-10-30',
     },
     # https://endoflife.software/operating-systems/linux/debian
+    # https://wiki.debian.org/DebianReleases
     'Debian' => {
-      '10' => '2022-01-15',
-      '9' => '2020-01-15',
+      # TODO: EOL is standard support, not the extended life cycle
+      '10' => nil, # '~2022',
+      '9' => nil, # '~2020',
       '8' => '2018-06-06',
       '7' => '2016-04-26',
       '6' => '2015-05-31',
