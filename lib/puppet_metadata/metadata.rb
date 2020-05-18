@@ -74,19 +74,42 @@ module PuppetMetadata
     end
 
     def requirements
-      @requirements ||= begin
-        return {} if metadata['requirements'].nil?
+      @requirements ||= build_version_requirement_hash(metadata['requirements'])
+    end
 
-        require 'semantic_puppet'
+    def satisfies_requirement?(name, version)
+      matches?(requirements[name], version)
+    end
 
-        reqs = metadata['requirements'].map do |requirement|
-          next unless requirement['name']
-          version_requirement = requirement['version_requirement'] || '>= 0'
-          [requirement['name'], SemanticPuppet::VersionRange.parse(version_requirement)]
-        end
+    def dependencies
+      @dependencies ||= build_version_requirement_hash(metadata['dependencies'])
+    end
 
-        Hash[reqs.compact]
+    def satisfies_dependency?(name, version)
+      matches?(dependencies[name], version)
+    end
+
+    private
+
+    def build_version_requirement_hash(array)
+      return {} if array.nil?
+
+      require 'semantic_puppet'
+
+      reqs = array.map do |requirement|
+        next unless requirement['name']
+        version_requirement = requirement['version_requirement'] || '>= 0'
+        [requirement['name'], SemanticPuppet::VersionRange.parse(version_requirement)]
       end
+
+      Hash[reqs.compact]
+    end
+
+    def matches?(required_version, provided_version)
+      return false unless required_version
+
+      provided_version = SemanticPuppet::Version.parse(provided_version) if provided_version.is_a?(String)
+      required_version.include?(provided_version)
     end
   end
 end

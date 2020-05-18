@@ -43,8 +43,8 @@ describe PuppetMetadata::Metadata do
           source: 'https://example.com/federation/voyager',
           dependencies: [
             {
-              name: "puppetlabs/concat",
-              version_requirement: ">= 1.0.0 < 7.0.0",
+              name: 'puppetlabs/concat',
+              version_requirement: '>= 1.0.0 < 7.0.0',
             },
             {
               name: 'puppetlabs/stdlib',
@@ -94,21 +94,60 @@ describe PuppetMetadata::Metadata do
         }
         is_expected.to eq(expected)
       end
-      it { expect(subject.os_release_supported?('any', 'version')).to be(false) }
-      it { expect(subject.os_release_supported?('ArchLinux', nil)).to be(true) }
-      it { expect(subject.os_release_supported?('ArchLinux', '3')).to be(true) }
-      it { expect(subject.os_release_supported?('Debian', '8')).to be(false) }
-      it { expect(subject.os_release_supported?('Debian', '9')).to be(true) }
-      it { expect(subject.os_release_supported?('Debian', 9)).to be(false) }
-      it { expect(subject.os_release_supported?('Debian', '10')).to be(true) }
 
-      it { expect(subject.eol_operatingsystems(at)).to eq({'Ubuntu' => ['14.04']}) }
+      describe 'os_release_supported?' do
+        it { expect(subject.os_release_supported?('any', 'version')).to be(false) }
+        it { expect(subject.os_release_supported?('ArchLinux', nil)).to be(true) }
+        it { expect(subject.os_release_supported?('ArchLinux', '3')).to be(true) }
+        it { expect(subject.os_release_supported?('Debian', '8')).to be(false) }
+        it { expect(subject.os_release_supported?('Debian', '9')).to be(true) }
+        it { expect(subject.os_release_supported?('Debian', 9)).to be(false) }
+        it { expect(subject.os_release_supported?('Debian', '10')).to be(true) }
+      end
 
-      it { expect(subject.requirements).to eq({'puppet' => SemanticPuppet::VersionRange.parse('>= 5.5.8 < 7.0.0')}) }
-      it { expect(subject.requirements['puppet']).not_to include(SemanticPuppet::Version.parse('5.5.7')) }
-      it { expect(subject.requirements['puppet']).to include(SemanticPuppet::Version.parse('5.5.10')) }
-      it { expect(subject.requirements['puppet']).to include(SemanticPuppet::Version.parse('6.0.10')) }
-      it { expect(subject.requirements['puppet']).not_to include(SemanticPuppet::Version.parse('7.0.10')) }
+      describe 'eol_operatingsystems' do
+        it { expect(subject.eol_operatingsystems(at)).to eq({'Ubuntu' => ['14.04']}) }
+      end
+
+      describe 'requirements' do
+        it { expect(subject.requirements).to eq({'puppet' => SemanticPuppet::VersionRange.parse('>= 5.5.8 < 7.0.0')}) }
+      end
+
+      describe 'satisfies_requirement' do
+        it { expect(subject.satisfies_requirement?('doesnotexist', '1.0.0')).to be(false) }
+        it { expect(subject.satisfies_requirement?('puppet', '5.5.7')).to be(false) }
+        it { expect(subject.satisfies_requirement?('puppet', '5.5.8')).to be(true) }
+        it { expect(subject.satisfies_requirement?('puppet', '6.0.0')).to be(true) }
+        it { expect(subject.satisfies_requirement?('puppet', '7.0.0')).to be(false) }
+      end
+
+      describe '#dependencies' do
+        it do
+          expected = {
+            'puppetlabs/concat' => SemanticPuppet::VersionRange.parse('>= 1.0.0 < 7.0.0'),
+            'puppetlabs/stdlib' => SemanticPuppet::VersionRange.parse('>= 4.25.0 < 7.0.0'),
+          }
+          expect(subject.dependencies).to eq(expected)
+        end
+      end
+
+      describe 'satisfies_dependency?' do
+        it 'with does/notexist 0.1.0' do
+          expect(subject.satisfies_dependency?('does/notexist', '0.1.0')).to be(false)
+        end
+
+        it 'with puppetlabs/concat 0.1.0' do
+          expect(subject.satisfies_dependency?('puppetlabs/concat', '0.1.0')).to be(false)
+        end
+
+        it 'with puppetlabs/concat 3.14.0' do
+          expect(subject.satisfies_dependency?('puppetlabs/concat', '3.14.0')).to be(true)
+        end
+
+        it 'with puppetlabs/concat 7.0.0' do
+          expect(subject.satisfies_dependency?('puppetlabs/concat', '7.0.0')).to be(false)
+        end
+      end
     end
   end
 end
