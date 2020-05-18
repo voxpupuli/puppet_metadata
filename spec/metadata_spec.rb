@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'puppet_metadata'
 
 describe PuppetMetadata::Metadata do
   context 'instance' do

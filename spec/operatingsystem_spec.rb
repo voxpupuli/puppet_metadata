@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'puppet_metadata/operatingsystem'
 
 describe PuppetMetadata::OperatingSystem do
   describe 'latest_release' do
