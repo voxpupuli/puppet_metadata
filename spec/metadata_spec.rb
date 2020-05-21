@@ -29,6 +29,7 @@ describe PuppetMetadata::Metadata do
       its(:operatingsystems) { is_expected.to eq({}) }
       it { expect(subject.os_release_supported?('any', 'version')).to be(true) }
       it { expect(subject.eol_operatingsystems).to eq({}) }
+      specify { expect { |b| subject.beaker_setfiles(&b) }.not_to yield_control }
     end
 
     context 'full metadata' do
@@ -146,6 +147,50 @@ describe PuppetMetadata::Metadata do
 
         it 'with puppetlabs/concat 7.0.0' do
           expect(subject.satisfies_dependency?('puppetlabs/concat', '7.0.0')).to be(false)
+        end
+      end
+
+      describe 'beaker_setfiles' do
+        it 'works without arguments' do
+          expected = [
+            'centos7-64',
+            'centos8-64',
+            'debian9-64',
+            'debian10-64',
+            'ubuntu1404-64',
+            'ubuntu1604-64',
+            'ubuntu1804-64',
+            'ubuntu2004-64',
+          ]
+          expect { |b| subject.beaker_setfiles(&b) }.to yield_successive_args(*expected)
+        end
+
+        it 'works when using use_fqdn' do
+          expected = [
+            'centos7-64{hostname=centos7-64.example.com}',
+            'centos8-64{hostname=centos8-64.example.com}',
+            'debian9-64{hostname=debian9-64.example.com}',
+            'debian10-64{hostname=debian10-64.example.com}',
+            'ubuntu1404-64{hostname=ubuntu1404-64.example.com}',
+            'ubuntu1604-64{hostname=ubuntu1604-64.example.com}',
+            'ubuntu1804-64{hostname=ubuntu1804-64.example.com}',
+            'ubuntu2004-64{hostname=ubuntu2004-64.example.com}',
+          ]
+          expect { |b| subject.beaker_setfiles(use_fqdn: true, &b) }.to yield_successive_args(*expected)
+        end
+
+        it 'works when passing pidfile_workaround' do
+          expected = [
+            'centos7-64{image=centos:7.6.1810}',
+            'centos8-64',
+            'debian9-64',
+            'debian10-64',
+            'ubuntu1404-64',
+            'ubuntu1604-64{image=ubuntu:xenial-20191212}',
+            'ubuntu1804-64',
+            'ubuntu2004-64',
+          ]
+          expect { |b| subject.beaker_setfiles(pidfile_workaround: true, &b) }.to yield_successive_args(*expected)
         end
       end
     end

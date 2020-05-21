@@ -89,6 +89,16 @@ module PuppetMetadata
       matches?(dependencies[name], version)
     end
 
+    def beaker_setfiles(use_fqdn: false, pidfile_workaround: false)
+      operatingsystems.each do |os, releases|
+        next unless PuppetMetadata::Beaker.os_supported?(os)
+        releases&.each do |release|
+          setfile = PuppetMetadata::Beaker.os_release_to_setfile(os, release, use_fqdn: use_fqdn, pidfile_workaround: pidfile_workaround)
+          yield setfile if setfile
+        end
+      end
+    end
+
     private
 
     def build_version_requirement_hash(array)

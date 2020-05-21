@@ -1,4 +1,5 @@
 module PuppetMetadata
+  autoload :Beaker, 'puppet_metadata/beaker'
   autoload :Metadata, 'puppet_metadata/metadata'
   autoload :OperatingSystem, 'puppet_metadata/operatingsystem'
 
