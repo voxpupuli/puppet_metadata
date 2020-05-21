@@ -1,9 +1,16 @@
 require 'json'
 
 module PuppetMetadata
+  # An exception indicating the metadata is invalid
+  #
+  # @attr_reader [Array[Hash[Symbol, String]]] errors
+  #   The errors in the metadata
   class InvalidMetadataException < Exception
     attr_reader :errors
 
+    # Returns a new instance of InvalidMetadataException
+    # @param [Array[Hash[Symbol, String]]] errors
+    #   The errors in the metadata
     def initialize(errors)
       messages = errors.map { |error| error[:message] }
       super("Invalid metadata: #{messages.join(', ')}")
@@ -11,9 +18,19 @@ module PuppetMetadata
     end
   end
 
+  # An abstraction over Puppet metadata
   class Metadata
     attr_reader :metadata
 
+    # @param [Hash[String, Any]] metadata
+    #   The metadata as a data structure
+    # @param [Boolean] validate
+    #   Whether to validate the metadata using metadata-json-lint
+    # @raise [PuppetMetadata::InvalidMetadataException]
+    #   When the provided metadata is invalid according to metadata.json-lint
+    # @see PuppetMetadata.parse
+    # @see PuppetMetadata.read
+    # @see https://rubygems.org/gems/metadata-json-lint
     def initialize(metadata, validate = true)
       if validate
         require 'metadata_json_lint'
@@ -24,18 +41,26 @@ module PuppetMetadata
       @metadata = metadata
     end
 
+    # The name
+    # @return [String] The name
     def name
       metadata['name']
     end
 
+    # The version
+    # @return [String]
     def version
       metadata['version']
     end
 
+    # The license
+    # @return [String] The license
     def license
       metadata['license']
     end
 
+    # @return [Hash[String, Array[String]]]
+    #   The supported operating system and its major releases
     def operatingsystems
       @operatingsystems ||= begin
         return {} if metadata['operatingsystem_support'].nil?
@@ -49,6 +74,11 @@ module PuppetMetadata
       end
     end
 
+    # Returns whether an operating system's release is supported
+    #
+    # @param [String] operatingsystem The operating system
+    # @param [String] release The major release of the OS
+    # @return [Boolean] Whether an operating system's release is supported
     def os_release_supported?(operatingsystem, release)
       # If no OS is present, everything is supported. An example of this is
       # modules with only functions.
@@ -61,6 +91,8 @@ module PuppetMetadata
       releases.nil? || releases.include?(release)
     end
 
+    # @param [Date] at The date to check the EOL time. Today is used when nil.
+    # @return [Hash[String, Array[String]]]
     def eol_operatingsystems(at = nil)
       at ||= Date.today
 
@@ -73,22 +105,75 @@ module PuppetMetadata
       Hash[unsupported.compact]
     end
 
+    # A hash representation of the requirements
+    #
+    # Every element in the original array is converted. The name is used as a
+    # key while version_requirement is used as a value. No value indicates any
+    # version is accepted.
+    #
+    # @see #satisfies_requirement?
+    # @return [Hash[String, SemanticPuppet::VersionRange]]
+    #   The requirements of the module
+    #
+    # @example
+    #   metadata = Metadata.new(data)
+    #   metadata.requirements.each do |requirement, version_requirement|
+    #     if version_requirement
+    #       puts "#{metadata.name} requires #{requirement} #{version_requirement}"
+    #     else
+    #       puts "#{metadata.name} requires any #{requirement}"
+    #     end
+    #   end
     def requirements
       @requirements ||= build_version_requirement_hash(metadata['requirements'])
     end
 
+    # @param [String] name The name of the requirement
+    # @param [String] version The version of the requirement
+    # @see #requirements
     def satisfies_requirement?(name, version)
       matches?(requirements[name], version)
     end
 
+    # A hash representation of the dependencies
+    #
+    # Every element in the original array is converted. The name is used as a
+    # key while version_requirement is used as a value. No value indicates any
+    # version is accepted.
+    #
+    # @see #satisfies_dependency?
+    # @return [Hash[String, SemanticPuppet::VersionRange]]
+    #   The dependencies of the module
+    #
+    # @example
+    #   metadata = Metadata.new(data)
+    #   metadata.dependencies.each do |os, releases|
+    #     if releases
+    #       releases.each do |release|
+    #         puts "#{metadata.name} supports #{os} #{release}"
+    #       end
+    #     else
+    #       puts "#{metadata.name} supports all #{os} releases"
+    #     end
+    #   end
     def dependencies
       @dependencies ||= build_version_requirement_hash(metadata['dependencies'])
     end
 
+    # @param [String] name The name of the dependency
+    # @param [String] version The version of the dependency
+    # @see #dependencies
     def satisfies_dependency?(name, version)
       matches?(dependencies[name], version)
     end
 
+    # @param [Boolean] use_fqdn
+    #   Whether to set the hostname to a fully qualified domain name
+    # @param [Boolean] pidfile_workaround
+    #   Whether to apply the Docker pidfile workaround
+    # @yieldparam [String] setfile
+    #   The supported setfile configurations
+    # @see PuppetMetadata::Beaker#os_release_to_setfile
     def beaker_setfiles(use_fqdn: false, pidfile_workaround: false)
       operatingsystems.each do |os, releases|
         next unless PuppetMetadata::Beaker.os_supported?(os)
