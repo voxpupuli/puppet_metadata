@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'metadata-json-lint', '~> 2.0'
   s.add_runtime_dependency 'semantic_puppet', '~> 1.0'
 
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'rspec'
-  s.add_development_dependency 'rspec-its'
+  s.add_development_dependency 'rake', '~> 13.0'
+  s.add_development_dependency 'rspec', '~> 3.0'
+  s.add_development_dependency 'rspec-its', '~> 1.0'
 end
