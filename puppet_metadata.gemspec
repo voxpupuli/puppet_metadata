@@ -3,9 +3,9 @@
 Gem::Specification.new do |s|
   s.name        = 'puppet_metadata'
   s.version     = '0.1.0'
-  s.authors     = ['Ewoud Kohl van Wijngaarden']
-  s.email       = ['ewoud+rubygems@kohlvanwijngaarden.nl']
-  s.homepage    = 'http://github.com/ekohl/puppet_metadata'
+  s.authors     = ['Vox Pupuli', 'Ewoud Kohl van Wijngaarden']
+  s.email       = ['voxpupuli@groups.io']
+  s.homepage    = 'http://github.com/voxpupuli/puppet_metadata'
   s.summary     = 'Data structures for the Puppet Metadata'
   s.description = 'A package that provides abstractions for the Puppet Metadata'
   s.licenses    = 'Apache-2.0'
