@@ -12,11 +12,13 @@ module PuppetMetadata
     # @param [String] release The OS release
     # @param [Boolean] use_fqdn
     #   Whether or not to use a FQDN, ensuring a domain
-    # @param [Boolean] pidfile_workaround
+    # @param [Boolean, Array[String]] pidfile_workaround
     #   Whether or not to apply the systemd PIDFile workaround. This is only
     #   needed when the daemon uses PIDFile in its service file and using
     #   Docker as a Beaker hypervisor. This is to work around Docker's
     #   limitations.
+    #   When a boolean, it's applied on applicable operating systems. On arrays
+    #   it's applied only when os is included in the provided array.
     #
     # @return [String] The beaker setfile description or nil
     def self.os_release_to_setfile(os, release, use_fqdn: false, pidfile_workaround: false)
@@ -26,9 +28,10 @@ module PuppetMetadata
 
       options = {}
       options[:hostname] = "#{name}.example.com" if use_fqdn
+
       # Docker messes up cgroups and modern systemd can't deal with that when
       # PIDFile is used.
-      if pidfile_workaround
+      if pidfile_workaround && (!pidfile_workaround.is_a?(Array) || pidfile_workaround.include?(os))
         case os
         when 'CentOS'
           case release

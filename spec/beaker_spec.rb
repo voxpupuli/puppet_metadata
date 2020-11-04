@@ -18,18 +18,26 @@ describe PuppetMetadata::Beaker do
     it { expect(described_class.os_release_to_setfile('SLES', '11')).to be_nil }
 
     describe 'pidfile_workaround' do
-      [
-        ['CentOS', '6', 'centos6-64'],
-        ['CentOS', '7', 'centos7-64{image=centos:7.6.1810}'],
-        ['CentOS', '8', nil],
-        ['Ubuntu', '16.04', 'ubuntu1604-64{image=ubuntu:xenial-20191212}'],
-        ['Ubuntu', '18.04', 'ubuntu1804-64'],
-      ].each do |os, release, expected|
-        it { expect(described_class.os_release_to_setfile(os, release, pidfile_workaround: true)).to eq(expected) }
+      describe 'true' do
+        [
+          ['CentOS', '6', 'centos6-64'],
+          ['CentOS', '7', 'centos7-64{image=centos:7.6.1810}'],
+          ['CentOS', '8', nil],
+          ['Ubuntu', '16.04', 'ubuntu1604-64{image=ubuntu:xenial-20191212}'],
+          ['Ubuntu', '18.04', 'ubuntu1804-64'],
+        ].each do |os, release, expected|
+          it { expect(described_class.os_release_to_setfile(os, release, pidfile_workaround: true)).to eq(expected) }
+        end
+
+        describe 'use_fqdn' do
+          it { expect(described_class.os_release_to_setfile('CentOS', '7', pidfile_workaround: true, use_fqdn: true)).to eq('centos7-64{hostname=centos7-64.example.com,image=centos:7.6.1810}') }
+        end
       end
 
-      describe 'use_fqdn' do
-        it { expect(described_class.os_release_to_setfile('CentOS', '7', pidfile_workaround: true, use_fqdn: true)).to eq('centos7-64{hostname=centos7-64.example.com,image=centos:7.6.1810}') }
+      describe 'as an array' do
+        it { expect(described_class.os_release_to_setfile('CentOS', '8', pidfile_workaround: [])).to eq('centos8-64') }
+        it { expect(described_class.os_release_to_setfile('CentOS', '8', pidfile_workaround: ['Debian'])).to eq('centos8-64') }
+        it { expect(described_class.os_release_to_setfile('CentOS', '8', pidfile_workaround: ['CentOS'])).to be_nil }
       end
     end
   end
