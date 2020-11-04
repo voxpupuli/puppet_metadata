@@ -182,7 +182,6 @@ describe PuppetMetadata::Metadata do
         it 'works when passing pidfile_workaround' do
           expected = [
             'centos7-64{image=centos:7.6.1810}',
-            'centos8-64',
             'debian9-64',
             'debian10-64',
             'ubuntu1404-64',

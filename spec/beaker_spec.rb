@@ -19,8 +19,9 @@ describe PuppetMetadata::Beaker do
 
     describe 'pidfile_workaround' do
       [
+        ['CentOS', '6', 'centos6-64'],
         ['CentOS', '7', 'centos7-64{image=centos:7.6.1810}'],
-        ['CentOS', '8', 'centos8-64'],
+        ['CentOS', '8', nil],
         ['Ubuntu', '16.04', 'ubuntu1604-64{image=ubuntu:xenial-20191212}'],
         ['Ubuntu', '18.04', 'ubuntu1804-64'],
       ].each do |os, release, expected|

@@ -31,7 +31,14 @@ module PuppetMetadata
       if pidfile_workaround
         case os
         when 'CentOS'
-          options[:image] = 'centos:7.6.1810' if release == '7'
+          case release
+          when '7'
+            options[:image] = 'centos:7.6.1810'
+          when '8'
+            # There is no CentOS 8 image that works with PIDFile in systemd
+            # unit files
+            return
+          end
         when 'Ubuntu'
           options[:image] = 'ubuntu:xenial-20191212' if release == '16.04'
         end
