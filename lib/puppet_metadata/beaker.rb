@@ -20,7 +20,8 @@ module PuppetMetadata
     #   When a boolean, it's applied on applicable operating systems. On arrays
     #   it's applied only when os is included in the provided array.
     #
-    # @return [String] The beaker setfile description or nil
+    # @return [nil] If no setfile is available
+    # @return [Array<(String, String)>] The beaker setfile description with a readable name
     def self.os_release_to_setfile(os, release, use_fqdn: false, pidfile_workaround: false)
       return unless os_supported?(os)
 
@@ -49,7 +50,10 @@ module PuppetMetadata
 
       setfile = name
       setfile += "{#{options.map { |key, value| "#{key}=#{value}" }.join(',')}}" if options.any?
-      setfile
+
+      human_name = "#{os} #{release}"
+
+      [setfile, human_name]
     end
 
     # Return whether a Beaker setfile can be generated for the given OS
