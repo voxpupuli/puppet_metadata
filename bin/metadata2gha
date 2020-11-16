@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby
+require 'optparse'
+require 'json'
+require 'puppet_metadata'
+
+PidfileWorkaround = Object.new
+
+options = {}
+OptionParser.new do |opts|
+  opts.accept(PidfileWorkaround) do |value|
+    case value
+    when 'true'
+      true
+    when 'false'
+      false
+    else
+      value.split(',')
+    end
+  end
+
+  opts.banner = "Usage: #{$0} [options] metadata"
+
+  opts.on("--[no-]use-fqdn", "Generate beaker setfiles with a FQDN")
+  opts.on("--pidfile-workaround VALUE", "Generate the systemd PIDFile workaround to work around a docker bug", PidfileWorkaround)
+end.parse!(into: options)
+
+filename = ARGV[0]
+if filename.nil? || filename.empty?
+  filename = 'metadata.json'
+end
+
+begin
+  metadata = PuppetMetadata.read(filename)
+rescue StandardError => e
+  STDERR.puts "Failed to read #{filename}: #{e}"
+  exit 2
+end
+
+metadata.github_actions.outputs(beaker_use_fqdn: options[:'use-fqdn'], beaker_pidfile_workaround: options[:'pidfile-workaround']).each do |name, value|
+  puts "::set-output name=#{name}::#{value.to_json}"
+end

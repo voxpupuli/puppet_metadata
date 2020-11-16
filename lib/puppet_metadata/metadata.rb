@@ -178,6 +178,11 @@ module PuppetMetadata
       matches?(dependencies[name], version)
     end
 
+    # @return [PuppetMetadata::GithubActions] A GithubActions instance
+    def github_actions
+      PuppetMetadata::GithubActions.new(self)
+    end
+
     # @param [Boolean] use_fqdn
     #   Whether to set the hostname to a fully qualified domain name
     # @param [Boolean] pidfile_workaround

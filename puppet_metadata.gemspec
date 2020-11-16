@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.description = 'A package that provides abstractions for the Puppet Metadata'
   s.licenses    = 'Apache-2.0'
 
+  s.executables << 'metadata2gha'
   s.files = Dir['lib/**/*.rb']
   s.extra_rdoc_files = ['README.md']
   s.rdoc_options << '--main' << 'README.md'
