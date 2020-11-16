@@ -135,6 +135,17 @@ module PuppetMetadata
       matches?(requirements[name], version)
     end
 
+    # @return [Array[Integer]] Supported major Puppet versions
+    # @see #requirements
+    def puppet_major_versions
+      requirement = requirements['puppet']
+      raise Exception, 'No Puppet requirement found' unless requirement
+
+      (requirement.begin.major..requirement.end.major).select do |major|
+        requirement.include?(SemanticPuppet::Version.new(major, 0, 0)) || requirement.include?(SemanticPuppet::Version.new(major, 99, 99))
+      end
+    end
+
     # A hash representation of the dependencies
     #
     # Every element in the original array is converted. The name is used as a

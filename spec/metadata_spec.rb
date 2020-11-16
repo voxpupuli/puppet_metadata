@@ -30,6 +30,7 @@ describe PuppetMetadata::Metadata do
       it { expect(subject.os_release_supported?('any', 'version')).to be(true) }
       it { expect(subject.eol_operatingsystems).to eq({}) }
       specify { expect { |b| subject.beaker_setfiles(&b) }.not_to yield_control }
+      it { expect { subject.puppet_major_versions }.to raise_error(/No Puppet requirement found/) }
     end
 
     context 'full metadata' do
@@ -120,6 +121,10 @@ describe PuppetMetadata::Metadata do
         it { expect(subject.satisfies_requirement?('puppet', '5.5.8')).to be(true) }
         it { expect(subject.satisfies_requirement?('puppet', '6.0.0')).to be(true) }
         it { expect(subject.satisfies_requirement?('puppet', '7.0.0')).to be(false) }
+      end
+
+      describe '#puppet_major_versions' do
+        it { expect(subject.puppet_major_versions).to eq([5, 6]) }
       end
 
       describe '#dependencies' do
