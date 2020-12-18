@@ -141,7 +141,11 @@ module PuppetMetadata
       requirement = requirements['puppet']
       raise Exception, 'No Puppet requirement found' unless requirement
 
-      (requirement.begin.major..requirement.end.major).select do |major|
+      # Current latest major is 7. It is highly recommended that modules
+      # actually specify exact bounds, but this prevents an infinite loop.
+      end_major = requirement.end == SemanticPuppet::Version::MAX ? 7 : requirement.end.major
+
+      (requirement.begin.major..end_major).select do |major|
         requirement.include?(SemanticPuppet::Version.new(major, 0, 0)) || requirement.include?(SemanticPuppet::Version.new(major, 99, 99))
       end
     end

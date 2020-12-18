@@ -125,6 +125,32 @@ describe PuppetMetadata::Metadata do
 
       describe '#puppet_major_versions' do
         it { expect(subject.puppet_major_versions).to eq([5, 6]) }
+
+        context 'with no lower bound' do
+          let(:metadata) do
+            super().merge(requirements: [
+              {
+                name: 'puppet',
+                version_requirement: '< 7.0.0',
+              },
+            ])
+          end
+
+          it { expect(subject.puppet_major_versions).to eq([0, 1, 2, 3, 4, 5, 6]) }
+        end
+
+        context 'with no upper bound' do
+          let(:metadata) do
+            super().merge(requirements: [
+              {
+                name: 'puppet',
+                version_requirement: '>= 5.5.8',
+              },
+            ])
+          end
+
+          it { expect(subject.puppet_major_versions).to eq([5, 6, 7]) }
+        end
       end
 
       describe '#dependencies' do
