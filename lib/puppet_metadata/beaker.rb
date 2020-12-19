@@ -42,7 +42,8 @@ module PuppetMetadata
       def os_release_to_setfile(os, release, use_fqdn: false, pidfile_workaround: false)
         return unless os_supported?(os)
 
-        name = "#{os.downcase}#{release.tr('.', '')}-64"
+        real_release = ['Gentoo', 'Archlinux'].include?(os) ? 'rolling' : release
+        name = "#{os.downcase}#{real_release.tr('.', '')}-64"
 
         options = {}
         options[:hostname] = "#{name}.example.com" if use_fqdn
@@ -50,9 +51,9 @@ module PuppetMetadata
         # Docker messes up cgroups and some systemd versions can't deal with
         # that when PIDFile is used.
         if pidfile_workaround?(pidfile_workaround, os)
-          return if PIDFILE_INCOMPATIBLE[os]&.include?(release)
+          return if PIDFILE_INCOMPATIBLE[os]&.include?(real_release)
 
-          if (image = PIDFILE_COMPATIBLE_IMAGES.dig(os, release))
+          if (image = PIDFILE_COMPATIBLE_IMAGES.dig(os, real_release))
             options[:image] = image
           end
         end
@@ -65,7 +66,7 @@ module PuppetMetadata
       # Return whether a Beaker setfile can be generated for the given OS
       # @param [String] os The operating system
       def os_supported?(os)
-        ['CentOS', 'Fedora', 'Debian', 'Ubuntu'].include?(os)
+        ['CentOS', 'Fedora', 'Debian', 'Ubuntu', 'Archlinux'].include?(os)
       end
 
       private

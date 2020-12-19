@@ -150,6 +150,18 @@ module PuppetMetadata
       end
     end
 
+    # @return [Integer] The newest/latest supported puppet major version
+    # @see #puppet_major_versions
+    def latest_supported_puppet_major_version
+      puppet_major_versions.sort.last
+    end
+
+    # @return [Integer] The oldest supported puppet major version
+    # @see #puppet_major_versions
+    def oldest_supported_puppet_major_version
+      puppet_major_versions.sort.first
+    end
+
     # A hash representation of the dependencies
     #
     # Every element in the original array is converted. The name is used as a
@@ -197,7 +209,8 @@ module PuppetMetadata
     def beaker_setfiles(use_fqdn: false, pidfile_workaround: false)
       operatingsystems.each do |os, releases|
         next unless PuppetMetadata::Beaker.os_supported?(os)
-        releases&.each do |release|
+        real_releases = ['Gentoo', 'Archlinux'].include?(os) ? ['rolling'] : releases
+        real_releases&.each do |release|
           setfile = PuppetMetadata::Beaker.os_release_to_setfile(os, release, use_fqdn: use_fqdn, pidfile_workaround: pidfile_workaround)
           yield setfile if setfile
         end
