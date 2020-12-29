@@ -9,9 +9,13 @@ module PuppetMetadata
 
     # @return [Hash[Symbol, Any]] The outputs for Github Actions
     def outputs(beaker_use_fqdn: false, beaker_pidfile_workaround: false)
+      beaker_setfiles = beaker_setfiles(beaker_use_fqdn, beaker_pidfile_workaround)
       {
-        beaker_setfiles: beaker_setfiles(beaker_use_fqdn, beaker_pidfile_workaround),
+        beaker_setfiles: beaker_setfiles,
+        beaker_setfile_names: beaker_setfiles.map { |setfile| setfile[:name] },
+        beaker_setfile_values: Hash[beaker_setfiles.map { |setfile| [setfile[:name], setfile[:value]] }],
         puppet_major_versions: puppet_major_versions,
+        puppet_major_version_numbers: metadata.puppet_major_versions.sort.reverse,
         puppet_unit_test_matrix: puppet_unit_test_matrix,
       }
     end
