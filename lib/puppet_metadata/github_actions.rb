@@ -13,6 +13,7 @@ module PuppetMetadata
         beaker_setfiles: beaker_setfiles(beaker_use_fqdn, beaker_pidfile_workaround),
         puppet_major_versions: puppet_major_versions,
         puppet_unit_test_matrix: puppet_unit_test_matrix,
+        known_bad_combinations: known_bad_combinations(beaker_setfiles(beaker_use_fqdn, beaker_pidfile_workaround), puppet_major_versions),
       }
     end
 
@@ -62,6 +63,36 @@ module PuppetMetadata
       when 7
         '2.7'
       end
+    end
+
+    def known_bad_combinations(beaker_setfiles, puppet_major_versions)
+      supporder_versions = {
+        'CentOS 5'     => 5..7,
+        'CentOS 6'     => 5..7,
+        'CentOS 7'     => 5..7,
+        'CentOS 8'     => 5..7,
+        'Debian 7'     => [5],
+        'Debian 8'     => 5..7,
+        'Debian 9'     => 5..7,
+        'Debian 10'    => 5..7,
+        'Ubuntu 14.04' => 5..6,
+        'Ubuntu 16.04' => 5..7,
+        'Ubuntu 18.04' => 5..7,
+        'Ubuntu 20.04' => 6..7,
+      }
+
+      known_bad = []
+      beaker_setfiles.each do |setfile|
+        puppet_major_versions.each do |puppet|
+          if !supporder_versions[setfile[:name]] || !supporder_versions[setfile[:name]].include?(puppet[:value])
+            known_bad << {
+              setfile: setfile,
+              puppet: puppet,
+            }
+          end
+        end
+      end
+      known_bad
     end
   end
 end

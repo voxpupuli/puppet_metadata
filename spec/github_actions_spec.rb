@@ -34,7 +34,7 @@ describe PuppetMetadata::GithubActions do
     subject { super().outputs }
 
     it { is_expected.to be_an_instance_of(Hash) }
-    it { expect(subject.keys).to contain_exactly(:beaker_setfiles, :puppet_major_versions, :puppet_unit_test_matrix) }
+    it { expect(subject.keys).to contain_exactly(:beaker_setfiles, :puppet_major_versions, :puppet_unit_test_matrix, :known_bad_combinations) }
 
     describe 'beaker_setfiles' do
       subject { super()[:beaker_setfiles] }
@@ -76,6 +76,64 @@ describe PuppetMetadata::GithubActions do
           {puppet: 6, ruby: "2.5"},
           {puppet: 5, ruby: "2.4"},
           {puppet: 4, ruby: "2.1"},
+        )
+      end
+    end
+
+    describe 'known_bad_combinations' do
+      subject { super()[:known_bad_combinations] }
+
+      it { is_expected.to be_an_instance_of(Array) }
+      it 'is expected to include outdated Puppet versions' do
+        is_expected.to contain_exactly(
+          {
+            setfile: {name: "CentOS 7", value: "centos7-64"},
+            puppet: {collection: "puppet8", name: "Puppet 8", value: 8},
+          },
+          {
+            setfile: {name: "CentOS 7", value: "centos7-64"},
+            puppet: {collection: "puppet4", name: "Puppet 4", value: 4},
+          },
+          {
+            setfile: {name: "CentOS 7", value: "centos7-64"},
+            puppet: {collection: "puppet3", name: "Puppet 3", value: 3},
+          },
+          {
+            setfile: {name: "CentOS 8", value: "centos8-64"},
+            puppet: {collection: "puppet8", name: "Puppet 8", value: 8},
+          },
+          {
+            setfile: {name: "CentOS 8", value: "centos8-64"},
+            puppet: {collection: "puppet4", name: "Puppet 4", value: 4},
+          },
+          {
+            setfile: {name: "CentOS 8", value: "centos8-64"},
+            puppet: {collection: "puppet3", name: "Puppet 3", value: 3},
+          },
+          {
+            setfile: {name: "Debian 9", value: "debian9-64"},
+            puppet: {collection: "puppet8", name: "Puppet 8", value: 8},
+          },
+          {
+            setfile: {name: "Debian 9", value: "debian9-64"},
+            puppet: {collection: "puppet4", name: "Puppet 4", value: 4},
+          },
+          {
+            setfile: {name: "Debian 9", value: "debian9-64"},
+            puppet: {collection: "puppet3", name: "Puppet 3", value: 3},
+          },
+          {
+            setfile: {name: "Debian 10", value: "debian10-64"},
+            puppet: {collection: "puppet8", name: "Puppet 8", value: 8},
+          },
+          {
+            setfile: {name: "Debian 10", value: "debian10-64"},
+            puppet: {collection: "puppet4", name: "Puppet 4", value: 4},
+          },
+          {
+            setfile: {name: "Debian 10", value: "debian10-64"},
+            puppet: {collection: "puppet3", name: "Puppet 3", value: 3},
+          },
         )
       end
     end
