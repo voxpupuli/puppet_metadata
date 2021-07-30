@@ -1,5 +1,13 @@
 # puppet_metadata
 
+[![License](https://img.shields.io/github/license/voxpupuli/puppet_metadata.svg)](https://github.com/voxpupuli/puppet_metadata/blob/master/LICENSE)
+[![Test](https://github.com/voxpupuli/puppet_metadata/actions/workflows/test.yml/badge.svg)](https://github.com/voxpupuli/puppet_metadata/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/voxpupuli/puppet_metadata/branch/master/graph/badge.svg?token=Mypkl78hvK)](https://codecov.io/gh/voxpupuli/puppet_metadata)
+[![Release](https://github.com/voxpupuli/puppet_metadata/actions/workflows/release.yml/badge.svg)](https://github.com/voxpupuli/puppet_metadata/actions/workflows/release.yml)
+[![RubyGem Version](https://img.shields.io/gem/v/puppet_metadata.svg)](https://rubygems.org/gems/puppet_metadata)
+[![RubyGem Downloads](https://img.shields.io/gem/dt/puppet_metadata.svg)](https://rubygems.org/gems/puppet_metadata)
+[![Donated by Ewoud Kohl van Wijngaarden](https://img.shields.io/badge/donated%20by-Ewoud%20Kohl%20van%20Wijngaarden-fb7047.svg)](#copyright)
+
 The gem intends to provide an abstraction over Puppet's metadata.json file. Its API allow easy iteration over its illogical data structures.
 
 ## Generating Github Actions outputs
@@ -90,3 +98,22 @@ This results in the following JSON data
 ```
 
 It is also possible to specify a comma separated list of operating systems as used in `metadata.json` (`CentOS,Ubuntu`).
+
+## Transfer Notice
+
+This plugin was originally authored by [Ewoud Kohl van Wijngaarden](https://github.com/ekohl).
+The maintainer preferred that [Vox Pupuli](https://voxpupuli.org/) take ownership of the module for future improvement and maintenance.
+Existing pull requests and issues were transferred, please fork and continue to contribute [here](https://github.com/voxpupuli/puppet_metadata).
+
+## License
+
+This gem is licensed under the Apache-2 license.
+
+## Release information
+
+To make a new release, please do:
+* Update the version in the puppet_metadata.gemspec file
+* Install gems with `bundle install --with release --path .vendor`
+* generate the changelog with `bundle exec rake changelog`
+* Create a PR with it
+* After it got merged, push a tag. A github workflow will do the actual release
