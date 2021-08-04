@@ -13,6 +13,7 @@ module PuppetMetadata
         beaker_setfiles: beaker_setfiles(beaker_use_fqdn, beaker_pidfile_workaround),
         puppet_major_versions: puppet_major_versions,
         puppet_unit_test_matrix: puppet_unit_test_matrix,
+        github_action_test_matrix: github_action_test_matrix,
       }
     end
 
@@ -62,6 +63,30 @@ module PuppetMetadata
       when 7
         '2.7'
       end
+    end
+
+
+    def github_action_test_matrix(use_fqdn: false, pidfile_workaround: false)
+      matrix_include = []
+
+      puppet_major_versions.each do |puppet_version|
+        metadata.operatingsystems.each do |os, releases|
+          releases&.each do |release|
+            next unless AIO.has_aio_build?(os, release, puppet_version[:value])
+
+            setfile = PuppetMetadata::Beaker.os_release_to_setfile(os, release, use_fqdn: use_fqdn, pidfile_workaround: pidfile_workaround)
+            matrix_include << {
+              setfile: {
+                name: setfile[1],
+                value: setfile[0],
+              },
+              puppet: puppet_version
+            }
+          end
+        end
+      end
+
+      matrix_include
     end
   end
 end

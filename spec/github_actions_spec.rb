@@ -34,7 +34,7 @@ describe PuppetMetadata::GithubActions do
     subject { super().outputs }
 
     it { is_expected.to be_an_instance_of(Hash) }
-    it { expect(subject.keys).to contain_exactly(:beaker_setfiles, :puppet_major_versions, :puppet_unit_test_matrix) }
+    it { expect(subject.keys).to contain_exactly(:beaker_setfiles, :puppet_major_versions, :puppet_unit_test_matrix, :github_action_test_matrix) }
 
     describe 'beaker_setfiles' do
       subject { super()[:beaker_setfiles] }
@@ -76,6 +76,28 @@ describe PuppetMetadata::GithubActions do
           {puppet: 6, ruby: "2.5"},
           {puppet: 5, ruby: "2.4"},
           {puppet: 4, ruby: "2.1"},
+        )
+      end
+    end
+
+    describe 'github_action_test_matrix' do
+      subject { super()[:github_action_test_matrix] }
+
+      it { is_expected.to be_an_instance_of(Array) }
+      it 'is expected to contain supported os / puppet version combinations' do
+        is_expected.to contain_exactly(
+          {setfile: {name: "CentOS 7", value: "centos7-64"}, puppet: {collection: "puppet5", name: "Puppet 5", value: 5}},
+          {setfile: {name: "CentOS 7", value: "centos7-64"}, puppet: {collection: "puppet6", name: "Puppet 6", value: 6}},
+          {setfile: {name: "CentOS 7", value: "centos7-64"}, puppet: {collection: "puppet7", name: "Puppet 7", value: 7}},
+          {setfile: {name: "CentOS 8", value: "centos8-64"}, puppet: {collection: "puppet5", name: "Puppet 5", value: 5}},
+          {setfile: {name: "CentOS 8", value: "centos8-64"}, puppet: {collection: "puppet6", name: "Puppet 6", value: 6}},
+          {setfile: {name: "CentOS 8", value: "centos8-64"}, puppet: {collection: "puppet7", name: "Puppet 7", value: 7}},
+          {setfile: {name: "Debian 9", value: "debian9-64"}, puppet: {collection: "puppet5", name: "Puppet 5", value: 5}},
+          {setfile: {name: "Debian 9", value: "debian9-64"}, puppet: {collection: "puppet6", name: "Puppet 6", value: 6}},
+          {setfile: {name: "Debian 9", value: "debian9-64"}, puppet: {collection: "puppet7", name: "Puppet 7", value: 7}},
+          {setfile: {name: "Debian 10", value: "debian10-64"}, puppet: {collection: "puppet5", name: "Puppet 5", value: 5}},
+          {setfile: {name: "Debian 10", value: "debian10-64"}, puppet: {collection: "puppet6", name: "Puppet 6", value: 6}},
+          {setfile: {name: "Debian 10", value: "debian10-64"}, puppet: {collection: "puppet7", name: "Puppet 7", value: 7}},
         )
       end
     end
