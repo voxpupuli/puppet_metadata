@@ -1,7 +1,12 @@
 module PuppetMetadata
   class AIO 
     COMPATIBLE = {
+      'AlmaLinux'   => 'RedHat',
+      'Amazon'      => 'RedHat',
       'CentOS'      => 'RedHat',
+      'OracleLinux' => 'RedHat',
+      'Rocky'       => 'RedHat',
+      'Scientific'  => 'RedHat',
     }
 
     BUILDS = { 
@@ -22,7 +27,11 @@ module PuppetMetadata
         '32' => 6..7,
         '34' => 6..7,
       },
-      # TODO: SLES/Suse
+      'SLES' => {
+        '11' => [7],
+        '12' => [7],
+        '15' => [7],
+      },
       # deb-based
       'Debian' => {
         '7' => [5],
