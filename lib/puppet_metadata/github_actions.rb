@@ -69,9 +69,9 @@ module PuppetMetadata
     def github_action_test_matrix(use_fqdn: false, pidfile_workaround: false)
       matrix_include = []
 
-      puppet_major_versions.each do |puppet_version|
-        metadata.operatingsystems.each do |os, releases|
-          releases&.each do |release|
+      metadata.operatingsystems.each do |os, releases|
+        releases&.each do |release|
+          puppet_major_versions.each do |puppet_version|
             next unless AIO.has_aio_build?(os, release, puppet_version[:value])
 
             setfile = PuppetMetadata::Beaker.os_release_to_setfile(os, release, use_fqdn: use_fqdn, pidfile_workaround: pidfile_workaround)
