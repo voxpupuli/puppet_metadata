@@ -75,6 +75,8 @@ module PuppetMetadata
             next unless AIO.has_aio_build?(os, release, puppet_version[:value])
 
             setfile = PuppetMetadata::Beaker.os_release_to_setfile(os, release, use_fqdn: use_fqdn, pidfile_workaround: pidfile_workaround)
+            next unless setfile
+
             matrix_include << {
               setfile: {
                 name: setfile[1],
