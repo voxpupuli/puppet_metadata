@@ -1,8 +1,12 @@
 module PuppetMetadata
   class AIO 
+    COMPATIBLE = {
+      'CentOS'      => 'RedHat',
+    }
+
     BUILDS = { 
       # RPM-based
-      'CentOS' => {
+      'RedHat' => {
         '5' => 5..7,
         '6' => 5..7,
         '7' => 5..7,
@@ -34,9 +38,12 @@ module PuppetMetadata
       },
     }
 
+    def self.find_base_os(os)
+      COMPATIBLE.fetch(os, os)
+    end
+
     def self.has_aio_build?(os, release, puppet_version)
-      # TODO: group CentOS with RedHat/AlmaLinux/Rocky?
-      BUILDS.dig(os, release)&.include?(puppet_version)
+      BUILDS.dig(find_base_os(os), release)&.include?(puppet_version)
     end
   end
 end
