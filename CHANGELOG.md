@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.0](https://github.com/voxpupuli/puppet_metadata/tree/1.0.0) (2021-08-11)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/0.4.0...1.0.0)
+
+**Merged pull requests:**
+
+- Track known-good os and puppet combinations [\#21](https://github.com/voxpupuli/puppet_metadata/pull/21) ([smortex](https://github.com/smortex))
+
 ## [0.4.0](https://github.com/voxpupuli/puppet_metadata/tree/0.4.0) (2021-08-06)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/0.3.0...0.4.0)
