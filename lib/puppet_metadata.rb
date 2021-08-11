@@ -1,5 +1,6 @@
 # A module that provides abstractions around Puppet's metadata format.
 module PuppetMetadata
+  autoload :AIO, 'puppet_metadata/aio'
   autoload :Beaker, 'puppet_metadata/beaker'
   autoload :GithubActions, 'puppet_metadata/github_actions'
   autoload :Metadata, 'puppet_metadata/metadata'
