@@ -24,7 +24,7 @@ module PuppetMetadata
         # TODO: EOL is standard support, not the extended life cycle
         '11' => nil, # '~2024',
         '10' => nil, # '~2022',
-        '9' => nil, # '~2020',
+        '9' => '2020-07-06',
         '8' => '2018-06-17',
         '7' => '2016-04-26',
         '6' => '2015-05-31',
