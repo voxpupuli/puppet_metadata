@@ -22,6 +22,7 @@ module PuppetMetadata
       # https://wiki.debian.org/DebianReleases
       'Debian' => {
         # TODO: EOL is standard support, not the extended life cycle
+        '11' => nil, # '~2024',
         '10' => nil, # '~2022',
         '9' => nil, # '~2020',
         '8' => '2018-06-06',
