@@ -1,10 +1,18 @@
 # Changelog
 
+## [1.1.0](https://github.com/voxpupuli/puppet_metadata/tree/1.1.0) (2021-08-17)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.0.0...1.1.0)
+
+**Implemented enhancements:**
+
+- Get ready for Debian 11 [\#24](https://github.com/voxpupuli/puppet_metadata/pull/24) ([smortex](https://github.com/smortex))
+
 ## [1.0.0](https://github.com/voxpupuli/puppet_metadata/tree/1.0.0) (2021-08-11)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/0.4.0...1.0.0)
 
-**Merged pull requests:**
+**Implemented enhancements:**
 
 - Track known-good os and puppet combinations [\#21](https://github.com/voxpupuli/puppet_metadata/pull/21) ([smortex](https://github.com/smortex))
 
