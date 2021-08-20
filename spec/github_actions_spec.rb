@@ -31,7 +31,10 @@ describe PuppetMetadata::GithubActions do
   end
 
   describe 'outputs' do
-    subject { super().outputs }
+    let(:beaker_pidfile_workaround) { false }
+    let(:beaker_use_fqdn) { false }
+
+    subject { super().outputs(beaker_use_fqdn: beaker_use_fqdn, beaker_pidfile_workaround: beaker_pidfile_workaround) }
 
     it { is_expected.to be_an_instance_of(Hash) }
     it { expect(subject.keys).to contain_exactly(:beaker_setfiles, :puppet_major_versions, :puppet_unit_test_matrix, :github_action_test_matrix) }
@@ -99,6 +102,45 @@ describe PuppetMetadata::GithubActions do
           {setfile: {name: "Debian 10", value: "debian10-64"}, puppet: {collection: "puppet6", name: "Puppet 6", value: 6}},
           {setfile: {name: "Debian 10", value: "debian10-64"}, puppet: {collection: "puppet7", name: "Puppet 7", value: 7}},
         )
+      end
+
+      context 'when beaker_pidfile_workaround is true' do
+        let(:beaker_pidfile_workaround) { true }
+
+        it 'is expected to contain supported os / puppet version combinations with image option' do
+          is_expected.to contain_exactly(
+            {setfile: {name: "CentOS 7", value: "centos7-64{image=centos:7.6.1810}"}, puppet: {name: "Puppet 7", value: 7, collection: "puppet7"}},
+            {setfile: {name: "CentOS 7", value: "centos7-64{image=centos:7.6.1810}"}, puppet: {name: "Puppet 6", value: 6, collection: "puppet6"}},
+            {setfile: {name: "CentOS 7", value: "centos7-64{image=centos:7.6.1810}"}, puppet: {name: "Puppet 5", value: 5, collection: "puppet5"}},
+            {setfile: {name: "Debian 9", value: "debian9-64"}, puppet: {name: "Puppet 7", value: 7, collection: "puppet7"}},
+            {setfile: {name: "Debian 9", value: "debian9-64"}, puppet: {name: "Puppet 6", value: 6, collection: "puppet6"}},
+            {setfile: {name: "Debian 9", value: "debian9-64"}, puppet: {name: "Puppet 5", value: 5, collection: "puppet5"}},
+            {setfile: {name: "Debian 10", value: "debian10-64"}, puppet: {name: "Puppet 7", value: 7, collection: "puppet7"}},
+            {setfile: {name: "Debian 10", value: "debian10-64"}, puppet: {name: "Puppet 6", value: 6, collection: "puppet6"}},
+            {setfile: {name: "Debian 10", value: "debian10-64"}, puppet: {name: "Puppet 5", value: 5, collection: "puppet5"}}
+          )
+        end
+      end
+
+      context 'when beaker_use_fqdn is true' do
+        let(:beaker_use_fqdn) { true }
+
+        it 'is expected to contain supported os / puppet version combinations with hostname option' do
+          is_expected.to contain_exactly(
+            {setfile: {name: "CentOS 7", value: "centos7-64{hostname=centos7-64.example.com}"}, puppet: {name: "Puppet 7", value: 7, collection: "puppet7"}},
+            {setfile: {name: "CentOS 7", value: "centos7-64{hostname=centos7-64.example.com}"}, puppet: {name: "Puppet 6", value: 6, collection: "puppet6"}},
+            {setfile: {name: "CentOS 7", value: "centos7-64{hostname=centos7-64.example.com}"}, puppet: {name: "Puppet 5", value: 5, collection: "puppet5"}},
+            {setfile: {name: "CentOS 8", value: "centos8-64{hostname=centos8-64.example.com}"}, puppet: {name: "Puppet 7", value: 7, collection: "puppet7"}},
+            {setfile: {name: "CentOS 8", value: "centos8-64{hostname=centos8-64.example.com}"}, puppet: {name: "Puppet 6", value: 6, collection: "puppet6"}},
+            {setfile: {name: "CentOS 8", value: "centos8-64{hostname=centos8-64.example.com}"}, puppet: {name: "Puppet 5", value: 5, collection: "puppet5"}},
+            {setfile: {name: "Debian 9", value: "debian9-64{hostname=debian9-64.example.com}"}, puppet: {name: "Puppet 7", value: 7, collection: "puppet7"}},
+            {setfile: {name: "Debian 9", value: "debian9-64{hostname=debian9-64.example.com}"}, puppet: {name: "Puppet 6", value: 6, collection: "puppet6"}},
+            {setfile: {name: "Debian 9", value: "debian9-64{hostname=debian9-64.example.com}"}, puppet: {name: "Puppet 5", value: 5, collection: "puppet5"}},
+            {setfile: {name: "Debian 10", value: "debian10-64{hostname=debian10-64.example.com}"}, puppet: {name: "Puppet 7", value: 7, collection: "puppet7"}},
+            {setfile: {name: "Debian 10", value: "debian10-64{hostname=debian10-64.example.com}"}, puppet: {name: "Puppet 6", value: 6, collection: "puppet6"}},
+            {setfile: {name: "Debian 10", value: "debian10-64{hostname=debian10-64.example.com}"}, puppet: {name: "Puppet 5", value: 5, collection: "puppet5"}}
+          )
+        end
       end
     end
   end
