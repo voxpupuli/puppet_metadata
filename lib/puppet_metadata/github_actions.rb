@@ -13,7 +13,7 @@ module PuppetMetadata
         beaker_setfiles: beaker_setfiles(beaker_use_fqdn, beaker_pidfile_workaround),
         puppet_major_versions: puppet_major_versions,
         puppet_unit_test_matrix: puppet_unit_test_matrix,
-        github_action_test_matrix: github_action_test_matrix,
+        github_action_test_matrix: github_action_test_matrix(use_fqdn: beaker_use_fqdn, pidfile_workaround: beaker_pidfile_workaround),
       }
     end
 
