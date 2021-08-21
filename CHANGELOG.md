@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.1](https://github.com/voxpupuli/puppet_metadata/tree/1.1.1) (2021-08-21)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.1.0...1.1.1)
+
+**Fixed bugs:**
+
+- Respect fqdn/pidfile options while generating actions matrix [\#26](https://github.com/voxpupuli/puppet_metadata/pull/26) ([root-expert](https://github.com/root-expert))
+
 ## [1.1.0](https://github.com/voxpupuli/puppet_metadata/tree/1.1.0) (2021-08-17)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.0.0...1.1.0)
