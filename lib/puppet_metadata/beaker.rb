@@ -4,6 +4,22 @@ module PuppetMetadata
   # @see https://rubygems.org/gems/beaker
   # @see https://rubygems.org/gems/beaker-hostgenerator
   class Beaker
+    # These images have an older systemd, which they work with
+    # PIDFile parameter
+    PIDFILE_COMPATIBLE_IMAGES = {
+      'CentOS' => {
+        '7' => 'centos:7.6.1810',
+      },
+      'Ubuntu' => {
+        '16.04' => 'ubuntu:xenial-20191212',
+      },
+    }.freeze
+
+    # There is no CentOS 8 image that works with PIDFile in systemd
+    # unit files
+    PIDFILE_INCOMPATIBLE = {
+      'CentOS' => ['8'],
+    }.freeze
     # Convert an Operating System name with a release to a Beaker setfile
     #
     # @param [String] os
@@ -32,34 +48,31 @@ module PuppetMetadata
 
       # Docker messes up cgroups and modern systemd can't deal with that when
       # PIDFile is used.
-      if pidfile_workaround && (!pidfile_workaround.is_a?(Array) || pidfile_workaround.include?(os))
-        case os
-        when 'CentOS'
-          case release
-          when '7'
-            options[:image] = 'centos:7.6.1810'
-          when '8'
-            # There is no CentOS 8 image that works with PIDFile in systemd
-            # unit files
-            return
-          end
-        when 'Ubuntu'
-          options[:image] = 'ubuntu:xenial-20191212' if release == '16.04'
+      if pidfile_workaround?(pidfile_workaround, os)
+        return if PIDFILE_INCOMPATIBLE[os]&.include?(release)
+
+        if (image = PIDFILE_COMPATIBLE_IMAGES.dig(os, release))
+          options[:image] = image
         end
       end
 
-      setfile = name
-      setfile += "{#{options.map { |key, value| "#{key}=#{value}" }.join(',')}}" if options.any?
-
       human_name = "#{os} #{release}"
 
-      [setfile, human_name]
+      [build_setfile(name, options), human_name]
     end
 
     # Return whether a Beaker setfile can be generated for the given OS
     # @param [String] os The operating system
     def self.os_supported?(os)
       ['CentOS', 'Fedora', 'Debian', 'Ubuntu'].include?(os)
+    end
+
+    def self.pidfile_workaround?(pidfile_workaround, os)
+      pidfile_workaround && (!pidfile_workaround.is_a?(Array) || pidfile_workaround.include?(os))
+    end
+
+    def self.build_setfile(name, options)
+      "#{name}#{options.any? ? "{#{options.map { |key, value| "#{key}=#{value}" }.join(',')}}" : ''}"
     end
   end
 end
