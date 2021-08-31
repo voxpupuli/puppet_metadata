@@ -114,7 +114,7 @@ module PuppetMetadata
         '5.04' => '2006-10-31',
         '4.10' => '2006-04-30',
       },
-    }
+    }.freeze
 
     # Return the EOL date for the given operating system release
     # @param [String] operatingsystem

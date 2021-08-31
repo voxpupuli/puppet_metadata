@@ -1,5 +1,5 @@
 module PuppetMetadata
-  class AIO 
+  class AIO
     COMPATIBLE = {
       'AlmaLinux'   => 'RedHat',
       'Amazon'      => 'RedHat',
@@ -7,9 +7,9 @@ module PuppetMetadata
       'OracleLinux' => 'RedHat',
       'Rocky'       => 'RedHat',
       'Scientific'  => 'RedHat',
-    }
+    }.freeze
 
-    BUILDS = { 
+    BUILDS = {
       # RPM-based
       'RedHat' => {
         '5' => 5..7,
@@ -46,7 +46,7 @@ module PuppetMetadata
         '18.04' => 5..7,
         '20.04' => 6..7,
       },
-    }
+    }.freeze
 
     def self.find_base_os(os)
       COMPATIBLE.fetch(os, os)
