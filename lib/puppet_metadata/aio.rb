@@ -48,6 +48,13 @@ module PuppetMetadata
       },
     }.freeze
 
+    PUPPET_RUBY_VERSIONS = {
+      4 => '2.1',
+      5 => '2.4',
+      6 => '2.5',
+      7 => '2.7',
+    }.freeze
+
     def self.find_base_os(os)
       COMPATIBLE.fetch(os, os)
     end
