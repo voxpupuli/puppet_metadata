@@ -55,12 +55,14 @@ module PuppetMetadata
       7 => '2.7',
     }.freeze
 
-    def self.find_base_os(os)
-      COMPATIBLE.fetch(os, os)
-    end
+    class << self
+      def find_base_os(os)
+        COMPATIBLE.fetch(os, os)
+      end
 
-    def self.has_aio_build?(os, release, puppet_version)
-      BUILDS.dig(find_base_os(os), release)&.include?(puppet_version)
+      def has_aio_build?(os, release, puppet_version)
+        BUILDS.dig(find_base_os(os), release)&.include?(puppet_version)
+      end
     end
   end
 end
