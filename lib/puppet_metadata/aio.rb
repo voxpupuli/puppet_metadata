@@ -1,5 +1,5 @@
 module PuppetMetadata
-  class AIO 
+  class AIO
     COMPATIBLE = {
       'AlmaLinux'   => 'RedHat',
       'Amazon'      => 'RedHat',
@@ -7,9 +7,9 @@ module PuppetMetadata
       'OracleLinux' => 'RedHat',
       'Rocky'       => 'RedHat',
       'Scientific'  => 'RedHat',
-    }
+    }.freeze
 
-    BUILDS = { 
+    BUILDS = {
       # RPM-based
       'RedHat' => {
         '5' => 5..7,
@@ -46,14 +46,23 @@ module PuppetMetadata
         '18.04' => 5..7,
         '20.04' => 6..7,
       },
-    }
+    }.freeze
 
-    def self.find_base_os(os)
-      COMPATIBLE.fetch(os, os)
-    end
+    PUPPET_RUBY_VERSIONS = {
+      4 => '2.1',
+      5 => '2.4',
+      6 => '2.5',
+      7 => '2.7',
+    }.freeze
 
-    def self.has_aio_build?(os, release, puppet_version)
-      BUILDS.dig(find_base_os(os), release)&.include?(puppet_version)
+    class << self
+      def find_base_os(os)
+        COMPATIBLE.fetch(os, os)
+      end
+
+      def has_aio_build?(os, release, puppet_version)
+        BUILDS.dig(find_base_os(os), release)&.include?(puppet_version)
+      end
     end
   end
 end

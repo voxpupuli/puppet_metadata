@@ -114,47 +114,49 @@ module PuppetMetadata
         '5.04' => '2006-10-31',
         '4.10' => '2006-04-30',
       },
-    }
+    }.freeze
 
-    # Return the EOL date for the given operating system release
-    # @param [String] operatingsystem
-    #   The operating system
-    # @param [String] release
-    #   The major version of the operating system
-    # @return [optional, Date]
-    #   The EOL date for the given operating system release. Nil is returned
-    #   when the either when the OS, the release or the EOL date is unknown
-    def self.eol_date(operatingsystem, release)
-      releases = EOL_DATES[operatingsystem]
-      return unless releases
-      date = releases[release]
-      return unless date
-      Date.parse(date)
-    end
+    class << self
+      # Return the EOL date for the given operating system release
+      # @param [String] operatingsystem
+      #   The operating system
+      # @param [String] release
+      #   The major version of the operating system
+      # @return [optional, Date]
+      #   The EOL date for the given operating system release. Nil is returned
+      #   when the either when the OS, the release or the EOL date is unknown
+      def eol_date(operatingsystem, release)
+        releases = EOL_DATES[operatingsystem]
+        return unless releases
+        date = releases[release]
+        return unless date
+        Date.parse(date)
+      end
 
-    # Return whether the given operating system release is EOL at the given
-    # date
-    #
-    # @param [String] operatingsystem
-    #   The operating system
-    # @param [String] release
-    #   The major version of the operating system
-    # @return [Boolean]
-    #   The EOL date for the given operating system release. Nil is returned
-    #   when the either when the OS, the release or the EOL date is unknown
-    def self.eol?(operatingsystem, release, at = nil)
-      date = eol_date(operatingsystem, release)
-      date && date < (at || Date.today)
-    end
+      # Return whether the given operating system release is EOL at the given
+      # date
+      #
+      # @param [String] operatingsystem
+      #   The operating system
+      # @param [String] release
+      #   The major version of the operating system
+      # @return [Boolean]
+      #   The EOL date for the given operating system release. Nil is returned
+      #   when the either when the OS, the release or the EOL date is unknown
+      def eol?(operatingsystem, release, at = nil)
+        date = eol_date(operatingsystem, release)
+        date && date < (at || Date.today)
+      end
 
-    # Return the latest known release for a given operating system
-    # @param [String] operatingsystem The operating system
-    # @return [optional, String]
-    #   The latest major release for the given operating system, if any is
-    #   known
-    def self.latest_release(operatingsystem)
-      releases = EOL_DATES[operatingsystem]
-      releases&.keys&.max_by { |release| Gem::Version.new(release) }
+      # Return the latest known release for a given operating system
+      # @param [String] operatingsystem The operating system
+      # @return [optional, String]
+      #   The latest major release for the given operating system, if any is
+      #   known
+      def latest_release(operatingsystem)
+        releases = EOL_DATES[operatingsystem]
+        releases&.keys&.max_by { |release| Gem::Version.new(release) }
+      end
     end
   end
 end

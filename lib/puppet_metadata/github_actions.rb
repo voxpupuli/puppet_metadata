@@ -42,7 +42,7 @@ module PuppetMetadata
 
     def puppet_unit_test_matrix
       metadata.puppet_major_versions.sort.reverse.map do |puppet|
-        ruby = puppet_ruby_version(puppet)
+        ruby = PuppetMetadata::AIO::PUPPET_RUBY_VERSIONS[puppet]
         next unless ruby
 
         {
@@ -52,24 +52,8 @@ module PuppetMetadata
       end.compact
     end
 
-    def puppet_ruby_version(puppet_version)
-      case puppet_version
-      when 4
-        '2.1'
-      when 5
-        '2.4'
-      when 6
-        '2.5'
-      when 7
-        '2.7'
-      end
-    end
-
-
     def github_action_test_matrix(use_fqdn: false, pidfile_workaround: false)
-      matrix_include = []
-
-      metadata.operatingsystems.each do |os, releases|
+      metadata.operatingsystems.each_with_object([]) do |(os, releases), matrix_include|
         releases&.each do |release|
           puppet_major_versions.each do |puppet_version|
             next unless AIO.has_aio_build?(os, release, puppet_version[:value])
@@ -87,8 +71,6 @@ module PuppetMetadata
           end
         end
       end
-
-      matrix_include
     end
   end
 end
