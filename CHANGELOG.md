@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/voxpupuli/puppet_metadata/tree/1.2.0) (2021-10-23)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.1.1...1.2.0)
+
+**Fixed bugs:**
+
+- Fix AIO packages for Debian 8 [\#28](https://github.com/voxpupuli/puppet_metadata/pull/28) ([smortex](https://github.com/smortex))
+
+**Merged pull requests:**
+
+- Ruby refactoring [\#30](https://github.com/voxpupuli/puppet_metadata/pull/30) ([MrGoumX](https://github.com/MrGoumX))
+
 ## [1.1.1](https://github.com/voxpupuli/puppet_metadata/tree/1.1.1) (2021-08-21)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.1.0...1.1.1)
