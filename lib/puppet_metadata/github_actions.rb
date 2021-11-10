@@ -17,10 +17,16 @@ module PuppetMetadata
       }
     end
 
+    def self.has_acceptance_tests?
+      ENV['PUPPET_METADATA_FORCE_ACCEPTANCE'] || Dir[File.join('spec', 'acceptance', '**', '*_spec.rb')].any?
+    end
+
     private
 
     def beaker_setfiles(use_fqdn, pidfile_workaround)
       setfiles = []
+      return setfiles unless GithubActions.has_acceptance_tests?
+
       metadata.beaker_setfiles(use_fqdn: use_fqdn, pidfile_workaround: pidfile_workaround) do |setfile, name|
         setfiles << {
           name: name,
@@ -53,6 +59,8 @@ module PuppetMetadata
     end
 
     def github_action_test_matrix(use_fqdn: false, pidfile_workaround: false)
+      return [] unless GithubActions.has_acceptance_tests?
+
       metadata.operatingsystems.each_with_object([]) do |(os, releases), matrix_include|
         releases&.each do |release|
           puppet_major_versions.each do |puppet_version|
