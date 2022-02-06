@@ -47,8 +47,8 @@ module PuppetMetadata
         options = {}
         options[:hostname] = "#{name}.example.com" if use_fqdn
 
-        # Docker messes up cgroups and modern systemd can't deal with that when
-        # PIDFile is used.
+        # Docker messes up cgroups and some systemd versions can't deal with
+        # that when PIDFile is used.
         if pidfile_workaround?(pidfile_workaround, os)
           return if PIDFILE_INCOMPATIBLE[os]&.include?(release)
 

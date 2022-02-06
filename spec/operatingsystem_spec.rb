@@ -6,8 +6,8 @@ describe PuppetMetadata::OperatingSystem do
       expect(described_class.latest_release('DoesNotExist')).to be_nil
     end
 
-    it 'returns 8 for CentOS' do
-      expect(described_class.latest_release('CentOS')).to eq('8')
+    it 'returns 9 for CentOS' do
+      expect(described_class.latest_release('CentOS')).to eq('9')
     end
 
     it 'returns 20.04 for Ubuntu' do
