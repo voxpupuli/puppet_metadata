@@ -65,7 +65,7 @@ describe PuppetMetadata::Metadata do
             },
             {
               operatingsystem: 'CentOS',
-              operatingsystemrelease: ['7', '8'],
+              operatingsystemrelease: ['7', '8', '9'],
             },
             {
               operatingsystem: 'Debian',
@@ -73,7 +73,7 @@ describe PuppetMetadata::Metadata do
             },
             {
               operatingsystem: 'RedHat',
-              operatingsystemrelease: ['7', '8'],
+              operatingsystemrelease: ['7', '8', '9'],
             },
             {
               operatingsystem: 'Ubuntu',
@@ -89,9 +89,9 @@ describe PuppetMetadata::Metadata do
       its(:operatingsystems) do
         expected = {
           'ArchLinux' => nil,
-          'CentOS' => ['7', '8'],
+          'CentOS' => ['7', '8', '9'],
           'Debian' => ['9', '10'],
-          'RedHat' => ['7', '8'],
+          'RedHat' => ['7', '8', '9'],
           'Ubuntu' => ['14.04', '16.04', '18.04', '20.04'],
         }
         is_expected.to eq(expected)
@@ -186,6 +186,7 @@ describe PuppetMetadata::Metadata do
           expected = [
             ['centos7-64', 'CentOS 7'],
             ['centos8-64', 'CentOS 8'],
+            ['centos9-64', 'CentOS 9'],
             ['debian9-64', 'Debian 9'],
             ['debian10-64', 'Debian 10'],
             ['ubuntu1404-64', 'Ubuntu 14.04'],
@@ -200,6 +201,7 @@ describe PuppetMetadata::Metadata do
           expected = [
             ['centos7-64{hostname=centos7-64.example.com}', 'CentOS 7'],
             ['centos8-64{hostname=centos8-64.example.com}', 'CentOS 8'],
+            ['centos9-64{hostname=centos9-64.example.com}', 'CentOS 9'],
             ['debian9-64{hostname=debian9-64.example.com}', 'Debian 9'],
             ['debian10-64{hostname=debian10-64.example.com}', 'Debian 10'],
             ['ubuntu1404-64{hostname=ubuntu1404-64.example.com}', 'Ubuntu 14.04'],
@@ -213,6 +215,7 @@ describe PuppetMetadata::Metadata do
         it 'works when passing pidfile_workaround' do
           expected = [
             ['centos7-64{image=centos:7.6.1810}', 'CentOS 7'],
+            ['centos9-64', 'CentOS 9'],
             ['debian9-64', 'Debian 9'],
             ['debian10-64', 'Debian 10'],
             ['ubuntu1404-64', 'Ubuntu 14.04'],

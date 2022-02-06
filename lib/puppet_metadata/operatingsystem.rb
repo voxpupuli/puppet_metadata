@@ -11,7 +11,8 @@ module PuppetMetadata
     EOL_DATES = {
       # https://endoflife.software/operating-systems/linux/centos
       'CentOS' => {
-        '8' => '2029-05-31',
+        '9' => nil, # EOL Date is not yet announced.
+        '8' => '2024-05-31',
         '7' => '2024-06-30',
         '6' => '2020-11-30',
         '5' => '2017-03-31',
