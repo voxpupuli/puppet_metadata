@@ -109,7 +109,7 @@ It is also possible to specify a comma separated list of operating systems as us
 
 The API can be initialised like this:
 
-```
+```ruby
 require 'puppet_metadata'
 metadata = PuppetMetadata.read('/path/to/a/metadata.json')
 ```
