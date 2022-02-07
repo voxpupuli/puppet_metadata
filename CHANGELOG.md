@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.0](https://github.com/voxpupuli/puppet_metadata/tree/1.3.0) (2022-02-07)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.2.0...1.3.0)
+
+**Implemented enhancements:**
+
+- Add CentOS 9 [\#36](https://github.com/voxpupuli/puppet_metadata/pull/36) ([kajinamit](https://github.com/kajinamit))
+
 ## [1.2.0](https://github.com/voxpupuli/puppet_metadata/tree/1.2.0) (2021-10-23)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.1.1...1.2.0)
