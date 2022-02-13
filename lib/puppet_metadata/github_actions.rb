@@ -52,25 +52,37 @@ module PuppetMetadata
       end.compact
     end
 
-    def github_action_test_matrix(use_fqdn: false, pidfile_workaround: false)
-      metadata.operatingsystems.each_with_object([]) do |(os, releases), matrix_include|
+    def beaker_os_releases
+      majors = puppet_major_versions
+
+      metadata.operatingsystems.each do |os, releases|
         releases&.each do |release|
-          puppet_major_versions.each do |puppet_version|
-            next unless AIO.has_aio_build?(os, release, puppet_version[:value])
-
-            setfile = PuppetMetadata::Beaker.os_release_to_setfile(os, release, use_fqdn: use_fqdn, pidfile_workaround: pidfile_workaround)
-            next unless setfile
-
-            matrix_include << {
-              setfile: {
-                name: setfile[1],
-                value: setfile[0],
-              },
-              puppet: puppet_version
-            }
+          majors.each do |puppet_version|
+            if AIO.has_aio_build?(os, release, puppet_version[:value])
+              yield [os, release, puppet_version]
+            end
           end
         end
       end
+    end
+
+    def github_action_test_matrix(use_fqdn: false, pidfile_workaround: false)
+      matrix_include = []
+
+      beaker_os_releases do |os, release, puppet_version|
+        setfile = PuppetMetadata::Beaker.os_release_to_setfile(os, release, use_fqdn: use_fqdn, pidfile_workaround: pidfile_workaround)
+        next unless setfile
+
+        matrix_include << {
+          setfile: {
+            name: setfile[1],
+            value: setfile[0],
+          },
+          puppet: puppet_version
+        }
+      end
+
+      matrix_include
     end
   end
 end
