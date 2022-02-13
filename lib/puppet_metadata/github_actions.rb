@@ -56,10 +56,15 @@ module PuppetMetadata
       majors = puppet_major_versions
 
       metadata.operatingsystems.each do |os, releases|
-        releases&.each do |release|
-          majors.each do |puppet_version|
-            if AIO.has_aio_build?(os, release, puppet_version[:value])
-              yield [os, release, puppet_version]
+        case os
+        when 'Archlinux', 'Gentoo'
+          yield [os, 'rolling', majors.max_by { |v| v[:value] }]
+        else
+          releases&.each do |release|
+            majors.each do |puppet_version|
+              if AIO.has_aio_build?(os, release, puppet_version[:value])
+                yield [os, release, puppet_version]
+              end
             end
           end
         end

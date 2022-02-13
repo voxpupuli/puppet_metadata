@@ -65,7 +65,7 @@ module PuppetMetadata
       # Return whether a Beaker setfile can be generated for the given OS
       # @param [String] os The operating system
       def os_supported?(os)
-        ['CentOS', 'Fedora', 'Debian', 'Ubuntu'].include?(os)
+        ['Archlinux', 'CentOS', 'Fedora', 'Debian', 'Ubuntu'].include?(os)
       end
 
       private
