@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0](https://github.com/voxpupuli/puppet_metadata/tree/1.4.0) (2022-02-15)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.3.0...1.4.0)
+
+**Implemented enhancements:**
+
+- Add Arch Linux support [\#37](https://github.com/voxpupuli/puppet_metadata/pull/37) ([ekohl](https://github.com/ekohl))
+
 ## [1.3.0](https://github.com/voxpupuli/puppet_metadata/tree/1.3.0) (2022-02-07)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.2.0...1.3.0)
