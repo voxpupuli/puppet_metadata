@@ -12,6 +12,7 @@ describe PuppetMetadata::Beaker do
       ['Debian', '10', ['debian10-64', 'Debian 10']],
       ['Ubuntu', '18.04', ['ubuntu1804-64', 'Ubuntu 18.04']],
       ['Ubuntu', '20.04', ['ubuntu2004-64', 'Ubuntu 20.04']],
+      ['Ubuntu', '22.04', ['ubuntu2204-64', 'Ubuntu 22.04']],
     ].each do |os, release, expected|
       it { expect(described_class.os_release_to_setfile(os, release)).to eq(expected) }
     end

@@ -77,7 +77,7 @@ describe PuppetMetadata::Metadata do
             },
             {
               operatingsystem: 'Ubuntu',
-              operatingsystemrelease: ['14.04', '16.04', '18.04', '20.04'],
+              operatingsystemrelease: ['14.04', '16.04', '18.04', '20.04', '22.04'],
             },
           ],
         }
@@ -92,7 +92,7 @@ describe PuppetMetadata::Metadata do
           'CentOS' => ['7', '8', '9'],
           'Debian' => ['9', '10'],
           'RedHat' => ['7', '8', '9'],
-          'Ubuntu' => ['14.04', '16.04', '18.04', '20.04'],
+          'Ubuntu' => ['14.04', '16.04', '18.04', '20.04', '22.04'],
         }
         is_expected.to eq(expected)
       end
@@ -193,6 +193,7 @@ describe PuppetMetadata::Metadata do
             ['ubuntu1604-64', 'Ubuntu 16.04'],
             ['ubuntu1804-64', 'Ubuntu 18.04'],
             ['ubuntu2004-64', 'Ubuntu 20.04'],
+            ['ubuntu2204-64', 'Ubuntu 22.04'],
           ]
           expect { |b| subject.beaker_setfiles(&b) }.to yield_successive_args(*expected)
         end
@@ -208,6 +209,7 @@ describe PuppetMetadata::Metadata do
             ['ubuntu1604-64{hostname=ubuntu1604-64.example.com}', 'Ubuntu 16.04'],
             ['ubuntu1804-64{hostname=ubuntu1804-64.example.com}', 'Ubuntu 18.04'],
             ['ubuntu2004-64{hostname=ubuntu2004-64.example.com}', 'Ubuntu 20.04'],
+            ['ubuntu2204-64{hostname=ubuntu2204-64.example.com}', 'Ubuntu 22.04'],
           ]
           expect { |b| subject.beaker_setfiles(use_fqdn: true, &b) }.to yield_successive_args(*expected)
         end
@@ -222,6 +224,7 @@ describe PuppetMetadata::Metadata do
             ['ubuntu1604-64{image=ubuntu:xenial-20191212}', 'Ubuntu 16.04'],
             ['ubuntu1804-64', 'Ubuntu 18.04'],
             ['ubuntu2004-64', 'Ubuntu 20.04'],
+            ['ubuntu2204-64', 'Ubuntu 22.04'],
           ]
           expect { |b| subject.beaker_setfiles(pidfile_workaround: true, &b) }.to yield_successive_args(*expected)
         end
