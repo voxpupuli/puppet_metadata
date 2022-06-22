@@ -73,8 +73,8 @@ module PuppetMetadata
       },
       # https://endoflife.software/operating-systems/unix-like-bsd/freebsd
       'FreeBSD' => {
-        '13' => nil,
-        '12' => nil,
+        '13' => '2026-01-31',
+        '12' => '2024-06-30',
         '11' => '2021-09-30',
         '10' => '2018-10-31',
         '9' => '2016-12-31',
