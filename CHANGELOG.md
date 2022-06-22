@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.5.0](https://github.com/voxpupuli/puppet_metadata/tree/1.5.0) (2022-06-22)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.4.0...1.5.0)
+
+**Implemented enhancements:**
+
+- Add supported\_releases to get all non-EoL OS versions [\#41](https://github.com/voxpupuli/puppet_metadata/pull/41) ([bastelfreak](https://github.com/bastelfreak))
+- Add support for Ubuntu 22.04 [\#39](https://github.com/voxpupuli/puppet_metadata/pull/39) ([smortex](https://github.com/smortex))
+
 ## [1.4.0](https://github.com/voxpupuli/puppet_metadata/tree/1.4.0) (2022-02-15)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.3.0...1.4.0)
