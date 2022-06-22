@@ -71,6 +71,19 @@ module PuppetMetadata
         '2' => '2005-04-11',
         '1' => '2004-09-20',
       },
+      # https://endoflife.software/operating-systems/unix-like-bsd/freebsd
+      'FreeBSD' => {
+        '13' => nil,
+        '12' => nil,
+        '11' => '2021-09-30',
+        '10' => '2018-10-31',
+        '9' => '2016-12-31',
+        '8' => '2015-08-01',
+        '7' => '2013-02-28',
+        '6' => '2010-11-30',
+        '5' => '2008-05-31',
+        '4' => '2007-01-31',
+      },
       # https://endoflife.software/operating-systems/linux/red-hat-enterprise-linux-rhel
       'RedHat' => {
         # TODO: EOL is standard support, not the extended life cycle
