@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.6.0](https://github.com/voxpupuli/puppet_metadata/tree/1.6.0) (2022-06-22)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.5.0...1.6.0)
+
+**Merged pull requests:**
+
+- add latest freebsd releases [\#43](https://github.com/voxpupuli/puppet_metadata/pull/43) ([Flipez](https://github.com/Flipez))
+
 ## [1.5.0](https://github.com/voxpupuli/puppet_metadata/tree/1.5.0) (2022-06-22)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.4.0...1.5.0)
