@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# frozen_string_literal: true
 
 Gem::Specification.new do |s|
   s.name        = 'puppet_metadata'
@@ -22,12 +22,9 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'semantic_puppet', '~> 1.0'
 
   s.add_development_dependency 'rake', '~> 13.0'
+  s.add_development_dependency 'rdoc', '~> 6.0'
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'rspec-its', '~> 1.0'
-  s.add_development_dependency 'rdoc', '~> 6.0'
+  s.add_development_dependency 'voxpupuli-rubocop', '~> 1.2.0'
   s.add_development_dependency 'yard', '~> 0.9'
-  # pull in older rubocop. Newer doesn't support ruby 2.4
-  s.add_development_dependency 'rubocop', '~> 1.12.0'
-  s.add_development_dependency 'rubocop-rake'
-  s.add_development_dependency 'rubocop-rspec'
 end

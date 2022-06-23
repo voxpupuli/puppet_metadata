@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe PuppetMetadata::Metadata do
@@ -64,15 +66,15 @@ describe PuppetMetadata::Metadata do
             },
             {
               operatingsystem: 'CentOS',
-              operatingsystemrelease: ['7', '8', '9'],
+              operatingsystemrelease: %w[7 8 9],
             },
             {
               operatingsystem: 'Debian',
-              operatingsystemrelease: ['9', '10'],
+              operatingsystemrelease: %w[9 10],
             },
             {
               operatingsystem: 'RedHat',
-              operatingsystemrelease: ['7', '8', '9'],
+              operatingsystemrelease: %w[7 8 9],
             },
             {
               operatingsystem: 'Ubuntu',
@@ -85,12 +87,13 @@ describe PuppetMetadata::Metadata do
       it { is_expected.not_to be_nil }
       its(:name) { is_expected.to eq('federation-voyager') }
       its(:version) { is_expected.to eq('1.0.0') }
+
       its(:operatingsystems) do
         expected = {
           'ArchLinux' => nil,
-          'CentOS' => ['7', '8', '9'],
-          'Debian' => ['9', '10'],
-          'RedHat' => ['7', '8', '9'],
+          'CentOS' => %w[7 8 9],
+          'Debian' => %w[9 10],
+          'RedHat' => %w[7 8 9],
           'Ubuntu' => ['14.04', '16.04', '18.04', '20.04', '22.04'],
         }
         is_expected.to eq(expected)
@@ -107,11 +110,13 @@ describe PuppetMetadata::Metadata do
       end
 
       describe 'eol_operatingsystems' do
-        it { expect(subject.eol_operatingsystems(at)).to eq({'Ubuntu' => ['14.04']}) }
+        it { expect(subject.eol_operatingsystems(at)).to eq({ 'Ubuntu' => ['14.04'] }) }
       end
 
       describe 'requirements' do
-        it { expect(subject.requirements).to eq({'puppet' => SemanticPuppet::VersionRange.parse('>= 5.5.8 < 7.0.0')}) }
+        it {
+          expect(subject.requirements).to eq({ 'puppet' => SemanticPuppet::VersionRange.parse('>= 5.5.8 < 7.0.0') })
+        }
       end
 
       describe 'satisfies_requirement' do
@@ -128,11 +133,11 @@ describe PuppetMetadata::Metadata do
         context 'with no lower bound' do
           let(:metadata) do
             super().merge(requirements: [
-              {
-                name: 'puppet',
-                version_requirement: '< 7.0.0',
-              },
-            ])
+                            {
+                              name: 'puppet',
+                              version_requirement: '< 7.0.0',
+                            },
+                          ])
           end
 
           it { expect(subject.puppet_major_versions).to eq([0, 1, 2, 3, 4, 5, 6]) }
@@ -141,11 +146,11 @@ describe PuppetMetadata::Metadata do
         context 'with no upper bound' do
           let(:metadata) do
             super().merge(requirements: [
-              {
-                name: 'puppet',
-                version_requirement: '>= 5.5.8',
-              },
-            ])
+                            {
+                              name: 'puppet',
+                              version_requirement: '>= 5.5.8',
+                            },
+                          ])
           end
 
           it { expect(subject.puppet_major_versions).to eq([5, 6, 7]) }

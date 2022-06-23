@@ -1,12 +1,12 @@
 module PuppetMetadata
   class AIO
     COMPATIBLE = {
-      'AlmaLinux'   => 'RedHat',
-      'Amazon'      => 'RedHat',
-      'CentOS'      => 'RedHat',
+      'AlmaLinux' => 'RedHat',
+      'Amazon' => 'RedHat',
+      'CentOS' => 'RedHat',
       'OracleLinux' => 'RedHat',
-      'Rocky'       => 'RedHat',
-      'Scientific'  => 'RedHat',
+      'Rocky' => 'RedHat',
+      'Scientific' => 'RedHat',
     }.freeze
 
     BUILDS = {
