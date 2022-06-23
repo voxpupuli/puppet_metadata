@@ -188,7 +188,7 @@ module PuppetMetadata
       end
 
       # Return an array of all Operating System versions that aren't EoL
-      # @param String operatingsystem The operating system
+      # @param [String] operatingsystem The operating system
       # @return [Array] All Operating System versions that aren't EoL today
       def supported_releases(operatingsystem)
         releases = EOL_DATES[operatingsystem]
