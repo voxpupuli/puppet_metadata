@@ -15,11 +15,14 @@ describe PuppetMetadata::OperatingSystem do
     end
   end
   describe 'supported_releases' do
-    it 'returns 7 and 8 for CentOS' do
-      expect(described_class.supported_releases('CentOS')).to match_array(['7', '8'])
+    it 'returns 7, 8 and 9 for CentOS' do
+      expect(described_class.supported_releases('CentOS')).to match_array(['7', '8', '9'])
     end
     it 'returns 18.04, 20.04, 21.10 and 22.04 for Ubuntu' do
       expect(described_class.supported_releases('Ubuntu')).to match_array(['18.04', '20.04', '21.10', '22.04'])
+    end
+    it 'returns 10 and 11 for Debian' do
+      expect(described_class.supported_releases('Debian')).to match_array(['10', '11'])
     end
   end
 end
