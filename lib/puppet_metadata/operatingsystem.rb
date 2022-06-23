@@ -6,9 +6,16 @@ module PuppetMetadata
   #
   # @see https://endoflife.software/operating-systems
   class OperatingSystem
+    # please add new OSes sorted alphabetically
+
     # The EOL dates for the various operating systems
     # @see .eol_date
     EOL_DATES = {
+      # https://almalinux.org/ FAQ at the bottom
+      'AlmaLinux' => {
+        '9' => nil,
+        '8' => '2029-05-31',
+      },
       # https://endoflife.software/operating-systems/linux/centos
       'CentOS' => {
         '9' => nil, # EOL Date is not yet announced.
@@ -93,6 +100,11 @@ module PuppetMetadata
         '5' => '2017-03-31',
         '4' => '2012-02-29',
         '3' => '2010-10-31',
+      },
+      # https://endoflife.date/rocky-linux
+      'Rocky' => {
+        '9' => nil,
+        '8' => '2029-05-31',
       },
       # https://endoflife.software/operating-systems/linux/ubuntu
       'Ubuntu' => {

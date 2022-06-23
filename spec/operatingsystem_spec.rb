@@ -24,5 +24,11 @@ describe PuppetMetadata::OperatingSystem do
     it 'returns 10 and 11 for Debian' do
       expect(described_class.supported_releases('Debian')).to match_array(['10', '11'])
     end
+    it 'returns 8 and 9 for Rocky' do
+      expect(described_class.supported_releases('Rocky')).to match_array(['8', '9'])
+    end
+    it 'returns 8 and 9 for AlmaLinux' do
+      expect(described_class.supported_releases('AlmaLinux')).to match_array(['8', '9'])
+    end
   end
 end
