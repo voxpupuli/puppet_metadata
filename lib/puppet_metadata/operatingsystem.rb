@@ -188,13 +188,13 @@ module PuppetMetadata
       end
 
       # Return an array of all Operating System versions that aren't EoL
-      # @param String operatingsystem The operating system
+      # @param [String] operatingsystem The operating system
       # @return [Array] All Operating System versions that aren't EoL today
       def supported_releases(operatingsystem)
         releases = EOL_DATES[operatingsystem]
         today = Date.today
-        tomorrow = (today + 1).to_s # hack to treat OS releases without EoL date as valid
-        releases.select {|release, eol_date| Date.parse(eol_date || tomorrow) > today}.keys.sort
+        releases.select { |release, eol_date| !eol_date || Date.parse(eol_date) > today }.keys.
+          sort_by { |release| Gem::Version.new(release) }
       end
     end
   end
