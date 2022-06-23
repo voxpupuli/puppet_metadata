@@ -193,8 +193,7 @@ module PuppetMetadata
       def supported_releases(operatingsystem)
         releases = EOL_DATES[operatingsystem]
         today = Date.today
-        tomorrow = (today + 1).to_s # hack to treat OS releases without EoL date as valid
-        releases.select {|release, eol_date| Date.parse(eol_date || tomorrow) > today}.keys.
+        releases.select { |release, eol_date| !eol_date || Date.parse(eol_date) > today }.keys.
           sort_by { |release| Gem::Version.new(release) }
       end
     end
