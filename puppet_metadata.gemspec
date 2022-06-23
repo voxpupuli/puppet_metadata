@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
   s.files = Dir['lib/**/*.rb']
   s.extra_rdoc_files = ['README.md']
   s.rdoc_options << '--main' << 'README.md'
+  s.required_ruby_version = '>= 2.4.0', '< 4'
 
   s.add_runtime_dependency 'metadata-json-lint', '>= 2.0', '< 4'
   s.add_runtime_dependency 'semantic_puppet', '~> 1.0'
@@ -25,4 +26,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec-its', '~> 1.0'
   s.add_development_dependency 'rdoc', '~> 6.0'
   s.add_development_dependency 'yard', '~> 0.9'
+  # pull in older rubocop. Newer doesn't support ruby 2.4
+  s.add_development_dependency 'rubocop', '~> 1.12.0'
+  s.add_development_dependency 'rubocop-rake'
+  s.add_development_dependency 'rubocop-rspec'
 end
