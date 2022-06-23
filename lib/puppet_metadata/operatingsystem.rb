@@ -31,7 +31,7 @@ module PuppetMetadata
       'Debian' => {
         # TODO: EOL is standard support, not the extended life cycle
         '11' => nil, # '~2024',
-        '10' => nil, # '~2022',
+        '10' => '2022-08-01', # Debian might move this, depending on the Debian 12 stable release date
         '9' => '2020-07-06',
         '8' => '2018-06-17',
         '7' => '2016-04-26',
@@ -79,6 +79,7 @@ module PuppetMetadata
         '1' => '2004-09-20',
       },
       # https://endoflife.software/operating-systems/unix-like-bsd/freebsd
+      # https://www.freebsd.org/security/#sup
       'FreeBSD' => {
         '13' => '2026-01-31',
         '12' => '2024-06-30',
