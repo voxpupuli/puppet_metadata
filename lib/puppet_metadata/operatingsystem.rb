@@ -181,7 +181,8 @@ module PuppetMetadata
       def supported_releases(operatingsystem)
         releases = EOL_DATES[operatingsystem]
         today = Date.today
-        releases.compact.select {|release, eol_date| Date.parse(eol_date) > today}.keys.sort
+        tomorrow = (today + 1).to_s # hack to treat OS releases without EoL date as valid
+        releases.select {|release, eol_date| Date.parse(eol_date || tomorrow) > today}.keys.sort
       end
     end
   end
