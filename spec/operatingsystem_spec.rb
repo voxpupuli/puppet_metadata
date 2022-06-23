@@ -15,20 +15,64 @@ describe PuppetMetadata::OperatingSystem do
     end
   end
   describe 'supported_releases' do
-    it 'returns 7, 8 and 9 for CentOS' do
-      expect(described_class.supported_releases('CentOS')).to match_array(['7', '8', '9'])
+    context 'with CentOS' do
+      let(:os) { 'CentOS' }
+
+      it 'returns 7, 8 and 9' do
+        expect(described_class.supported_releases(os)).to match_array(['7', '8', '9'])
+      end
+
+      it 'the last entry matches latest_release' do
+        expect(described_class.supported_releases(os).last).to eq(described_class.latest_release(os))
+      end
     end
-    it 'returns 18.04, 20.04, 21.10 and 22.04 for Ubuntu' do
-      expect(described_class.supported_releases('Ubuntu')).to match_array(['18.04', '20.04', '21.10', '22.04'])
+
+    context 'with Ubuntu' do
+      let(:os) { 'Ubuntu' }
+
+      it 'returns 18.04, 20.04, 21.10 and 22.04' do
+        expect(described_class.supported_releases(os)).to match_array(['18.04', '20.04', '21.10', '22.04'])
+      end
+
+      it 'the last entry matches latest_release' do
+        expect(described_class.supported_releases(os).last).to eq(described_class.latest_release(os))
+      end
     end
-    it 'returns 10 and 11 for Debian' do
-      expect(described_class.supported_releases('Debian')).to match_array(['10', '11'])
+
+    context 'with Debian' do
+      let(:os) { 'Debian' }
+
+      it 'returns 10 and 11' do
+        expect(described_class.supported_releases(os)).to match_array(['10', '11'])
+      end
+
+      it 'the last entry matches latest_release' do
+        expect(described_class.supported_releases(os).last).to eq(described_class.latest_release(os))
+      end
     end
-    it 'returns 8 and 9 for Rocky' do
-      expect(described_class.supported_releases('Rocky')).to match_array(['8', '9'])
+
+    context 'with Rocky' do
+      let(:os) { 'Rocky' }
+
+      it 'returns 8 and 9' do
+        expect(described_class.supported_releases(os)).to match_array(['8', '9'])
+      end
+
+      it 'the last entry matches latest_release' do
+        expect(described_class.supported_releases(os).last).to eq(described_class.latest_release(os))
+      end
     end
-    it 'returns 8 and 9 for AlmaLinux' do
-      expect(described_class.supported_releases('AlmaLinux')).to match_array(['8', '9'])
+
+    context 'with AlmaLinux' do
+      let(:os) { 'AlmaLinux' }
+
+      it 'returns 8 and 9' do
+        expect(described_class.supported_releases(os)).to match_array(['8', '9'])
+      end
+
+      it 'the last entry matches latest_release' do
+        expect(described_class.supported_releases(os).last).to eq(described_class.latest_release(os))
+      end
     end
   end
 end
