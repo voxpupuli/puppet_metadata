@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.7.0](https://github.com/voxpupuli/puppet_metadata/tree/1.7.0) (2022-06-25)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.6.0...1.7.0)
+
+**Implemented enhancements:**
+
+- Enable Ruby 3.1 in CI [\#49](https://github.com/voxpupuli/puppet_metadata/pull/49) ([bastelfreak](https://github.com/bastelfreak))
+- Add AlmaLinux and Rocky [\#48](https://github.com/voxpupuli/puppet_metadata/pull/48) ([bastelfreak](https://github.com/bastelfreak))
+- Add expected EOL dates for current FreeBSD releases [\#45](https://github.com/voxpupuli/puppet_metadata/pull/45) ([smortex](https://github.com/smortex))
+
+**Fixed bugs:**
+
+- README.md: Fix internal link to other section [\#53](https://github.com/voxpupuli/puppet_metadata/pull/53) ([bastelfreak](https://github.com/bastelfreak))
+- Apply fixes to supported\_releases [\#51](https://github.com/voxpupuli/puppet_metadata/pull/51) ([ekohl](https://github.com/ekohl))
+- supported\_releases: treat OSes with `nil` as EoL date as non-EoL [\#46](https://github.com/voxpupuli/puppet_metadata/pull/46) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [1.6.0](https://github.com/voxpupuli/puppet_metadata/tree/1.6.0) (2022-06-22)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.5.0...1.6.0)
