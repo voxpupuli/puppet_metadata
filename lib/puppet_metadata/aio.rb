@@ -46,7 +46,7 @@ module PuppetMetadata
         '16.04' => 5..7,
         '18.04' => 5..7,
         '20.04' => 6..7,
-        '22.04' => [], # https://tickets.puppetlabs.com/browse/PA-4233
+        '22.04' => 6..7,
       },
     }.freeze
 
