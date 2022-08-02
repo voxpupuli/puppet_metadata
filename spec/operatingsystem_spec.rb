@@ -30,8 +30,8 @@ describe PuppetMetadata::OperatingSystem do
     context 'with Ubuntu' do
       let(:os) { 'Ubuntu' }
 
-      it 'returns 18.04, 20.04, 21.10 and 22.04' do
-        expect(described_class.supported_releases(os)).to match_array(['18.04', '20.04', '21.10', '22.04'])
+      it 'returns 18.04, 20.04 and 22.04' do
+        expect(described_class.supported_releases(os)).to match_array(['18.04', '20.04', '22.04'])
       end
 
       it 'the last entry matches latest_release' do
