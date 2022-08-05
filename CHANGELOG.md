@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.8.0](https://github.com/voxpupuli/puppet_metadata/tree/1.8.0) (2022-08-04)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.7.0...1.8.0)
+
+**Implemented enhancements:**
+
+- Add Ubuntu 22.04 metadata [\#55](https://github.com/voxpupuli/puppet_metadata/pull/55) ([smortex](https://github.com/smortex))
+
 ## [1.7.0](https://github.com/voxpupuli/puppet_metadata/tree/1.7.0) (2022-06-25)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.6.0...1.7.0)
@@ -20,7 +28,7 @@
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.5.0...1.6.0)
 
-**Merged pull requests:**
+**Implemented enhancements:**
 
 - add latest freebsd releases [\#43](https://github.com/voxpupuli/puppet_metadata/pull/43) ([Flipez](https://github.com/Flipez))
 
