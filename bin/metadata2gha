@@ -22,6 +22,7 @@ OptionParser.new do |opts|
 
   opts.on("--[no-]use-fqdn", "Generate beaker setfiles with a FQDN")
   opts.on("--pidfile-workaround VALUE", "Generate the systemd PIDFile workaround to work around a docker bug", PidfileWorkaround)
+  opts.on("--minimum-major-puppet-version VERSION", "Don't create actions for Puppet versions less than this major version")
 end.parse!(into: options)
 
 filename = ARGV[0]
@@ -36,6 +37,6 @@ rescue StandardError => e
   exit 2
 end
 
-metadata.github_actions.outputs(beaker_use_fqdn: options[:'use-fqdn'], beaker_pidfile_workaround: options[:'pidfile-workaround']).each do |name, value|
+metadata.github_actions.outputs(beaker_use_fqdn: options[:'use-fqdn'], beaker_pidfile_workaround: options[:'pidfile-workaround'], minimum_major_puppet_version: options[:'minimum-major-puppet-version']).each do |name, value|
   puts "::set-output name=#{name}::#{value.to_json}"
 end

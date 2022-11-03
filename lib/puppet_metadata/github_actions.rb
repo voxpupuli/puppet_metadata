@@ -8,12 +8,12 @@ module PuppetMetadata
     end
 
     # @return [Hash[Symbol, Any]] The outputs for Github Actions
-    def outputs(beaker_use_fqdn: false, beaker_pidfile_workaround: false)
+    def outputs(beaker_use_fqdn: false, beaker_pidfile_workaround: false, minimum_major_puppet_version: nil)
       {
         beaker_setfiles: beaker_setfiles(beaker_use_fqdn, beaker_pidfile_workaround),
-        puppet_major_versions: puppet_major_versions,
-        puppet_unit_test_matrix: puppet_unit_test_matrix,
-        github_action_test_matrix: github_action_test_matrix(use_fqdn: beaker_use_fqdn, pidfile_workaround: beaker_pidfile_workaround),
+        puppet_major_versions: puppet_major_versions(minimum_major_puppet_version),
+        puppet_unit_test_matrix: puppet_unit_test_matrix(minimum_major_puppet_version),
+        github_action_test_matrix: github_action_test_matrix(use_fqdn: beaker_use_fqdn, pidfile_workaround: beaker_pidfile_workaround, minimum_major_puppet_version: minimum_major_puppet_version),
       }
     end
 
@@ -30,20 +30,23 @@ module PuppetMetadata
       setfiles
     end
 
-    def puppet_major_versions
+    def puppet_major_versions(minimum_major_puppet_version)
       metadata.puppet_major_versions.sort.reverse.map do |version|
+        next if minimum_major_puppet_version && Gem::Version.new(minimum_major_puppet_version) > Gem::Version.new(version)
+
         {
           name: "Puppet #{version}",
           value: version,
           collection: "puppet#{version}",
         }
-      end
+      end.compact
     end
 
-    def puppet_unit_test_matrix
+    def puppet_unit_test_matrix(minimum_major_puppet_version)
       metadata.puppet_major_versions.sort.reverse.map do |puppet|
         ruby = PuppetMetadata::AIO::PUPPET_RUBY_VERSIONS[puppet]
         next unless ruby
+        next if minimum_major_puppet_version && Gem::Version.new(minimum_major_puppet_version) > Gem::Version.new(puppet)
 
         {
           puppet: puppet,
@@ -52,8 +55,8 @@ module PuppetMetadata
       end.compact
     end
 
-    def beaker_os_releases
-      majors = puppet_major_versions
+    def beaker_os_releases(minimum_major_puppet_version)
+      majors = puppet_major_versions(minimum_major_puppet_version)
 
       metadata.operatingsystems.each do |os, releases|
         case os
@@ -71,12 +74,13 @@ module PuppetMetadata
       end
     end
 
-    def github_action_test_matrix(use_fqdn: false, pidfile_workaround: false)
+    def github_action_test_matrix(use_fqdn: false, pidfile_workaround: false, minimum_major_puppet_version: nil)
       matrix_include = []
 
-      beaker_os_releases do |os, release, puppet_version|
+      beaker_os_releases(minimum_major_puppet_version) do |os, release, puppet_version|
         setfile = PuppetMetadata::Beaker.os_release_to_setfile(os, release, use_fqdn: use_fqdn, pidfile_workaround: pidfile_workaround)
         next unless setfile
+        next if minimum_major_puppet_version && Gem::Version.new(minimum_major_puppet_version) > Gem::Version.new(puppet_version[:value])
 
         matrix_include << {
           setfile: {
