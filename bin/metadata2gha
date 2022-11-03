@@ -5,7 +5,13 @@ require 'puppet_metadata'
 
 PidfileWorkaround = Object.new
 
-options = {}
+options = {
+  beaker_use_fqdn: false,
+  beaker_pidfile_workaround: false,
+  domain: nil,
+  minimum_major_puppet_version: nil
+}
+
 OptionParser.new do |opts|
   opts.accept(PidfileWorkaround) do |value|
     case value
@@ -20,10 +26,11 @@ OptionParser.new do |opts|
 
   opts.banner = "Usage: #{$0} [options] metadata"
 
-  opts.on("--[no-]use-fqdn", "Generate beaker setfiles with a FQDN")
-  opts.on("--pidfile-workaround VALUE", "Generate the systemd PIDFile workaround to work around a docker bug", PidfileWorkaround)
-  opts.on("-d", "--domain VALUE", "the domain for the box, only used when --use-fqdn is set to true")
-end.parse!(into: options)
+  opts.on("--[no-]use-fqdn", "Generate beaker setfiles with a FQDN") { |opt| options[:beaker_use_fqdn] = opt }
+  opts.on("--pidfile-workaround VALUE", "Generate the systemd PIDFile workaround to work around a docker bug", PidfileWorkaround) { |opt| options[:beaker_pidfile_workaround] = opt }
+  opts.on("-d", "--domain VALUE", "the domain for the box, only used when --use-fqdn is set to true") { |opt| options[:domain] = opt }
+  opts.on("--minimum-major-puppet-version VERSION", "Don't create actions for Puppet versions less than this major version") { |opt| options[:minimum_major_puppet_version] = opt }
+end.parse!
 
 filename = ARGV[0]
 if filename.nil? || filename.empty?
@@ -38,7 +45,7 @@ rescue StandardError => e
 end
 
 github_output = !ENV['GITHUB_OUTPUT'].nil? ? File.open(ENV['GITHUB_OUTPUT'], 'a') : $stdout
-metadata.github_actions.outputs(beaker_use_fqdn: options[:'use-fqdn'], beaker_pidfile_workaround: options[:'pidfile-workaround'], domain: options[:'domain']).each do |name, value|
+metadata.github_actions(options).outputs.each do |name, value|
   github_output.write("#{name}=#{value.to_json}\n")
 end
 github_output.close

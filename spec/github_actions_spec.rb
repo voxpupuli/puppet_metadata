@@ -1,7 +1,17 @@
 require 'spec_helper'
 
 describe PuppetMetadata::GithubActions do
-  subject { described_class.new(PuppetMetadata::Metadata.new(JSON.parse(JSON.dump(metadata)))) }
+  subject { described_class.new(PuppetMetadata::Metadata.new(JSON.parse(JSON.dump(metadata))), options) }
+  let(:beaker_pidfile_workaround) { false }
+  let(:beaker_use_fqdn) { false }
+  let(:minimum_major_puppet_version) { nil }
+  let(:options) do
+    {
+      beaker_use_fqdn: beaker_use_fqdn,
+      beaker_pidfile_workaround: beaker_pidfile_workaround,
+      minimum_major_puppet_version: minimum_major_puppet_version
+    }
+  end
   let(:metadata) do
     {
       author: 'federation',
@@ -34,7 +44,7 @@ describe PuppetMetadata::GithubActions do
     let(:beaker_pidfile_workaround) { false }
     let(:beaker_use_fqdn) { false }
 
-    subject { super().outputs(beaker_use_fqdn: beaker_use_fqdn, beaker_pidfile_workaround: beaker_pidfile_workaround) }
+    subject { super().outputs }
 
     it { is_expected.to be_an_instance_of(Hash) }
     it { expect(subject.keys).to contain_exactly(:beaker_setfiles, :puppet_major_versions, :puppet_unit_test_matrix, :github_action_test_matrix) }
@@ -68,6 +78,18 @@ describe PuppetMetadata::GithubActions do
           {collection: "puppet3", name: "Puppet 3", value: 3},
         )
       end
+
+      context 'when minimum_major_puppet_version is set to 6' do
+        let(:minimum_major_puppet_version) { '6' }
+
+        it 'is expected to contain major versions 6, 7 and 8' do
+          is_expected.to contain_exactly(
+            {collection: "puppet8", name: "Puppet 8", value: 8},
+            {collection: "puppet7", name: "Puppet 7", value: 7},
+            {collection: "puppet6", name: "Puppet 6", value: 6},
+          )
+        end
+      end
     end
 
     describe 'puppet_unit_test_matrix' do
@@ -81,6 +103,17 @@ describe PuppetMetadata::GithubActions do
           {puppet: 5, ruby: "2.4"},
           {puppet: 4, ruby: "2.1"},
         )
+      end
+
+      context 'when minimum_major_puppet_version is set to 6' do
+        let(:minimum_major_puppet_version) { '6' }
+
+        it 'is expected to contain major versions 6 and 7' do
+          is_expected.to contain_exactly(
+            {puppet: 7, ruby: "2.7"},
+            {puppet: 6, ruby: "2.5"},
+          )
+        end
       end
     end
 
@@ -105,6 +138,25 @@ describe PuppetMetadata::GithubActions do
           {setfile: {name: "Debian 10", value: "debian10-64"}, puppet: {collection: "puppet6", name: "Puppet 6", value: 6}},
           {setfile: {name: "Debian 10", value: "debian10-64"}, puppet: {collection: "puppet7", name: "Puppet 7", value: 7}},
         )
+      end
+
+      context 'when minimum_major_puppet_version is set to 6' do
+        let(:minimum_major_puppet_version) { '6' }
+
+        it 'is expected to contain supported os / puppet version combinations excluding puppet 5' do
+          is_expected.to contain_exactly(
+            {setfile: {name: "CentOS 7", value: "centos7-64"}, puppet: {collection: "puppet6", name: "Puppet 6", value: 6}},
+            {setfile: {name: "CentOS 7", value: "centos7-64"}, puppet: {collection: "puppet7", name: "Puppet 7", value: 7}},
+            {setfile: {name: "CentOS 8", value: "centos8-64"}, puppet: {collection: "puppet6", name: "Puppet 6", value: 6}},
+            {setfile: {name: "CentOS 8", value: "centos8-64"}, puppet: {collection: "puppet7", name: "Puppet 7", value: 7}},
+            {setfile: {name: "CentOS 9", value: "centos9-64"}, puppet: {collection: "puppet6", name: "Puppet 6", value: 6}},
+            {setfile: {name: "CentOS 9", value: "centos9-64"}, puppet: {collection: "puppet7", name: "Puppet 7", value: 7}},
+            {setfile: {name: "Debian 9", value: "debian9-64"}, puppet: {collection: "puppet6", name: "Puppet 6", value: 6}},
+            {setfile: {name: "Debian 9", value: "debian9-64"}, puppet: {collection: "puppet7", name: "Puppet 7", value: 7}},
+            {setfile: {name: "Debian 10", value: "debian10-64"}, puppet: {collection: "puppet6", name: "Puppet 6", value: 6}},
+            {setfile: {name: "Debian 10", value: "debian10-64"}, puppet: {collection: "puppet7", name: "Puppet 7", value: 7}},
+          )
+        end
       end
 
       context 'when beaker_pidfile_workaround is true' do
