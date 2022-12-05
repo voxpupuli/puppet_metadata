@@ -16,9 +16,9 @@ To get outputs [usable in Github Actions](https://docs.github.com/en/free-pro-te
 
 ```console
 $ metadata2gha-beaker
-::set-output name=beaker_setfiles::[{"name":"CentOS 7","value":"centos7-64"},{"name":"CentOS 8","value":"centos8-64"},{"name":"Debian 10","value":"debian10-64"},{"name":"Ubuntu 18.04","value":"ubuntu1804-64"}]
-::set-output name=puppet_major_versions::[{"name":"Puppet 6","value":6,"collection":"puppet6"},{"name":"Puppet 5","value":5,"collection":"puppet5"}]
-::set-output name=puppet_unit_test_matrix::[{"puppet":6,"ruby":"2.5"},{"puppet":5,"ruby":"2.4"}]
+beaker_setfiles=[{"name":"CentOS 7","value":"centos7-64"},{"name":"CentOS 8","value":"centos8-64"},{"name":"Debian 10","value":"debian10-64"},{"name":"Ubuntu 18.04","value":"ubuntu1804-64"}]
+puppet_major_versions=[{"name":"Puppet 6","value":6,"collection":"puppet6"},{"name":"Puppet 5","value":5,"collection":"puppet5"}]
+puppet_unit_test_matrix=[{"puppet":6,"ruby":"2.5"},{"puppet":5,"ruby":"2.4"}]
 ```
 
 Beaker setfiles formatted for readability:
