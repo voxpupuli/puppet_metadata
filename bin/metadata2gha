@@ -36,6 +36,8 @@ rescue StandardError => e
   exit 2
 end
 
+github_output = !ENV['GITHUB_OUTPUT'].nil? ? File.open(ENV['GITHUB_OUTPUT'], 'a') : $stdout
 metadata.github_actions.outputs(beaker_use_fqdn: options[:'use-fqdn'], beaker_pidfile_workaround: options[:'pidfile-workaround']).each do |name, value|
-  puts "::set-output name=#{name}::#{value.to_json}"
+  github_output.write("#{name}=#{value.to_json}\n")
 end
+github_output.close
