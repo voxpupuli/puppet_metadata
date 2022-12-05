@@ -25,6 +25,8 @@ jobs:
       COVERAGE: ${{ matrix.coverage }}
     steps:
       - uses: actions/checkout@v2
+      - name: Install libyaml-dev for Psych 5.0+
+        run: sudo apt-get install -y libyaml-dev
       - name: Install Ruby ${{ matrix.ruby }}
         uses: ruby/setup-ruby@v1
         with:
