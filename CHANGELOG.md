@@ -1,6 +1,14 @@
 # Changelog
 
-## [1.8.0](https://github.com/voxpupuli/puppet_metadata/tree/1.8.0) (2022-08-04)
+## [1.9.0](https://github.com/voxpupuli/puppet_metadata/tree/1.9.0) (2022-12-05)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.8.0...1.9.0)
+
+**Implemented enhancements:**
+
+- write to GITHUB\_OUTPUT instead of using set-output [\#60](https://github.com/voxpupuli/puppet_metadata/pull/60) ([evgeni](https://github.com/evgeni))
+
+## [1.8.0](https://github.com/voxpupuli/puppet_metadata/tree/1.8.0) (2022-08-05)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.7.0...1.8.0)
 
