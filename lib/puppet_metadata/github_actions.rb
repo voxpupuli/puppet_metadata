@@ -8,9 +8,9 @@ module PuppetMetadata
     end
 
     # @return [Hash[Symbol, Any]] The outputs for Github Actions
-    def outputs(beaker_use_fqdn: false, beaker_pidfile_workaround: false)
+    def outputs(beaker_use_fqdn: false, beaker_pidfile_workaround: false, domain: nil)
       {
-        beaker_setfiles: beaker_setfiles(beaker_use_fqdn, beaker_pidfile_workaround),
+        beaker_setfiles: beaker_setfiles(beaker_use_fqdn, beaker_pidfile_workaround, domain),
         puppet_major_versions: puppet_major_versions,
         puppet_unit_test_matrix: puppet_unit_test_matrix,
         github_action_test_matrix: github_action_test_matrix(use_fqdn: beaker_use_fqdn, pidfile_workaround: beaker_pidfile_workaround),
@@ -19,9 +19,9 @@ module PuppetMetadata
 
     private
 
-    def beaker_setfiles(use_fqdn, pidfile_workaround)
+    def beaker_setfiles(use_fqdn, pidfile_workaround, domain)
       setfiles = []
-      metadata.beaker_setfiles(use_fqdn: use_fqdn, pidfile_workaround: pidfile_workaround) do |setfile, name|
+      metadata.beaker_setfiles(use_fqdn: use_fqdn, pidfile_workaround: pidfile_workaround, domain: domain) do |setfile, name|
         setfiles << {
           name: name,
           value: setfile,

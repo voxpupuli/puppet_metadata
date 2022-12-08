@@ -188,17 +188,19 @@ module PuppetMetadata
     end
 
     # @param [Boolean] use_fqdn
-    #   Whether to set the hostname to a fully qualified domain name
+    #   Whether to set the hostname to a fully qualified domain name (deprecated, use domain)
     # @param [Boolean] pidfile_workaround
     #   Whether to apply the Docker pidfile workaround
+    # @param [String] domain
+    #   Enforce a domain to be appended to the hostname, making it an FQDN
     # @yieldparam [String] setfile
     #   The supported setfile configurations
     # @see PuppetMetadata::Beaker#os_release_to_setfile
-    def beaker_setfiles(use_fqdn: false, pidfile_workaround: false)
+    def beaker_setfiles(use_fqdn: false, pidfile_workaround: false, domain: nil)
       operatingsystems.each do |os, releases|
         next unless PuppetMetadata::Beaker.os_supported?(os)
         releases&.each do |release|
-          setfile = PuppetMetadata::Beaker.os_release_to_setfile(os, release, use_fqdn: use_fqdn, pidfile_workaround: pidfile_workaround)
+          setfile = PuppetMetadata::Beaker.os_release_to_setfile(os, release, use_fqdn: use_fqdn, pidfile_workaround: pidfile_workaround, domain: domain)
           yield setfile if setfile
         end
       end
