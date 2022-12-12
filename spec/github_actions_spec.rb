@@ -184,20 +184,20 @@ describe PuppetMetadata::GithubActions do
 
         it 'is expected to contain supported os / puppet version combinations with hostname option' do
           is_expected.to contain_exactly(
-            {setfile: {name: "CentOS 7", value: "centos7-64{hostname=centos7-64.example.com}"}, puppet: {name: "Puppet 7", value: 7, collection: "puppet7"}},
-            {setfile: {name: "CentOS 7", value: "centos7-64{hostname=centos7-64.example.com}"}, puppet: {name: "Puppet 6", value: 6, collection: "puppet6"}},
-            {setfile: {name: "CentOS 7", value: "centos7-64{hostname=centos7-64.example.com}"}, puppet: {name: "Puppet 5", value: 5, collection: "puppet5"}},
-            {setfile: {name: "CentOS 8", value: "centos8-64{hostname=centos8-64.example.com}"}, puppet: {name: "Puppet 7", value: 7, collection: "puppet7"}},
-            {setfile: {name: "CentOS 8", value: "centos8-64{hostname=centos8-64.example.com}"}, puppet: {name: "Puppet 6", value: 6, collection: "puppet6"}},
-            {setfile: {name: "CentOS 8", value: "centos8-64{hostname=centos8-64.example.com}"}, puppet: {name: "Puppet 5", value: 5, collection: "puppet5"}},
-            {setfile: {name: "CentOS 9", value: "centos9-64{hostname=centos9-64.example.com}"}, puppet: {name: "Puppet 7", value: 7, collection: "puppet7"}},
-            {setfile: {name: "CentOS 9", value: "centos9-64{hostname=centos9-64.example.com}"}, puppet: {name: "Puppet 6", value: 6, collection: "puppet6"}},
-            {setfile: {name: "Debian 9", value: "debian9-64{hostname=debian9-64.example.com}"}, puppet: {name: "Puppet 7", value: 7, collection: "puppet7"}},
-            {setfile: {name: "Debian 9", value: "debian9-64{hostname=debian9-64.example.com}"}, puppet: {name: "Puppet 6", value: 6, collection: "puppet6"}},
-            {setfile: {name: "Debian 9", value: "debian9-64{hostname=debian9-64.example.com}"}, puppet: {name: "Puppet 5", value: 5, collection: "puppet5"}},
-            {setfile: {name: "Debian 10", value: "debian10-64{hostname=debian10-64.example.com}"}, puppet: {name: "Puppet 7", value: 7, collection: "puppet7"}},
-            {setfile: {name: "Debian 10", value: "debian10-64{hostname=debian10-64.example.com}"}, puppet: {name: "Puppet 6", value: 6, collection: "puppet6"}},
-            {setfile: {name: "Debian 10", value: "debian10-64{hostname=debian10-64.example.com}"}, puppet: {name: "Puppet 5", value: 5, collection: "puppet5"}}
+            {setfile: {name: "CentOS 7", value: "centos7-64{hostname=centos7-64-puppet7.example.com}"}, puppet: {name: "Puppet 7", value: 7, collection: "puppet7"}},
+            {setfile: {name: "CentOS 7", value: "centos7-64{hostname=centos7-64-puppet6.example.com}"}, puppet: {name: "Puppet 6", value: 6, collection: "puppet6"}},
+            {setfile: {name: "CentOS 7", value: "centos7-64{hostname=centos7-64-puppet5.example.com}"}, puppet: {name: "Puppet 5", value: 5, collection: "puppet5"}},
+            {setfile: {name: "CentOS 8", value: "centos8-64{hostname=centos8-64-puppet7.example.com}"}, puppet: {name: "Puppet 7", value: 7, collection: "puppet7"}},
+            {setfile: {name: "CentOS 8", value: "centos8-64{hostname=centos8-64-puppet6.example.com}"}, puppet: {name: "Puppet 6", value: 6, collection: "puppet6"}},
+            {setfile: {name: "CentOS 8", value: "centos8-64{hostname=centos8-64-puppet5.example.com}"}, puppet: {name: "Puppet 5", value: 5, collection: "puppet5"}},
+            {setfile: {name: "CentOS 9", value: "centos9-64{hostname=centos9-64-puppet7.example.com}"}, puppet: {name: "Puppet 7", value: 7, collection: "puppet7"}},
+            {setfile: {name: "CentOS 9", value: "centos9-64{hostname=centos9-64-puppet6.example.com}"}, puppet: {name: "Puppet 6", value: 6, collection: "puppet6"}},
+            {setfile: {name: "Debian 9", value: "debian9-64{hostname=debian9-64-puppet7.example.com}"}, puppet: {name: "Puppet 7", value: 7, collection: "puppet7"}},
+            {setfile: {name: "Debian 9", value: "debian9-64{hostname=debian9-64-puppet6.example.com}"}, puppet: {name: "Puppet 6", value: 6, collection: "puppet6"}},
+            {setfile: {name: "Debian 9", value: "debian9-64{hostname=debian9-64-puppet5.example.com}"}, puppet: {name: "Puppet 5", value: 5, collection: "puppet5"}},
+            {setfile: {name: "Debian 10", value: "debian10-64{hostname=debian10-64-puppet7.example.com}"}, puppet: {name: "Puppet 7", value: 7, collection: "puppet7"}},
+            {setfile: {name: "Debian 10", value: "debian10-64{hostname=debian10-64-puppet6.example.com}"}, puppet: {name: "Puppet 6", value: 6, collection: "puppet6"}},
+            {setfile: {name: "Debian 10", value: "debian10-64{hostname=debian10-64-puppet5.example.com}"}, puppet: {name: "Puppet 5", value: 5, collection: "puppet5"}}
           )
         end
       end

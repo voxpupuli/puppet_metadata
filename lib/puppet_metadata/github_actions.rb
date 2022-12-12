@@ -83,7 +83,7 @@ module PuppetMetadata
 
       beaker_os_releases do |os, release, puppet_version|
         setfile = PuppetMetadata::Beaker.os_release_to_setfile(
-          os, release, use_fqdn: options[:beaker_use_fqdn], pidfile_workaround: options[:beaker_pidfile_workaround], domain: options[:domain]
+          os, release, use_fqdn: options[:beaker_use_fqdn], pidfile_workaround: options[:beaker_pidfile_workaround], domain: options[:domain], puppet_version: puppet_version[:collection]
         )
         next unless setfile
         next if puppet_version_below_minimum?(puppet_version[:value])
