@@ -13,7 +13,7 @@ module PuppetMetadata
         beaker_setfiles: beaker_setfiles(beaker_use_fqdn, beaker_pidfile_workaround, domain),
         puppet_major_versions: puppet_major_versions,
         puppet_unit_test_matrix: puppet_unit_test_matrix,
-        github_action_test_matrix: github_action_test_matrix(use_fqdn: beaker_use_fqdn, pidfile_workaround: beaker_pidfile_workaround),
+        github_action_test_matrix: github_action_test_matrix(use_fqdn: beaker_use_fqdn, pidfile_workaround: beaker_pidfile_workaround, domain: domain),
       }
     end
 
@@ -71,11 +71,11 @@ module PuppetMetadata
       end
     end
 
-    def github_action_test_matrix(use_fqdn: false, pidfile_workaround: false)
+    def github_action_test_matrix(use_fqdn: false, pidfile_workaround: false, domain: nil)
       matrix_include = []
 
       beaker_os_releases do |os, release, puppet_version|
-        setfile = PuppetMetadata::Beaker.os_release_to_setfile(os, release, use_fqdn: use_fqdn, pidfile_workaround: pidfile_workaround)
+        setfile = PuppetMetadata::Beaker.os_release_to_setfile(os, release, use_fqdn: use_fqdn, pidfile_workaround: pidfile_workaround, domain: domain)
         next unless setfile
 
         matrix_include << {
