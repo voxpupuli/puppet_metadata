@@ -29,7 +29,6 @@ describe PuppetMetadata::Metadata do
       its(:operatingsystems) { is_expected.to eq({}) }
       it { expect(subject.os_release_supported?('any', 'version')).to be(true) }
       it { expect(subject.eol_operatingsystems).to eq({}) }
-      specify { expect { |b| subject.beaker_setfiles(&b) }.not_to yield_control }
       it { expect { subject.puppet_major_versions }.to raise_error(/No Puppet requirement found/) }
     end
 
@@ -178,55 +177,6 @@ describe PuppetMetadata::Metadata do
 
         it 'with puppetlabs/concat 7.0.0' do
           expect(subject.satisfies_dependency?('puppetlabs/concat', '7.0.0')).to be(false)
-        end
-      end
-
-      describe 'beaker_setfiles' do
-        it 'works without arguments' do
-          expected = [
-            ['centos7-64', 'CentOS 7'],
-            ['centos8-64', 'CentOS 8'],
-            ['centos9-64', 'CentOS 9'],
-            ['debian9-64', 'Debian 9'],
-            ['debian10-64', 'Debian 10'],
-            ['ubuntu1404-64', 'Ubuntu 14.04'],
-            ['ubuntu1604-64', 'Ubuntu 16.04'],
-            ['ubuntu1804-64', 'Ubuntu 18.04'],
-            ['ubuntu2004-64', 'Ubuntu 20.04'],
-            ['ubuntu2204-64', 'Ubuntu 22.04'],
-          ]
-          expect { |b| subject.beaker_setfiles(&b) }.to yield_successive_args(*expected)
-        end
-
-        it 'works when using use_fqdn' do
-          expected = [
-            ['centos7-64{hostname=centos7-64.example.com}', 'CentOS 7'],
-            ['centos8-64{hostname=centos8-64.example.com}', 'CentOS 8'],
-            ['centos9-64{hostname=centos9-64.example.com}', 'CentOS 9'],
-            ['debian9-64{hostname=debian9-64.example.com}', 'Debian 9'],
-            ['debian10-64{hostname=debian10-64.example.com}', 'Debian 10'],
-            ['ubuntu1404-64{hostname=ubuntu1404-64.example.com}', 'Ubuntu 14.04'],
-            ['ubuntu1604-64{hostname=ubuntu1604-64.example.com}', 'Ubuntu 16.04'],
-            ['ubuntu1804-64{hostname=ubuntu1804-64.example.com}', 'Ubuntu 18.04'],
-            ['ubuntu2004-64{hostname=ubuntu2004-64.example.com}', 'Ubuntu 20.04'],
-            ['ubuntu2204-64{hostname=ubuntu2204-64.example.com}', 'Ubuntu 22.04'],
-          ]
-          expect { |b| subject.beaker_setfiles(use_fqdn: true, &b) }.to yield_successive_args(*expected)
-        end
-
-        it 'works when passing pidfile_workaround' do
-          expected = [
-            ['centos7-64{image=centos:7.6.1810}', 'CentOS 7'],
-            ['centos9-64', 'CentOS 9'],
-            ['debian9-64', 'Debian 9'],
-            ['debian10-64', 'Debian 10'],
-            ['ubuntu1404-64', 'Ubuntu 14.04'],
-            ['ubuntu1604-64{image=ubuntu:xenial-20191212}', 'Ubuntu 16.04'],
-            ['ubuntu1804-64', 'Ubuntu 18.04'],
-            ['ubuntu2004-64', 'Ubuntu 20.04'],
-            ['ubuntu2204-64', 'Ubuntu 22.04'],
-          ]
-          expect { |b| subject.beaker_setfiles(pidfile_workaround: true, &b) }.to yield_successive_args(*expected)
         end
       end
     end
