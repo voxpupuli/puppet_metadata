@@ -27,6 +27,8 @@ jobs:
       - uses: actions/checkout@v3
       - name: Install libyaml-dev for Psych 5.0+
         run: sudo apt-get install -y libyaml-dev
+      - name: update rubygems
+        run: sudo gem update --system
       - name: Install Ruby ${{ matrix.ruby }}
         uses: ruby/setup-ruby@v1
         with:
