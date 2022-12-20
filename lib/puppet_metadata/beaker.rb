@@ -38,17 +38,20 @@ module PuppetMetadata
       #   it's applied only when os is included in the provided array.
       # @param [Optional[String]] domain
       #   Enforce a domain to be appended to the hostname, making it an FQDN
+      # @param [Optional[String]] puppet_version
+      #   The desired puppet version. Will be appended to the hostname
       #
       # @return [nil] If no setfile is available
       # @return [Array<(String, String)>] The beaker setfile description with a readable name
-      def os_release_to_setfile(os, release, use_fqdn: false, pidfile_workaround: false, domain: nil)
+      def os_release_to_setfile(os, release, use_fqdn: false, pidfile_workaround: false, domain: nil, puppet_version: nil)
         return unless os_supported?(os)
 
         name = "#{os.downcase}#{release.tr('.', '')}-64"
+        hostname = puppet_version != nil ? "#{name}-#{puppet_version}" : name
         domain ||= 'example.com' if use_fqdn
 
         options = {}
-        options[:hostname] = "#{name}.#{domain}" if domain
+        options[:hostname] = "#{hostname}.#{domain}" if domain
 
         # Docker messes up cgroups and some systemd versions can't deal with
         # that when PIDFile is used.
