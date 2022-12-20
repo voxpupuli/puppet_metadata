@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.10.0](https://github.com/voxpupuli/puppet_metadata/tree/1.10.0) (2022-12-20)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.9.0...1.10.0)
+
+**Implemented enhancements:**
+
+- beaker: append puppet version to hostname [\#65](https://github.com/voxpupuli/puppet_metadata/pull/65) ([bastelfreak](https://github.com/bastelfreak))
+- Implement --domain option [\#63](https://github.com/voxpupuli/puppet_metadata/pull/63) ([bastelfreak](https://github.com/bastelfreak))
+- Add --minimum-major-puppet-version option [\#59](https://github.com/voxpupuli/puppet_metadata/pull/59) ([alexjfisher](https://github.com/alexjfisher))
+
+**Fixed bugs:**
+
+- Beaker jobs: correct generated setfiles [\#64](https://github.com/voxpupuli/puppet_metadata/pull/64) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [1.9.0](https://github.com/voxpupuli/puppet_metadata/tree/1.9.0) (2022-12-05)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.8.0...1.9.0)
