@@ -1,27 +1,31 @@
 module PuppetMetadata
   class GithubActions
     attr_reader :metadata
+    attr_reader :options
 
     # @param [PuppetMetadata::Metadata] metadata
-    def initialize(metadata)
+    # @param [Hash] options
+    def initialize(metadata, options)
       @metadata = metadata
+      @options  = options
     end
 
     # @return [Hash[Symbol, Any]] The outputs for Github Actions
-    def outputs(beaker_use_fqdn: false, beaker_pidfile_workaround: false, domain: nil)
+    def outputs
       {
-        beaker_setfiles: beaker_setfiles(beaker_use_fqdn, beaker_pidfile_workaround, domain),
+        beaker_setfiles: beaker_setfiles,
         puppet_major_versions: puppet_major_versions,
         puppet_unit_test_matrix: puppet_unit_test_matrix,
-        github_action_test_matrix: github_action_test_matrix(use_fqdn: beaker_use_fqdn, pidfile_workaround: beaker_pidfile_workaround, domain: domain),
+        github_action_test_matrix: github_action_test_matrix,
       }
     end
 
     private
 
-    def beaker_setfiles(use_fqdn, pidfile_workaround, domain)
+
+    def beaker_setfiles
       setfiles = []
-      metadata.beaker_setfiles(use_fqdn: use_fqdn, pidfile_workaround: pidfile_workaround, domain: domain) do |setfile, name|
+      metadata.beaker_setfiles(use_fqdn: options[:beaker_use_fqdn], pidfile_workaround: options[:beaker_pidfile_workaround], domain: options[:domain]) do |setfile, name|
         setfiles << {
           name: name,
           value: setfile,
@@ -32,18 +36,21 @@ module PuppetMetadata
 
     def puppet_major_versions
       metadata.puppet_major_versions.sort.reverse.map do |version|
+        next if puppet_version_below_minimum?(version)
+
         {
           name: "Puppet #{version}",
           value: version,
           collection: "puppet#{version}",
         }
-      end
+      end.compact
     end
 
     def puppet_unit_test_matrix
       metadata.puppet_major_versions.sort.reverse.map do |puppet|
         ruby = PuppetMetadata::AIO::PUPPET_RUBY_VERSIONS[puppet]
         next unless ruby
+        next if puppet_version_below_minimum?(puppet)
 
         {
           puppet: puppet,
@@ -71,12 +78,15 @@ module PuppetMetadata
       end
     end
 
-    def github_action_test_matrix(use_fqdn: false, pidfile_workaround: false, domain: nil)
+    def github_action_test_matrix
       matrix_include = []
 
       beaker_os_releases do |os, release, puppet_version|
-        setfile = PuppetMetadata::Beaker.os_release_to_setfile(os, release, use_fqdn: use_fqdn, pidfile_workaround: pidfile_workaround, domain: domain)
+        setfile = PuppetMetadata::Beaker.os_release_to_setfile(
+          os, release, use_fqdn: options[:beaker_use_fqdn], pidfile_workaround: options[:beaker_pidfile_workaround], domain: options[:domain]
+        )
         next unless setfile
+        next if puppet_version_below_minimum?(puppet_version[:value])
 
         matrix_include << {
           setfile: {
@@ -88,6 +98,12 @@ module PuppetMetadata
       end
 
       matrix_include
+    end
+
+    def puppet_version_below_minimum?(version)
+      return false unless options[:minimum_major_puppet_version]
+
+      Gem::Version.new(version) < Gem::Version.new(options[:minimum_major_puppet_version])
     end
   end
 end

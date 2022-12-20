@@ -182,9 +182,10 @@ module PuppetMetadata
       matches?(dependencies[name], version)
     end
 
+    # @param [Hash] options A hash containing the command line options
     # @return [PuppetMetadata::GithubActions] A GithubActions instance
-    def github_actions
-      PuppetMetadata::GithubActions.new(self)
+    def github_actions(options)
+      PuppetMetadata::GithubActions.new(self, options)
     end
 
     # @param [Boolean] use_fqdn
