@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.0.0](https://github.com/voxpupuli/puppet_metadata/tree/2.0.0) (2022-12-20)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.10.0...2.0.0)
+
+**Breaking changes:**
+
+- Enable AlmaLinux Acceptance testing [\#70](https://github.com/voxpupuli/puppet_metadata/pull/70) ([bastelfreak](https://github.com/bastelfreak))
+- Enable Rocky Acceptance testing [\#69](https://github.com/voxpupuli/puppet_metadata/pull/69) ([bastelfreak](https://github.com/bastelfreak))
+- Drop unused beaker\_setfiles output [\#66](https://github.com/voxpupuli/puppet_metadata/pull/66) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [1.10.0](https://github.com/voxpupuli/puppet_metadata/tree/1.10.0) (2022-12-20)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.9.0...1.10.0)
