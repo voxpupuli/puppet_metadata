@@ -47,22 +47,7 @@ describe PuppetMetadata::GithubActions do
     subject { super().outputs }
 
     it { is_expected.to be_an_instance_of(Hash) }
-    it { expect(subject.keys).to contain_exactly(:beaker_setfiles, :puppet_major_versions, :puppet_unit_test_matrix, :github_action_test_matrix) }
-
-    describe 'beaker_setfiles' do
-      subject { super()[:beaker_setfiles] }
-
-      it { is_expected.to be_an_instance_of(Array) }
-      it 'is expected to contain CentOS 7, 8 and 9 + Debian 9 and 10' do
-        is_expected.to contain_exactly(
-          {name: "CentOS 7", value: "centos7-64"},
-          {name: "CentOS 8", value: "centos8-64"},
-          {name: "CentOS 9", value: "centos9-64"},
-          {name: "Debian 9", value: "debian9-64"},
-          {name: "Debian 10", value: "debian10-64"},
-        )
-      end
-    end
+    it { expect(subject.keys).to contain_exactly(:puppet_major_versions, :puppet_unit_test_matrix, :github_action_test_matrix) }
 
     describe 'puppet_major_versions' do
       subject { super()[:puppet_major_versions] }

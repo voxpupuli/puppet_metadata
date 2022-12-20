@@ -13,7 +13,6 @@ module PuppetMetadata
     # @return [Hash[Symbol, Any]] The outputs for Github Actions
     def outputs
       {
-        beaker_setfiles: beaker_setfiles,
         puppet_major_versions: puppet_major_versions,
         puppet_unit_test_matrix: puppet_unit_test_matrix,
         github_action_test_matrix: github_action_test_matrix,
@@ -21,18 +20,6 @@ module PuppetMetadata
     end
 
     private
-
-
-    def beaker_setfiles
-      setfiles = []
-      metadata.beaker_setfiles(use_fqdn: options[:beaker_use_fqdn], pidfile_workaround: options[:beaker_pidfile_workaround], domain: options[:domain]) do |setfile, name|
-        setfiles << {
-          name: name,
-          value: setfile,
-        }
-      end
-      setfiles
-    end
 
     def puppet_major_versions
       metadata.puppet_major_versions.sort.reverse.map do |version|
