@@ -15,23 +15,24 @@ The gem intends to provide an abstraction over Puppet's metadata.json file. Its 
 To get outputs [usable in Github Actions](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions), there is the `metadata2gha` command available. This generates based on metadata.json, such as [Beaker](https://github.com/voxpupuli/beaker) setfiles, Puppet major versions and a Puppet unit test matrix.
 
 ```console
-$ metadata2gha-beaker
-puppet_major_versions=[{"name":"Puppet 6","value":6,"collection":"puppet6"},{"name":"Puppet 5","value":5,"collection":"puppet5"}]
-puppet_unit_test_matrix=[{"puppet":6,"ruby":"2.5"},{"puppet":5,"ruby":"2.4"}]
+$ metadata2gha
+puppet_major_versions=[{"name":"Puppet 7","value":7,"collection":"puppet7"},{"name":"Puppet 6","value":6,"collection":"puppet6"}]
+puppet_unit_test_matrix=[{"puppet":7,"ruby":"2.7"},{"puppet":6,"ruby":"2.5"}]
+github_action_test_matrix=[{"setfile":{"name":"Debian 11","value":"debian11-64"},"puppet":{"name":"Puppet 7","value":7,"collection":"puppet7"}},{"setfile":{"name":"Debian 11","value":"debian11-64"},"puppet":{"name":"Puppet 6","value":6,"collection":"puppet6"}}]
 ```
 
 Puppet major versions formatted for readability:
 ```json
 [
   {
+    "name": "Puppet 7",
+    "value": 7,
+    "collection": "puppet7"
+  },
+  {
     "name": "Puppet 6",
     "value": 6,
     "collection": "puppet6"
-  },
-  {
-    "name": "Puppet 5",
-    "value": 5,
-    "collection": "puppet5"
   }
 ]
 ```
@@ -40,12 +41,40 @@ Puppet unit test matrix formatted for readability:
 ```json
 [
   {
-    "puppet": 6,
-    "ruby": "2.5"
+    "puppet": 7,
+    "ruby": "2.7"
   },
   {
-    "puppet": 5,
-    "ruby": "2.4"
+    "puppet": 6,
+    "ruby": "2.5"
+  }
+]
+```
+
+GitHub Action test matrix formatted for readability
+```json
+[
+  {
+    "setfile": {
+      "name": "Debian 11",
+      "value": "debian11-64"
+    },
+    "puppet": {
+      "name": "Puppet 7",
+      "value": 7,
+      "collection": "puppet7"
+    }
+  },
+  {
+    "setfile": {
+      "name": "Debian 11",
+      "value": "debian11-64"
+    },
+    "puppet": {
+      "name": "Puppet 6",
+      "value": 6,
+      "collection": "puppet6"
+    }
   }
 ]
 ```
