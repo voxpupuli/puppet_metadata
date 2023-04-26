@@ -35,4 +35,4 @@ jobs:
       - name: Run tests
         run: bundle exec rake
       - name: Build the gem
-        run: gem build *.gemspec
+        run: gem build --strict --verbose *.gemspec
