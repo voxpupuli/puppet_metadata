@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.1.0](https://github.com/voxpupuli/puppet_metadata/tree/2.1.0) (2023-04-26)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/2.0.0...2.1.0)
+
+**Implemented enhancements:**
+
+- Puppet 8: Run unit tests on Ruby 3.2 [\#75](https://github.com/voxpupuli/puppet_metadata/pull/75) ([bastelfreak](https://github.com/bastelfreak))
+
+**Fixed bugs:**
+
+- Ubuntu 18.04: Fix EoL date: 2023-04-15-\>2023-05-31 [\#77](https://github.com/voxpupuli/puppet_metadata/pull/77) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- rspec: print full diff for hashes [\#78](https://github.com/voxpupuli/puppet_metadata/pull/78) ([bastelfreak](https://github.com/bastelfreak))
+- dependabot: check for github actions and gems & CI: Run on merges to master [\#74](https://github.com/voxpupuli/puppet_metadata/pull/74) ([bastelfreak](https://github.com/bastelfreak))
+- Update the README to reflect current command output [\#73](https://github.com/voxpupuli/puppet_metadata/pull/73) ([ekohl](https://github.com/ekohl))
+
 ## [2.0.0](https://github.com/voxpupuli/puppet_metadata/tree/2.0.0) (2022-12-20)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/1.10.0...2.0.0)
