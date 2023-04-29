@@ -1,5 +1,24 @@
 # Changelog
 
+## [3.0.0](https://github.com/voxpupuli/puppet_metadata/tree/3.0.0) (2023-04-29)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/2.1.0...3.0.0)
+
+**Breaking changes:**
+
+- Drop EoL Ruby 2.4/2.5/2.6 [\#81](https://github.com/voxpupuli/puppet_metadata/pull/81) ([bastelfreak](https://github.com/bastelfreak))
+
+**Fixed bugs:**
+
+- GCG: Add faraday-retry dep [\#86](https://github.com/voxpupuli/puppet_metadata/pull/86) ([bastelfreak](https://github.com/bastelfreak))
+- Fedora: Fix typo in supported puppet versions [\#83](https://github.com/voxpupuli/puppet_metadata/pull/83) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- add dummy CI job we can depend on [\#85](https://github.com/voxpupuli/puppet_metadata/pull/85) ([bastelfreak](https://github.com/bastelfreak))
+- CI: Dont install libyaml-dev [\#84](https://github.com/voxpupuli/puppet_metadata/pull/84) ([bastelfreak](https://github.com/bastelfreak))
+- CI: Build gems with strictness and verbosity [\#82](https://github.com/voxpupuli/puppet_metadata/pull/82) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [2.1.0](https://github.com/voxpupuli/puppet_metadata/tree/2.1.0) (2023-04-26)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/2.0.0...2.1.0)
