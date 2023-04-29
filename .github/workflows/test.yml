@@ -36,3 +36,11 @@ jobs:
         run: bundle exec rake
       - name: Build the gem
         run: gem build --strict --verbose *.gemspec
+
+  tests:
+    needs:
+      - test
+    runs-on: ubuntu-latest
+    name: Test suite
+    steps:
+      - run: echo Test suite completed
