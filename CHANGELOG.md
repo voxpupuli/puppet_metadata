@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.1.1](https://github.com/voxpupuli/puppet_metadata/tree/2.1.1) (2023-04-29)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/2.1.0...2.1.1)
+
+- Fedora: Fix typo in supported puppet versions [\#83](https://github.com/voxpupuli/puppet_metadata/pull/83) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [2.1.0](https://github.com/voxpupuli/puppet_metadata/tree/2.1.0) (2023-04-26)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/2.0.0...2.1.0)
