@@ -48,10 +48,16 @@ module PuppetMetadata
     def beaker_os_releases
       majors = puppet_major_versions
 
+      distro_puppet_version = {
+        name: 'Distro Puppet',
+        value: nil, # We don't know the version and since it's rolling, it can be anything
+        collection: 'none',
+      }
+
       metadata.operatingsystems.each do |os, releases|
         case os
         when 'Archlinux', 'Gentoo'
-          yield [os, 'rolling', majors.max_by { |v| v[:value] }]
+          yield [os, 'rolling', distro_puppet_version]
         else
           releases&.each do |release|
             majors.each do |puppet_version|
@@ -87,7 +93,7 @@ module PuppetMetadata
     end
 
     def puppet_version_below_minimum?(version)
-      return false unless options[:minimum_major_puppet_version]
+      return false unless version && options[:minimum_major_puppet_version]
 
       Gem::Version.new(version) < Gem::Version.new(options[:minimum_major_puppet_version])
     end

@@ -30,6 +30,9 @@ describe PuppetMetadata::GithubActions do
       ],
       operatingsystem_support: [
         {
+          operatingsystem: 'Archlinux',
+        },
+        {
           operatingsystem: 'CentOS',
           operatingsystemrelease: %w[7 8 9],
         },
@@ -114,6 +117,7 @@ describe PuppetMetadata::GithubActions do
 
       it 'is expected to contain supported os / puppet version combinations' do
         expect(subject).to contain_exactly(
+          { setfile: { name: 'Archlinux rolling', value: 'archlinuxrolling-64' }, puppet: { collection: 'none', name: 'Distro Puppet', value: nil } },
           { setfile: { name: 'CentOS 7', value: 'centos7-64' }, puppet: { collection: 'puppet5', name: 'Puppet 5', value: 5 } },
           { setfile: { name: 'CentOS 7', value: 'centos7-64' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
           { setfile: { name: 'CentOS 7', value: 'centos7-64' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
@@ -140,6 +144,7 @@ describe PuppetMetadata::GithubActions do
 
         it 'is expected to contain supported os / puppet version combinations excluding puppet 5' do
           expect(subject).to contain_exactly(
+            { setfile: { name: 'Archlinux rolling', value: 'archlinuxrolling-64' }, puppet: { collection: 'none', name: 'Distro Puppet', value: nil } },
             { setfile: { name: 'CentOS 7', value: 'centos7-64' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
             { setfile: { name: 'CentOS 7', value: 'centos7-64' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
             { setfile: { name: 'CentOS 7', value: 'centos7-64' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
@@ -163,6 +168,7 @@ describe PuppetMetadata::GithubActions do
 
         it 'is expected to contain supported os / puppet version combinations with image option' do
           expect(subject).to contain_exactly(
+            { setfile: { name: 'Archlinux rolling', value: 'archlinuxrolling-64' }, puppet: { collection: 'none', name: 'Distro Puppet', value: nil } },
             { setfile: { name: 'CentOS 7', value: 'centos7-64{image=centos:7.6.1810}' }, puppet: { name: 'Puppet 8', value: 8, collection: 'puppet8' } },
             { setfile: { name: 'CentOS 7', value: 'centos7-64{image=centos:7.6.1810}' }, puppet: { name: 'Puppet 7', value: 7, collection: 'puppet7' } },
             { setfile: { name: 'CentOS 7', value: 'centos7-64{image=centos:7.6.1810}' }, puppet: { name: 'Puppet 6', value: 6, collection: 'puppet6' } },
@@ -186,6 +192,7 @@ describe PuppetMetadata::GithubActions do
 
         it 'is expected to contain supported os / puppet version combinations with hostname option' do
           expect(subject).to contain_exactly(
+            { setfile: { name: 'Archlinux rolling', value: 'archlinuxrolling-64{hostname=archlinuxrolling-64.example.com}' }, puppet: { collection: 'none', name: 'Distro Puppet', value: nil } },
             { setfile: { name: 'CentOS 7', value: 'centos7-64{hostname=centos7-64-puppet8.example.com}' }, puppet: { name: 'Puppet 8', value: 8, collection: 'puppet8' } },
             { setfile: { name: 'CentOS 7', value: 'centos7-64{hostname=centos7-64-puppet7.example.com}' }, puppet: { name: 'Puppet 7', value: 7, collection: 'puppet7' } },
             { setfile: { name: 'CentOS 7', value: 'centos7-64{hostname=centos7-64-puppet6.example.com}' }, puppet: { name: 'Puppet 6', value: 6, collection: 'puppet6' } },
