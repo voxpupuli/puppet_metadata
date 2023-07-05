@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # A module that provides abstractions around Puppet's metadata format.
 module PuppetMetadata
   autoload :AIO, 'puppet_metadata/aio'

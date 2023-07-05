@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'date'
 
 module PuppetMetadata
@@ -157,8 +159,10 @@ module PuppetMetadata
       def eol_date(operatingsystem, release)
         releases = EOL_DATES[operatingsystem]
         return unless releases
+
         date = releases[release]
         return unless date
+
         Date.parse(date)
       end
 
@@ -193,8 +197,8 @@ module PuppetMetadata
       def supported_releases(operatingsystem)
         releases = EOL_DATES[operatingsystem]
         today = Date.today
-        releases.select { |release, eol_date| !eol_date || Date.parse(eol_date) > today }.keys.
-          sort_by { |release| Gem::Version.new(release) }
+        releases.select { |_release, eol_date| !eol_date || Date.parse(eol_date) > today }.keys
+                .sort_by { |release| Gem::Version.new(release) }
       end
     end
   end

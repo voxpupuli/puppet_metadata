@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# frozen_string_literal: true
 
 Gem::Specification.new do |s|
   s.name        = 'puppet_metadata'
@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.description = 'A package that provides abstractions for the Puppet Metadata'
   s.licenses    = 'Apache-2.0'
 
-  s.required_ruby_version = Gem::Requirement.new('>= 2.7')
+  s.required_ruby_version = Gem::Requirement.new('>= 2.7', '< 4')
 
   s.executables << 'metadata2gha'
   s.files = Dir['lib/**/*.rb']
@@ -21,8 +21,9 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'semantic_puppet', '~> 1.0'
 
   s.add_development_dependency 'rake', '~> 13.0'
+  s.add_development_dependency 'rdoc', '~> 6.0'
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'rspec-its', '~> 1.0'
-  s.add_development_dependency 'rdoc', '~> 6.0'
+  s.add_development_dependency 'voxpupuli-rubocop', '~> 1.2.0'
   s.add_development_dependency 'yard', '~> 0.9'
 end

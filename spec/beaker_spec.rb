@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe PuppetMetadata::Beaker do
@@ -33,13 +35,25 @@ describe PuppetMetadata::Beaker do
         end
 
         describe 'use_fqdn' do
-          it { expect(described_class.os_release_to_setfile('CentOS', '7', pidfile_workaround: true, use_fqdn: true)).to eq(['centos7-64{hostname=centos7-64.example.com,image=centos:7.6.1810}', 'CentOS 7']) }
+          it {
+            expect(described_class.os_release_to_setfile('CentOS', '7', pidfile_workaround: true,
+                                                                        use_fqdn: true)).to eq(['centos7-64{hostname=centos7-64.example.com,image=centos:7.6.1810}', 'CentOS 7'])
+          }
         end
       end
 
       describe 'as an array' do
-        it { expect(described_class.os_release_to_setfile('CentOS', '8', pidfile_workaround: [])).to eq(['centos8-64', 'CentOS 8']) }
-        it { expect(described_class.os_release_to_setfile('CentOS', '8', pidfile_workaround: ['Debian'])).to eq(['centos8-64', 'CentOS 8']) }
+        it {
+          expect(described_class.os_release_to_setfile('CentOS', '8',
+                                                       pidfile_workaround: [])).to eq(['centos8-64', 'CentOS 8'])
+        }
+
+        it {
+          expect(described_class.os_release_to_setfile('CentOS', '8',
+                                                       pidfile_workaround: ['Debian'])).to eq(['centos8-64',
+                                                                                               'CentOS 8',])
+        }
+
         it { expect(described_class.os_release_to_setfile('CentOS', '8', pidfile_workaround: ['CentOS'])).to be_nil }
       end
     end

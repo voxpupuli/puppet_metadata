@@ -35,7 +35,7 @@ module PuppetMetadata
       if validate
         require 'metadata_json_lint'
         schema_errors = MetadataJsonLint::Schema.new.validate(metadata)
-        raise InvalidMetadataException.new(schema_errors) if schema_errors.any?
+        raise InvalidMetadataException, schema_errors if schema_errors.any?
       end
 
       @metadata = metadata
@@ -67,10 +67,11 @@ module PuppetMetadata
 
         supported = metadata['operatingsystem_support'].map do |os|
           next unless os['operatingsystem']
+
           [os['operatingsystem'], os['operatingsystemrelease']]
         end
 
-        Hash[supported.compact]
+        supported.compact.to_h
       end
     end
 
@@ -98,11 +99,12 @@ module PuppetMetadata
 
       unsupported = operatingsystems.map do |os, rels|
         next unless rels
+
         eol = rels.select { |rel| OperatingSystem.eol?(os, rel, at) }
         [os, eol] if eol.any?
       end
 
-      Hash[unsupported.compact]
+      unsupported.compact.to_h
     end
 
     # A hash representation of the requirements
@@ -146,7 +148,9 @@ module PuppetMetadata
       end_major = requirement.end == SemanticPuppet::Version::MAX ? 7 : requirement.end.major
 
       (requirement.begin.major..end_major).select do |major|
-        requirement.include?(SemanticPuppet::Version.new(major, 0, 0)) || requirement.include?(SemanticPuppet::Version.new(major, 99, 99))
+        requirement.include?(SemanticPuppet::Version.new(major, 0,
+                                                         0)) || requirement.include?(SemanticPuppet::Version.new(major,
+                                                                                                                 99, 99))
       end
     end
 
@@ -197,11 +201,12 @@ module PuppetMetadata
 
       reqs = array.map do |requirement|
         next unless requirement['name']
+
         version_requirement = requirement['version_requirement'] || '>= 0'
         [requirement['name'], SemanticPuppet::VersionRange.parse(version_requirement)]
       end
 
-      Hash[reqs.compact]
+      reqs.compact.to_h
     end
 
     def matches?(required_version, provided_version)

@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 require 'rspec/core/rake_task'
 
 RSpec::Core::RakeTask.new(:spec)
 
-task :default => :spec
+task default: :spec
 
 begin
-  require 'rubygems'
   require 'github_changelog_generator/task'
-rescue LoadError # rubocop:disable Lint/HandleExceptions
+rescue LoadError
+  # github_changelog_generator is an optional group
 else
   GitHubChangelogGenerator::RakeTask.new :changelog do |config|
     config.exclude_labels = %w[duplicate question invalid wontfix wont-fix skip-changelog]
@@ -16,4 +18,10 @@ else
     gem_version = Gem::Specification.load("#{config.project}.gemspec").version
     config.future_release = gem_version
   end
+end
+
+begin
+  require 'voxpupuli/rubocop/rake'
+rescue LoadError
+  # the voxpupuli-rubocop gem is optional
 end

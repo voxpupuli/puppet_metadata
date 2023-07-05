@@ -47,7 +47,7 @@ module PuppetMetadata
         return unless os_supported?(os)
 
         name = "#{os.downcase}#{release.tr('.', '')}-64"
-        hostname = puppet_version != nil ? "#{name}-#{puppet_version}" : name
+        hostname = puppet_version.nil? ? name : "#{name}-#{puppet_version}"
         domain ||= 'example.com' if use_fqdn
 
         options = {}
@@ -71,7 +71,7 @@ module PuppetMetadata
       # Return whether a Beaker setfile can be generated for the given OS
       # @param [String] os The operating system
       def os_supported?(os)
-        ['Archlinux', 'CentOS', 'Fedora', 'Debian', 'Ubuntu', 'Rocky', 'AlmaLinux'].include?(os)
+        %w[Archlinux CentOS Fedora Debian Ubuntu Rocky AlmaLinux].include?(os)
       end
 
       private

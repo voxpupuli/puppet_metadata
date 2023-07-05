@@ -1,7 +1,6 @@
 module PuppetMetadata
   class GithubActions
-    attr_reader :metadata
-    attr_reader :options
+    attr_reader :metadata, :options
 
     # @param [PuppetMetadata::Metadata] metadata
     # @param [Hash] options
@@ -56,7 +55,7 @@ module PuppetMetadata
         else
           releases&.each do |release|
             majors.each do |puppet_version|
-              if AIO.has_aio_build?(os, release, puppet_version[:value])
+              if AIO.has_aio_build?(os, release, puppet_version[:value]) # rubocop:disable Style/IfUnlessModifier
                 yield [os, release, puppet_version]
               end
             end
@@ -80,7 +79,7 @@ module PuppetMetadata
             name: setfile[1],
             value: setfile[0],
           },
-          puppet: puppet_version
+          puppet: puppet_version,
         }
       end
 
