@@ -47,7 +47,7 @@ module PuppetMetadata
         return unless os_supported?(os)
 
         name = "#{os.downcase}#{release.tr('.', '')}-64"
-        hostname = puppet_version.nil? ? name : "#{name}-#{puppet_version}"
+        hostname = (puppet_version.nil? && puppet_version != 'none') ? name : "#{name}-#{puppet_version}"
         domain ||= 'example.com' if use_fqdn
 
         options = {}
