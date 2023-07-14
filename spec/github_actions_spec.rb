@@ -192,7 +192,7 @@ describe PuppetMetadata::GithubActions do
 
         it 'is expected to contain supported os / puppet version combinations with hostname option' do
           expect(subject).to contain_exactly(
-            { setfile: { name: 'Archlinux rolling', value: 'archlinuxrolling-64{hostname=archlinuxrolling-64.example.com}' }, puppet: { collection: 'none', name: 'Distro Puppet', value: nil } },
+            { setfile: { name: 'Archlinux rolling', value: 'archlinuxrolling-64{hostname=archlinuxrolling-64-none.example.com}' }, puppet: { collection: 'none', name: 'Distro Puppet', value: nil } },
             { setfile: { name: 'CentOS 7', value: 'centos7-64{hostname=centos7-64-puppet8.example.com}' }, puppet: { name: 'Puppet 8', value: 8, collection: 'puppet8' } },
             { setfile: { name: 'CentOS 7', value: 'centos7-64{hostname=centos7-64-puppet7.example.com}' }, puppet: { name: 'Puppet 7', value: 7, collection: 'puppet7' } },
             { setfile: { name: 'CentOS 7', value: 'centos7-64{hostname=centos7-64-puppet6.example.com}' }, puppet: { name: 'Puppet 6', value: 6, collection: 'puppet6' } },
