@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.1.0](https://github.com/voxpupuli/puppet_metadata/tree/3.1.0) (2023-07-24)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/2.1.1...3.1.0)
+
+**Implemented enhancements:**
+
+- Use the none collection on some distros [\#91](https://github.com/voxpupuli/puppet_metadata/pull/91) ([ekohl](https://github.com/ekohl))
+
+**Merged pull requests:**
+
+- Implement rubocop [\#50](https://github.com/voxpupuli/puppet_metadata/pull/50) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [3.0.0](https://github.com/voxpupuli/puppet_metadata/tree/3.0.0) (2023-04-29)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/2.1.0...3.0.0)
