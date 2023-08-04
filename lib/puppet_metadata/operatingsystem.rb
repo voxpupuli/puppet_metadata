@@ -45,6 +45,12 @@ module PuppetMetadata
         '2.2' => '2003-06-30',
         '2.1' => '2000-09-30',
       },
+      # https://endoflife.date/oraclelinux
+      'OracleLinux' => {
+        '9' => '2032-06-30',
+        '8' => '2029-07-01',
+        '7' => '2024-07-01',
+      },
       # https://endoflife.software/operating-systems/linux/fedora
       'Fedora' => {
         '32' => nil,

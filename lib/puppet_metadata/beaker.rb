@@ -21,6 +21,18 @@ module PuppetMetadata
       'CentOS' => ['8'],
     }.freeze
     class << self
+      # modifies the operating system name to suit beaker-hostgenerator
+      # @param [String] os
+      # @return [String] the modified OS name
+      def adjusted_os(os)
+        case os
+        when 'OracleLinux'
+          'oracle'
+        else
+          os.downcase
+        end
+      end
+
       # Convert an Operating System name with a release to a Beaker setfile
       #
       # @param [String] os
@@ -46,7 +58,9 @@ module PuppetMetadata
       def os_release_to_setfile(os, release, use_fqdn: false, pidfile_workaround: false, domain: nil, puppet_version: nil)
         return unless os_supported?(os)
 
-        name = "#{os.downcase}#{release.tr('.', '')}-64"
+        aos = adjusted_os(os)
+
+        name = "#{aos}#{release.tr('.', '')}-64"
         hostname = (puppet_version.nil? && puppet_version != 'none') ? name : "#{name}-#{puppet_version}"
         domain ||= 'example.com' if use_fqdn
 
@@ -71,7 +85,7 @@ module PuppetMetadata
       # Return whether a Beaker setfile can be generated for the given OS
       # @param [String] os The operating system
       def os_supported?(os)
-        %w[Archlinux CentOS Fedora Debian Ubuntu Rocky AlmaLinux].include?(os)
+        %w[Archlinux CentOS Fedora Debian Ubuntu Rocky AlmaLinux OracleLinux].include?(os)
       end
 
       private
