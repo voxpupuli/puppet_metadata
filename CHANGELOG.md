@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.2.0](https://github.com/voxpupuli/puppet_metadata/tree/3.2.0) (2023-08-11)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/3.1.0...3.2.0)
+
+**Implemented enhancements:**
+
+- Implement OracleLinux support [\#98](https://github.com/voxpupuli/puppet_metadata/pull/98) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [3.1.0](https://github.com/voxpupuli/puppet_metadata/tree/3.1.0) (2023-07-24)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/2.1.1...3.1.0)
@@ -11,6 +19,10 @@
 **Merged pull requests:**
 
 - Implement rubocop [\#50](https://github.com/voxpupuli/puppet_metadata/pull/50) ([bastelfreak](https://github.com/bastelfreak))
+
+## [2.1.1](https://github.com/voxpupuli/puppet_metadata/tree/2.1.1) (2023-04-29)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/3.0.0...2.1.1)
 
 ## [3.0.0](https://github.com/voxpupuli/puppet_metadata/tree/3.0.0) (2023-04-29)
 
