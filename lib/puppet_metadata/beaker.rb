@@ -10,9 +10,6 @@ module PuppetMetadata
       'CentOS' => {
         '7' => 'centos:7.6.1810',
       },
-      'Ubuntu' => {
-        '16.04' => 'ubuntu:xenial-20191212',
-      },
     }.freeze
 
     # There is no CentOS 8 image that works with PIDFile in systemd
