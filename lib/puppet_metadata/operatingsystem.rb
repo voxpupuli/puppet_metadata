@@ -206,6 +206,28 @@ module PuppetMetadata
         releases.select { |_release, eol_date| !eol_date || Date.parse(eol_date) > today }.keys
                 .sort_by { |release| Gem::Version.new(release) }
       end
+
+      # Return the Puppet major version in an OS release, if any
+      #
+      # Only tracks releases without an AIO build, since that's preferred.
+      #
+      # @param [String] operatingsystem
+      #   The operating system name
+      # @param [String] release
+      #   The operating system release version
+      #
+      # @return [Optional[Integer]] The Puppet major version, if any
+      def os_release_puppet_version(operatingsystem, release)
+        case operatingsystem
+        when 'Fedora'
+          case release
+          when '39', '40'
+            8
+          when '37', '38'
+            7
+          end
+        end
+      end
     end
   end
 end
