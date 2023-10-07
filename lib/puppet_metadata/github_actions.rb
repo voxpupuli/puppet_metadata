@@ -81,6 +81,7 @@ module PuppetMetadata
         next if puppet_version_below_minimum?(puppet_version[:value])
 
         matrix_include << {
+          name: "#{puppet_version[:name]} - #{setfile[1]}",
           setfile: {
             name: setfile[1],
             value: setfile[0],
