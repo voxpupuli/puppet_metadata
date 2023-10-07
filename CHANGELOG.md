@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.3.0](https://github.com/voxpupuli/puppet_metadata/tree/3.3.0) (2023-10-07)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/3.2.0...3.3.0)
+
+**Implemented enhancements:**
+
+- Add a name to the GHA beaker test matrix [\#35](https://github.com/voxpupuli/puppet_metadata/pull/35) ([ekohl](https://github.com/ekohl))
+
+**Merged pull requests:**
+
+- Update metadata-json-lint requirement from \>= 2.0, \< 4 to \>= 2.0, \< 5 [\#101](https://github.com/voxpupuli/puppet_metadata/pull/101) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [3.2.0](https://github.com/voxpupuli/puppet_metadata/tree/3.2.0) (2023-08-11)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/3.1.0...3.2.0)
