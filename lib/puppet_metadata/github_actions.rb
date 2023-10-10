@@ -74,9 +74,10 @@ module PuppetMetadata
       matrix_include = []
 
       beaker_os_releases do |os, release, puppet_version|
+        next if puppet_version_below_minimum?(puppet_version[:value])
+
         setfile = os_release_to_beaker_setfile(os, release, puppet_version[:collection])
         next unless setfile
-        next if puppet_version_below_minimum?(puppet_version[:value])
 
         matrix_include << {
           name: "#{puppet_version[:name]} - #{setfile[1]}",
