@@ -74,9 +74,7 @@ module PuppetMetadata
       matrix_include = []
 
       beaker_os_releases do |os, release, puppet_version|
-        setfile = PuppetMetadata::Beaker.os_release_to_setfile(
-          os, release, use_fqdn: options[:beaker_use_fqdn], pidfile_workaround: options[:beaker_pidfile_workaround], domain: options[:domain], puppet_version: puppet_version[:collection]
-        )
+        setfile = os_release_to_beaker_setfile(os, release, puppet_version[:collection])
         next unless setfile
         next if puppet_version_below_minimum?(puppet_version[:value])
 
@@ -97,6 +95,17 @@ module PuppetMetadata
       return false unless version && options[:minimum_major_puppet_version]
 
       Gem::Version.new(version) < Gem::Version.new(options[:minimum_major_puppet_version])
+    end
+
+    def os_release_to_beaker_setfile(os, release, puppet_collection)
+      PuppetMetadata::Beaker.os_release_to_setfile(
+        os,
+        release,
+        use_fqdn: options[:beaker_use_fqdn],
+        pidfile_workaround: options[:beaker_pidfile_workaround],
+        domain: options[:domain],
+        puppet_version: puppet_collection,
+      )
     end
   end
 end
