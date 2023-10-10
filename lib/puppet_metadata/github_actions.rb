@@ -87,10 +87,20 @@ module PuppetMetadata
           'BEAKER_SETFILE' => setfile[0],
         }
 
-        matrix_include << {
-          name: name,
-          env: env,
-        }
+        if options[:beaker_facter]
+          fact, label, values = options[:beaker_facter]
+          values.each do |value|
+            matrix_include << {
+              name: "#{name} - #{label || fact} #{value}",
+              env: env.merge("BEAKER_FACTER_#{fact}" => value),
+            }
+          end
+        else
+          matrix_include << {
+            name: name,
+            env: env,
+          }
+        end
       end
 
       matrix_include

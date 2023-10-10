@@ -139,6 +139,17 @@ describe PuppetMetadata::GithubActions do
           { name: 'Puppet 8 - Debian 10', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'debian10-64' } },
         )
       end
+
+      context 'with beaker_facter option' do
+        let(:options) { super().merge(beaker_facter: ['pulpcore_version', 'Pulp', %w[2 3]]) }
+
+        it 'is expected to contain supported os / puppet version / fact combinations' do
+          expect(subject).to include(
+            { name: 'Distro Puppet - Archlinux rolling - Pulp 2', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'archlinuxrolling-64', 'BEAKER_FACTER_pulpcore_version' => '2' } },
+            { name: 'Distro Puppet - Archlinux rolling - Pulp 3', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'archlinuxrolling-64', 'BEAKER_FACTER_pulpcore_version' => '3' } },
+          )
+        end
+      end
     end
 
     describe 'github_action_test_matrix' do
