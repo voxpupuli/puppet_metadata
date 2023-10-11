@@ -1,6 +1,14 @@
 # Changelog
 
-## [3.3.0](https://github.com/voxpupuli/puppet_metadata/tree/3.3.0) (2023-10-07)
+## [3.4.0](https://github.com/voxpupuli/puppet_metadata/tree/3.4.0) (2023-10-11)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/3.3.0...3.4.0)
+
+**Implemented enhancements:**
+
+- Support BEAKER\_FACTER\_\* env vars in beaker testing [\#108](https://github.com/voxpupuli/puppet_metadata/pull/108) ([ekohl](https://github.com/ekohl))
+
+## [3.3.0](https://github.com/voxpupuli/puppet_metadata/tree/3.3.0) (2023-10-08)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/3.2.0...3.3.0)
 
