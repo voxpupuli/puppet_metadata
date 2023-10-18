@@ -1,5 +1,14 @@
 # Changelog
 
+## [3.5.0](https://github.com/voxpupuli/puppet_metadata/tree/3.5.0) (2023-10-18)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/3.4.0...3.5.0)
+
+**Implemented enhancements:**
+
+- Add support for Fedora Distro Puppet testing [\#104](https://github.com/voxpupuli/puppet_metadata/pull/104) ([ekohl](https://github.com/ekohl))
+- Add Debian 12 [\#102](https://github.com/voxpupuli/puppet_metadata/pull/102) ([evgeni](https://github.com/evgeni))
+
 ## [3.4.0](https://github.com/voxpupuli/puppet_metadata/tree/3.4.0) (2023-10-11)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/3.3.0...3.4.0)
