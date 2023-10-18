@@ -32,6 +32,7 @@ module PuppetMetadata
       # https://wiki.debian.org/DebianReleases
       'Debian' => {
         # TODO: EOL is standard support, not the extended life cycle
+        '12' => nil, # '~2026',
         '11' => nil, # '~2024',
         '10' => nil, # '~2022',
         '9' => '2020-07-06',
@@ -205,6 +206,33 @@ module PuppetMetadata
         today = Date.today
         releases.select { |_release, eol_date| !eol_date || Date.parse(eol_date) > today }.keys
                 .sort_by { |release| Gem::Version.new(release) }
+      end
+
+      # Return the Puppet major version in an OS release, if any
+      #
+      # Only tracks releases without an AIO build, since that's preferred.
+      #
+      # @param [String] operatingsystem
+      #   The operating system name
+      # @param [String] release
+      #   The operating system release version
+      #
+      # @return [Optional[Integer]] The Puppet major version, if any
+      def os_release_puppet_version(operatingsystem, release)
+        case operatingsystem
+        when 'Debian'
+          case release
+          when '12'
+            7
+          end
+        when 'Fedora'
+          case release
+          when '39', '40'
+            8
+          when '37', '38'
+            7
+          end
+        end
       end
     end
   end

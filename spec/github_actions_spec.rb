@@ -38,13 +38,21 @@ describe PuppetMetadata::GithubActions do
         },
         {
           operatingsystem: 'Debian',
-          operatingsystemrelease: %w[9 10],
+          operatingsystemrelease: %w[9 10 12],
+        },
+        {
+          operatingsystem: 'Fedora',
+          operatingsystemrelease: %w[36 38 40],
+        },
+        {
+          operatingsystem: 'Fedora',
+          operatingsystemrelease: %w[36 38 40],
         },
       ],
     }
   end
 
-  # rubocop:disable Layout/LineLength
+  # rubocop:disable Layout/LineLength,RSpec/ExampleLength
   describe 'outputs' do
     subject { super().outputs }
 
@@ -137,6 +145,11 @@ describe PuppetMetadata::GithubActions do
           { name: 'Puppet 6 - Debian 10', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet6', 'BEAKER_SETFILE' => 'debian10-64' } },
           { name: 'Puppet 7 - Debian 10', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'debian10-64' } },
           { name: 'Puppet 8 - Debian 10', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'debian10-64' } },
+          { name: 'Distro Puppet - Debian 12', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'debian12-64' } },
+          { name: 'Puppet 7 - Fedora 36', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'fedora36-64' } },
+          { name: 'Puppet 8 - Fedora 36', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'fedora36-64' } },
+          { name: 'Distro Puppet - Fedora 38', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'fedora38-64' } },
+          { name: 'Distro Puppet - Fedora 40', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'fedora40-64' } },
         )
       end
 
@@ -178,6 +191,11 @@ describe PuppetMetadata::GithubActions do
           { name: 'Puppet 6 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
           { name: 'Puppet 7 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
           { name: 'Puppet 8 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
+          { name: 'Distro Puppet - Debian 12', setfile: { name: 'Debian 12', value: 'debian12-64' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 7 } },
+          { name: 'Puppet 7 - Fedora 36', setfile: { name: 'Fedora 36', value: 'fedora36-64' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
+          { name: 'Puppet 8 - Fedora 36', setfile: { name: 'Fedora 36', value: 'fedora36-64' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
+          { name: 'Distro Puppet - Fedora 38', setfile: { name: 'Fedora 38', value: 'fedora38-64' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 7 } },
+          { name: 'Distro Puppet - Fedora 40', setfile: { name: 'Fedora 40', value: 'fedora40-64' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 8 } },
         )
       end
 
@@ -201,6 +219,11 @@ describe PuppetMetadata::GithubActions do
             { name: 'Puppet 6 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
             { name: 'Puppet 7 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
             { name: 'Puppet 8 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
+            { name: 'Distro Puppet - Debian 12', setfile: { name: 'Debian 12', value: 'debian12-64' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 7 } },
+            { name: 'Puppet 7 - Fedora 36', setfile: { name: 'Fedora 36', value: 'fedora36-64' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
+            { name: 'Puppet 8 - Fedora 36', setfile: { name: 'Fedora 36', value: 'fedora36-64' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
+            { name: 'Distro Puppet - Fedora 38', setfile: { name: 'Fedora 38', value: 'fedora38-64' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 7 } },
+            { name: 'Distro Puppet - Fedora 40', setfile: { name: 'Fedora 40', value: 'fedora40-64' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 8 } },
           )
         end
       end
@@ -225,6 +248,11 @@ describe PuppetMetadata::GithubActions do
             { name: 'Puppet 7 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64' }, puppet: { name: 'Puppet 7', value: 7, collection: 'puppet7' } },
             { name: 'Puppet 6 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64' }, puppet: { name: 'Puppet 6', value: 6, collection: 'puppet6' } },
             { name: 'Puppet 5 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64' }, puppet: { name: 'Puppet 5', value: 5, collection: 'puppet5' } },
+            { name: 'Distro Puppet - Debian 12', setfile: { name: 'Debian 12', value: 'debian12-64' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 7 } },
+            { name: 'Puppet 7 - Fedora 36', setfile: { name: 'Fedora 36', value: 'fedora36-64' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
+            { name: 'Puppet 8 - Fedora 36', setfile: { name: 'Fedora 36', value: 'fedora36-64' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
+            { name: 'Distro Puppet - Fedora 38', setfile: { name: 'Fedora 38', value: 'fedora38-64' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 7 } },
+            { name: 'Distro Puppet - Fedora 40', setfile: { name: 'Fedora 40', value: 'fedora40-64' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 8 } },
           )
         end
       end
@@ -253,10 +281,15 @@ describe PuppetMetadata::GithubActions do
             { name: 'Puppet 7 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64{hostname=debian10-64-puppet7.example.com}' }, puppet: { name: 'Puppet 7', value: 7, collection: 'puppet7' } },
             { name: 'Puppet 6 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64{hostname=debian10-64-puppet6.example.com}' }, puppet: { name: 'Puppet 6', value: 6, collection: 'puppet6' } },
             { name: 'Puppet 5 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64{hostname=debian10-64-puppet5.example.com}' }, puppet: { name: 'Puppet 5', value: 5, collection: 'puppet5' } },
+            { name: 'Distro Puppet - Debian 12', setfile: { name: 'Debian 12', value: 'debian12-64{hostname=debian12-64-none.example.com}' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 7 } },
+            { name: 'Puppet 7 - Fedora 36', setfile: { name: 'Fedora 36', value: 'fedora36-64{hostname=fedora36-64-puppet7.example.com}' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
+            { name: 'Puppet 8 - Fedora 36', setfile: { name: 'Fedora 36', value: 'fedora36-64{hostname=fedora36-64-puppet8.example.com}' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
+            { name: 'Distro Puppet - Fedora 38', setfile: { name: 'Fedora 38', value: 'fedora38-64{hostname=fedora38-64-none.example.com}' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 7 } },
+            { name: 'Distro Puppet - Fedora 40', setfile: { name: 'Fedora 40', value: 'fedora40-64{hostname=fedora40-64-none.example.com}' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 8 } },
           )
         end
       end
     end
   end
-  # rubocop:enable Layout/LineLength
+  # rubocop:enable Layout/LineLength,RSpec/ExampleLength
 end
