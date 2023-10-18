@@ -105,6 +105,41 @@ This results in the following JSON data
 
 It is also possible to specify a comma separated list of operating systems as used in `metadata.json` (`CentOS,Ubuntu`).
 
+## Work with the API
+
+The API can be initialised like this:
+
+```ruby
+require 'puppet_metadata'
+metadata = PuppetMetadata.read('/path/to/a/metadata.json')
+```
+
+The metadata object has several different methods that we can call
+
+### List all supported operating systems
+
+```
+[9] pry(main)> metadata.operatingsystems
+=> {"Archlinux"=>nil, "Gentoo"=>nil, "Fedora"=>["32", "33"], "CentOS"=>["7", "8"], "RedHat"=>["7", "8"], "Ubuntu"=>["18.04"], "Debian"=>["9", "10"], "VirtuozzoLinux"=>["7"]}
+[10] pry(main)>
+```
+
+### List supported major puppet versions
+
+```
+[10] pry(main)> metadata.puppet_major_versions
+=> [6, 7]
+[11] pry(main)>
+```
+
+### Check if an operating systems is supported
+
+```
+[6] pry(main)> metadata.os_release_supported?('Archlinux', nil)
+=> true
+[7] pry(main)>
+```
+
 ## Transfer Notice
 
 This plugin was originally authored by [Ewoud Kohl van Wijngaarden](https://github.com/ekohl).
