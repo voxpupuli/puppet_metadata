@@ -163,6 +163,16 @@ describe PuppetMetadata::GithubActions do
           )
         end
       end
+
+      context 'with hosts option' do
+        let(:options) { super().merge(hosts: %w[foo bar baz]) }
+
+        it 'is expected to contain supported os / puppet version / role combinations' do
+          expect(subject).to include(
+            { name: 'Puppet 8 - CentOS 9', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'centos9-64{hostname=foo}-centos9-64{hostname=bar}-centos9-64{hostname=baz}' } },
+          )
+        end
+      end
     end
 
     describe 'github_action_test_matrix' do
@@ -286,6 +296,16 @@ describe PuppetMetadata::GithubActions do
             { name: 'Puppet 8 - Fedora 36', setfile: { name: 'Fedora 36', value: 'fedora36-64{hostname=fedora36-64-puppet8.example.com}' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
             { name: 'Distro Puppet - Fedora 38', setfile: { name: 'Fedora 38', value: 'fedora38-64{hostname=fedora38-64-none.example.com}' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 7 } },
             { name: 'Distro Puppet - Fedora 40', setfile: { name: 'Fedora 40', value: 'fedora40-64{hostname=fedora40-64-none.example.com}' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 8 } },
+          )
+        end
+      end
+
+      context 'with hosts option' do
+        let(:options) { super().merge(hosts: %w[foo bar baz]) }
+
+        it 'is expected to contain supported os / puppet version combinations with hostname option' do
+          expect(subject).to include(
+            { name: 'Puppet 8 - CentOS 9', setfile: { name: 'CentOS 9', value: 'centos9-64{hostname=foo}-centos9-64{hostname=bar}-centos9-64{hostname=baz}' }, puppet: { name: 'Puppet 8', value: 8, collection: 'puppet8' } },
           )
         end
       end

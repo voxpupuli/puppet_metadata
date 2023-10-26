@@ -57,5 +57,18 @@ describe PuppetMetadata::Beaker do
         it { expect(described_class.os_release_to_setfile('CentOS', '8', pidfile_workaround: ['CentOS'])).to be_nil }
       end
     end
+
+    describe 'hostname' do
+      describe 'without domain' do
+        it { expect(described_class.os_release_to_setfile('AlmaLinux', '9', hostname: 'foo')).to eq(['almalinux9-64{hostname=foo}', 'AlmaLinux 9']) }
+      end
+
+      describe 'with domain' do
+        it {
+          expect(described_class.os_release_to_setfile('AlmaLinux', '9', domain: 'example.com',
+                                                                         hostname: 'foo')).to eq(['almalinux9-64{hostname=foo.example.com}', 'AlmaLinux 9'])
+        }
+      end
+    end
   end
 end

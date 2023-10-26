@@ -11,6 +11,7 @@ options = {
   domain: nil,
   minimum_major_puppet_version: nil,
   beaker_fact: nil,
+  hosts: nil,
 }
 
 OptionParser.new do |opts|
@@ -39,6 +40,9 @@ OptionParser.new do |opts|
 
       options[:beaker_facter] = [fact, label, values.split(',')]
     end
+  end
+  opts.on('--hosts VALUE,VALUE', Array, 'A list of hostnames to create -- generates multiple SUTs. Separate values using commas') do |opt|
+    options[:hosts] = opt unless opt.empty?
   end
 end.parse!
 
