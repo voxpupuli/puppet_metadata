@@ -6,3 +6,6 @@ inherit_gem:
 
 Layout/LineLength:
   Max: 200
+
+Style/WordArray:
+  Enabled: false
