@@ -19,6 +19,9 @@ module PuppetMetadata
     # unit files
     PIDFILE_INCOMPATIBLE = {
       'CentOS' => ['8'],
+      'AlmaLinux' => ['8'],
+      'OracleLinux' => ['7', '8'],
+      'Rocky' => ['8'],
     }.freeze
     class << self
       # modifies the operating system name to suit beaker-hostgenerator
