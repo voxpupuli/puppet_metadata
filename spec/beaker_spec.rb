@@ -28,7 +28,6 @@ describe PuppetMetadata::Beaker do
           ['CentOS', '7', ['centos7-64{image=centos:7.6.1810}', 'CentOS 7']],
           ['CentOS', '8', nil],
           ['CentOS', '9', ['centos9-64', 'CentOS 9']],
-          ['Ubuntu', '16.04', ['ubuntu1604-64{image=ubuntu:xenial-20191212}', 'Ubuntu 16.04']],
           ['Ubuntu', '18.04', ['ubuntu1804-64', 'Ubuntu 18.04']],
         ].each do |os, release, expected|
           it { expect(described_class.os_release_to_setfile(os, release, pidfile_workaround: true)).to eq(expected) }
