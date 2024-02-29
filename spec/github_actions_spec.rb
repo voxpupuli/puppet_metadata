@@ -44,10 +44,6 @@ describe PuppetMetadata::GithubActions do
           operatingsystem: 'Fedora',
           operatingsystemrelease: %w[36 38 40],
         },
-        {
-          operatingsystem: 'Fedora',
-          operatingsystemrelease: %w[36 38 40],
-        },
       ],
     }
   end
