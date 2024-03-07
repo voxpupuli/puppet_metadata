@@ -137,14 +137,33 @@ module PuppetMetadata
     end
 
     def os_release_to_beaker_setfile(os, release, puppet_collection)
-      PuppetMetadata::Beaker.os_release_to_setfile(
-        os,
-        release,
-        use_fqdn: options[:beaker_use_fqdn],
-        pidfile_workaround: options[:beaker_pidfile_workaround],
-        domain: options[:domain],
-        puppet_version: puppet_collection,
-      )
+      if options[:hosts]
+        setfiles = options[:hosts].filter_map do |host|
+          PuppetMetadata::Beaker.os_release_to_setfile(
+            os,
+            release,
+            use_fqdn: options[:beaker_use_fqdn],
+            pidfile_workaround: options[:beaker_pidfile_workaround],
+            domain: options[:domain],
+            puppet_version: puppet_collection,
+            hostname: host,
+          )
+        end
+
+        return if setfiles.empty?
+
+        # merge the setfile strings
+        [setfiles.collect { |setfile| setfile[0] }.join('-'), setfiles[0][1]]
+      else
+        PuppetMetadata::Beaker.os_release_to_setfile(
+          os,
+          release,
+          use_fqdn: options[:beaker_use_fqdn],
+          pidfile_workaround: options[:beaker_pidfile_workaround],
+          domain: options[:domain],
+          puppet_version: puppet_collection,
+        )
+      end
     end
   end
 end
