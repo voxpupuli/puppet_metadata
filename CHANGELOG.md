@@ -1,5 +1,23 @@
 # Changelog
 
+## [3.6.0](https://github.com/voxpupuli/puppet_metadata/tree/3.6.0) (2024-03-07)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/3.5.0...3.6.0)
+
+**Implemented enhancements:**
+
+- add Debian 12 AIO builds for 7 and 8 [\#117](https://github.com/voxpupuli/puppet_metadata/pull/117) ([evgeni](https://github.com/evgeni))
+
+**Fixed bugs:**
+
+- mark Oracle/Alma/Rocky as pidfile incompatible [\#112](https://github.com/voxpupuli/puppet_metadata/pull/112) ([evgeni](https://github.com/evgeni))
+
+**Merged pull requests:**
+
+- Update voxpupuli-rubocop requirement from ~\> 2.4.0 to ~\> 2.5.0 [\#118](https://github.com/voxpupuli/puppet_metadata/pull/118) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update voxpupuli-rubocop requirement from ~\> 2.0.0 to ~\> 2.4.0 [\#116](https://github.com/voxpupuli/puppet_metadata/pull/116) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Document API in README.md [\#34](https://github.com/voxpupuli/puppet_metadata/pull/34) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [3.5.0](https://github.com/voxpupuli/puppet_metadata/tree/3.5.0) (2023-10-18)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/3.4.0...3.5.0)
