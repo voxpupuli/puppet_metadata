@@ -1,0 +1,68 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'json'
+require 'puppet_metadata'
+
+# The base command. All actual commands should inherit from this.
+class BaseCommand
+  def initialize(arguments); end # rubocop:disable Style/RedundantInitialize
+
+  def metadata
+    @metadata ||= begin
+      @filename = 'metadata.json' if @filename.nil? || @filename.empty?
+
+      PuppetMetadata.read(@filename)
+    end
+  rescue StandardError => e
+    warn "Failed to read #{filename}: #{e}"
+    exit 2
+  end
+
+  def self.commands
+    subclasses.to_h { |subclass| [subclass.command, subclass] }
+  end
+
+  def self.command
+    name.gsub(/Command$/, '')
+        .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
+        .gsub(/([a-z\d])([A-Z])/, '\1_\2')
+        .downcase
+  end
+end
+
+# Show which operating systems are end of life
+class EolCommand < BaseCommand
+  def initialize(arguments)
+    super
+
+    @filename = arguments.shift
+
+    # TODO: expose --at $DATE
+    eol = metadata.eol_operatingsystems
+
+    if eol.any?
+      width = eol.each_key.map(&:length).max
+
+      puts 'Found EOL operating systems'
+      eol.each do |os, versions|
+        puts "#{os.ljust(width)} #{versions.join(', ')}"
+      end
+    else
+      puts 'All operating systems up to date'
+    end
+  end
+end
+
+def main
+  command = ARGV[0]
+  command_class = BaseCommand.commands[command]
+  unless command_class
+    warn "Command '#{command}' not understood."
+    exit 2
+  end
+
+  command_class.new(ARGV[1..])
+end
+
+main
