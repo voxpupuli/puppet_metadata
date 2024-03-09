@@ -1,0 +1,64 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# optparse subcommands inspired by https://gist.github.com/rkumar/445735
+
+require 'optparse'
+require 'optparse/date'
+
+require 'puppet_metadata'
+
+def main
+  subcommands = PuppetMetadata::BaseCommand.commands
+
+  options = {}
+
+  parsers = subcommands.transform_values { |cls| cls.parser(options) }
+
+  global = OptionParser.new do |opts|
+    opts.banner = "Usage: #{opts.program_name} [options] <action> [options]"
+    opts.on('--filename METADATA', 'Metadata filename') do |value|
+      options[:verbose] = value
+    end
+
+    opts.separator ''
+    opts.separator 'ACTIONS'
+    width = subcommands.keys.max { |command, _parser| command.length }.length
+    parsers.each do |command, parser|
+      # TODO: positional argument
+      parser.banner = "Usage: #{opts.program_name} #{command} [options]"
+      opts.separator "  #{command.ljust(width + 4)}#{parser.program_name}"
+    end
+    opts.separator ''
+    opts.separator "See '#{opts.program_name} ACTION --help' for more information on a specific action."
+  end
+
+  begin
+    global.order!
+  rescue OptionParser::InvalidArgument, OptionParser::InvalidOption => e
+    warn e.cause ? "#{e}: #{e.cause}" : e
+    warn ''
+    global.help_exit
+  end
+  unless (command = ARGV.shift)
+    puts global
+    exit 1
+  end
+  if (parser = parsers[command])
+    begin
+      arguments = parser.parse!
+    rescue OptionParser::InvalidArgument, OptionParser::InvalidOption => e
+      warn e.cause ? "#{e}: #{e.cause}" : e
+      warn ''
+      parser.help_exit
+    end
+
+    command = subcommands[command].new(arguments, options)
+    command.run
+  else
+    puts global
+    exit 1
+  end
+end
+
+main
