@@ -24,6 +24,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rdoc', '~> 6.0'
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'rspec-its', '~> 1.0'
-  s.add_development_dependency 'voxpupuli-rubocop', '~> 2.5.0'
+  s.add_development_dependency 'voxpupuli-rubocop', '~> 2.6.0'
   s.add_development_dependency 'yard', '~> 0.9'
 end
