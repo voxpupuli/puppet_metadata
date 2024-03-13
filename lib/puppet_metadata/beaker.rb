@@ -19,6 +19,7 @@ module PuppetMetadata
     # unit files
     PIDFILE_INCOMPATIBLE = {
       'CentOS' => ['8'],
+      'RedHat' => ['8'],
       'AlmaLinux' => ['8'],
       'OracleLinux' => ['7', '8'],
       'Rocky' => ['8'],
@@ -59,7 +60,7 @@ module PuppetMetadata
       # @return [nil] If no setfile is available
       # @return [Array<(String, String)>] The beaker setfile description with a readable name
       def os_release_to_setfile(os, release, use_fqdn: false, pidfile_workaround: false, domain: nil, puppet_version: nil)
-        return unless os_supported?(os)
+        return unless os_supported?(os, release)
 
         aos = adjusted_os(os)
 
@@ -87,8 +88,14 @@ module PuppetMetadata
 
       # Return whether a Beaker setfile can be generated for the given OS
       # @param [String] os The operating system
-      def os_supported?(os)
-        %w[Archlinux CentOS Fedora Debian Ubuntu Rocky AlmaLinux OracleLinux].include?(os)
+      # @param [String] release The operating system release
+      def os_supported?(os, release = nil)
+        case os
+        when 'RedHat'
+          true unless /^7/.match?(release)
+        when /^(Archlinux|CentOS|Fedora|Debian|Ubuntu|Rocky|AlmaLinux|OracleLinux)/
+          true
+        end
       end
 
       private
