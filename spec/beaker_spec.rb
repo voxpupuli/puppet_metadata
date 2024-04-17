@@ -57,5 +57,40 @@ describe PuppetMetadata::Beaker do
         it { expect(described_class.os_release_to_setfile('CentOS', '8', pidfile_workaround: ['CentOS'])).to be_nil }
       end
     end
+
+    describe 'domain' do
+      it {
+        expect(described_class.os_release_to_setfile('CentOS', '7', domain: 'mydomain.org',
+                                                                    use_fqdn: true)).to eq(['centos7-64{hostname=centos7-64.mydomain.org}', 'CentOS 7'])
+      }
+    end
+
+    describe 'puppet_version' do
+      [
+        ['CentOS', '7', 'none', ['centos7-64', 'CentOS 7']],
+        ['CentOS', '7', 'puppet7', ['centos7-64{hostname=centos7-64-puppet7}', 'CentOS 7']],
+      ].each do |os, release, puppet_version, expected|
+        it { expect(described_class.os_release_to_setfile(os, release, puppet_version: puppet_version)).to eq(expected) }
+      end
+    end
+
+    describe 'nodes_and_roles' do
+      [
+        ['CentOS', '7', { '1' => ['role1', 'role2'] }, ['centos7-64role1,role2.ma', 'CentOS 7']],
+        ['CentOS', '7', { '1' => [], '2' => [] }, ['centos7-64.ma{hostname=centos7-64-1}-centos7-64.a{hostname=centos7-64-2}', 'CentOS 7']],
+        ['CentOS', '7', { '1' => ['role1'], '2' => ['role2'] }, ['centos7-64role1.ma{hostname=centos7-64-1}-centos7-64role2.a{hostname=centos7-64-2}', 'CentOS 7']],
+      ].each do |os, release, nodes, expected|
+        it { expect(described_class.os_release_to_setfile(os, release, nodes_and_roles: nodes)).to eq(expected) }
+      end
+    end
+
+    describe 'domain, puppet_version and nodes_and_roles' do
+      [
+        ['CentOS', '7', 'mydomain.org', 'puppet7', { '1' => ['role1'], '2' => ['role2'] },
+         ['centos7-64role1.ma{hostname=centos7-64-puppet7-1.mydomain.org}-centos7-64role2.a{hostname=centos7-64-puppet7-2.mydomain.org}', 'CentOS 7'],],
+      ].each do |os, release, domain, puppet_version, nodes, expected|
+        it { expect(described_class.os_release_to_setfile(os, release, domain: domain, puppet_version: puppet_version, nodes_and_roles: nodes)).to eq(expected) }
+      end
+    end
   end
 end

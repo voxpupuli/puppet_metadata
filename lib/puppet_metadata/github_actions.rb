@@ -144,6 +144,7 @@ module PuppetMetadata
         pidfile_workaround: options[:beaker_pidfile_workaround],
         domain: options[:domain],
         puppet_version: puppet_collection,
+        nodes_and_roles: options[:beaker_nodes_and_roles],
       )
     end
   end

@@ -40,6 +40,19 @@ OptionParser.new do |opts|
       options[:beaker_facter] = [fact, label, values.split(',')]
     end
   end
+  opts.on('--beaker_nodes_and_roles #NODE:ROLES;#NODE:ROLES;...', 'Expand the setfile string to create multiple nodes with custom roles. Separate roles using commas') do |opt|
+    options[:beaker_nodes_and_roles] = {}
+    if opt != 'false'
+      opt.split(';').each do |node|
+        node_num, roles = node.split(':', 2)
+        options[:beaker_nodes_and_roles][node_num] = if roles
+                                                       roles.split(',')
+                                                     else
+                                                       []
+                                                     end
+      end
+    end
+  end
 end.parse!
 
 filename = ARGV[0]

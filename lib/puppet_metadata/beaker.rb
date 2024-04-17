@@ -58,17 +58,18 @@ module PuppetMetadata
       #
       # @return [nil] If no setfile is available
       # @return [Array<(String, String)>] The beaker setfile description with a readable name
-      def os_release_to_setfile(os, release, use_fqdn: false, pidfile_workaround: false, domain: nil, puppet_version: nil)
+      def os_release_to_setfile(os, release, use_fqdn: false, pidfile_workaround: false, domain: nil, puppet_version: nil, nodes_and_roles: nil)
         return unless os_supported?(os)
 
         aos = adjusted_os(os)
 
         name = "#{aos}#{release.tr('.', '')}-64"
-        hostname = (puppet_version.nil? && puppet_version != 'none') ? name : "#{name}-#{puppet_version}"
         domain ||= 'example.com' if use_fqdn
-
+        hostname = (puppet_version.nil? || puppet_version == 'none') ? name : "#{name}-#{puppet_version}"
         options = {}
-        options[:hostname] = "#{hostname}.#{domain}" if domain
+        if domain || (puppet_version && puppet_version != 'none')
+          options[:hostname] = domain ? "#{hostname}.#{domain}" : hostname
+        end
 
         # Docker messes up cgroups and some systemd versions can't deal with
         # that when PIDFile is used.
@@ -82,7 +83,25 @@ module PuppetMetadata
 
         human_name = "#{os} #{release}"
 
-        [build_setfile(name, options), human_name]
+        if nodes_and_roles
+          names = []
+          nodes_and_roles.each do |node, roles|
+            roles.map!(&:strip)
+            n = "#{name}#{roles.join(',')}"
+            n += if names.empty?
+                   # add master role to first node
+                   '.ma'
+                 else
+                   '.a'
+                 end
+            options[:hostname] = hostname + "-#{node.strip}" if nodes_and_roles.size > 1
+            options[:hostname] = "#{options[:hostname]}.#{domain}" if options[:hostname] && domain
+            names << build_setfile(n, options)
+          end
+          [names.join('-'), human_name]
+        else
+          [build_setfile(name, options), human_name]
+        end
       end
 
       # Return whether a Beaker setfile can be generated for the given OS
