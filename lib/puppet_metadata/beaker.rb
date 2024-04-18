@@ -55,53 +55,69 @@ module PuppetMetadata
       #   Enforce a domain to be appended to the hostname, making it an FQDN
       # @param [Optional[String]] puppet_version
       #   The desired puppet version. Will be appended to the hostname
+      # @param [Optional[Hash]] hosts
+      #   Key: hostname, Value: roles (roles string as defined by beaker-hostgenerator )
+      #   Override the automatically generated hostname and optionally add roles
+      #   If more than one entry this will generate multiple hosts in the setfile
+      #   The domain may still be set via the `domain` param.
       #
       # @return [nil] If no setfile is available
       # @return [Array<(String, String)>] The beaker setfile description with a readable name
-      def os_release_to_setfile(os, release, use_fqdn: false, pidfile_workaround: false, domain: nil, puppet_version: nil, nodes_and_roles: nil)
+      def os_release_to_setfile(os, release, use_fqdn: false, pidfile_workaround: false, domain: nil, puppet_version: nil, hosts: nil)
         return unless os_supported?(os)
 
         aos = adjusted_os(os)
-
         name = "#{aos}#{release.tr('.', '')}-64"
+        human_name = "#{os} #{release}"
         domain ||= 'example.com' if use_fqdn
-        hostname = (puppet_version.nil? || puppet_version == 'none') ? name : "#{name}-#{puppet_version}"
-        options = {}
-        if domain || (puppet_version && puppet_version != 'none')
-          options[:hostname] = domain ? "#{hostname}.#{domain}" : hostname
+
+        hosts_settings = []
+        if hosts
+          hosts.each do |hostname, roles|
+            hosts_settings << {
+              'name' => if roles
+                          name + roles
+                        elsif hosts.size > 1
+                          hosts_settings.empty? ? "#{name}.ma" : "#{name}.a"
+                        else
+                          name
+                        end,
+              'hostname' => ((puppet_version.nil? || puppet_version == 'none') ? hostname : "#{hostname}-#{puppet_version}") + (domain ? ".#{domain}" : ''),
+            }
+          end
+        else
+          hosts_settings << {
+            'name' => name,
+            'hostname' => if puppet_version && puppet_version != 'none'
+                            "#{name}-#{puppet_version}" + (domain ? ".#{domain}" : '')
+                          elsif domain
+                            name + (domain ? ".#{domain}" : '')
+                          else
+                            ''
+                          end,
+          }
         end
 
+        options = {}
         # Docker messes up cgroups and some systemd versions can't deal with
         # that when PIDFile is used.
+        image_to_use = nil
         if pidfile_workaround?(pidfile_workaround, os)
           return if PIDFILE_INCOMPATIBLE[os]&.include?(release)
 
           if (image = PIDFILE_COMPATIBLE_IMAGES.dig(os, release))
-            options[:image] = image
+            image_to_use = image
           end
         end
 
-        human_name = "#{os} #{release}"
-
-        if nodes_and_roles
-          names = []
-          nodes_and_roles.each do |node, roles|
-            roles.map!(&:strip)
-            n = "#{name}#{roles.join(',')}"
-            n += if names.empty?
-                   # add master role to first node
-                   '.ma'
-                 else
-                   '.a'
-                 end
-            options[:hostname] = hostname + "-#{node.strip}" if nodes_and_roles.size > 1
-            options[:hostname] = "#{options[:hostname]}.#{domain}" if options[:hostname] && domain
-            names << build_setfile(n, options)
-          end
-          [names.join('-'), human_name]
-        else
-          [build_setfile(name, options), human_name]
+        setfile_parts = []
+        hosts_settings.each do |host_settings|
+          options[:hostname] = host_settings['hostname'] unless host_settings['hostname'].empty?
+          options[:image] = image_to_use if image_to_use
+          setfile_parts << build_setfile(host_settings['name'], options)
         end
+
+        [setfile_parts.join('-'), human_name]
       end
 
       # Return whether a Beaker setfile can be generated for the given OS

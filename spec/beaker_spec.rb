@@ -21,7 +21,7 @@ describe PuppetMetadata::Beaker do
 
     it { expect(described_class.os_release_to_setfile('SLES', '11')).to be_nil }
 
-    describe 'pidfile_workaround' do
+    context 'with pidfile_workaround' do
       describe 'true' do
         [
           ['CentOS', '6', ['centos6-64', 'CentOS 6']],
@@ -58,14 +58,13 @@ describe PuppetMetadata::Beaker do
       end
     end
 
-    describe 'domain' do
+    context 'with domain' do
       it {
-        expect(described_class.os_release_to_setfile('CentOS', '7', domain: 'mydomain.org',
-                                                                    use_fqdn: true)).to eq(['centos7-64{hostname=centos7-64.mydomain.org}', 'CentOS 7'])
+        expect(described_class.os_release_to_setfile('CentOS', '7', domain: 'mydomain.org')).to eq(['centos7-64{hostname=centos7-64.mydomain.org}', 'CentOS 7'])
       }
     end
 
-    describe 'puppet_version' do
+    context 'with puppet_version' do
       [
         ['CentOS', '7', 'none', ['centos7-64', 'CentOS 7']],
         ['CentOS', '7', 'puppet7', ['centos7-64{hostname=centos7-64-puppet7}', 'CentOS 7']],
@@ -74,22 +73,41 @@ describe PuppetMetadata::Beaker do
       end
     end
 
-    describe 'nodes_and_roles' do
+    context 'with hosts and no roles' do
       [
-        ['CentOS', '7', { '1' => ['role1', 'role2'] }, ['centos7-64role1,role2.ma', 'CentOS 7']],
-        ['CentOS', '7', { '1' => [], '2' => [] }, ['centos7-64.ma{hostname=centos7-64-1}-centos7-64.a{hostname=centos7-64-2}', 'CentOS 7']],
-        ['CentOS', '7', { '1' => ['role1'], '2' => ['role2'] }, ['centos7-64role1.ma{hostname=centos7-64-1}-centos7-64role2.a{hostname=centos7-64-2}', 'CentOS 7']],
-      ].each do |os, release, nodes, expected|
-        it { expect(described_class.os_release_to_setfile(os, release, nodes_and_roles: nodes)).to eq(expected) }
+        ['Debian', '12', { 'foo' => nil }, ['debian12-64{hostname=foo}', 'Debian 12']],
+        ['Debian', '12', { 'foo' => nil, 'bar' => nil }, ['debian12-64.ma{hostname=foo}-debian12-64.a{hostname=bar}', 'Debian 12']],
+      ].each do |os, release, hosts, expected|
+        it { expect(described_class.os_release_to_setfile(os, release, hosts: hosts)).to eq(expected) }
       end
     end
 
-    describe 'domain, puppet_version and nodes_and_roles' do
+    context 'with hosts and roles' do
       [
-        ['CentOS', '7', 'mydomain.org', 'puppet7', { '1' => ['role1'], '2' => ['role2'] },
-         ['centos7-64role1.ma{hostname=centos7-64-puppet7-1.mydomain.org}-centos7-64role2.a{hostname=centos7-64-puppet7-2.mydomain.org}', 'CentOS 7'],],
-      ].each do |os, release, domain, puppet_version, nodes, expected|
-        it { expect(described_class.os_release_to_setfile(os, release, domain: domain, puppet_version: puppet_version, nodes_and_roles: nodes)).to eq(expected) }
+        ['Debian', '12', { 'foo' => 'myrole.ma' }, ['debian12-64myrole.ma{hostname=foo}', 'Debian 12']],
+        ['Debian', '12', { 'foo' => 'myrole,primary.ma' }, ['debian12-64myrole,primary.ma{hostname=foo}', 'Debian 12']],
+        ['Debian', '12', { 'foo' => 'myrole,primary.ma', 'bar' => 'myrole,secondary.a' },
+         ['debian12-64myrole,primary.ma{hostname=foo}-debian12-64myrole,secondary.a{hostname=bar}', 'Debian 12'],],
+      ].each do |os, release, hosts, expected|
+        it { expect(described_class.os_release_to_setfile(os, release, hosts: hosts)).to eq(expected) }
+      end
+    end
+
+    context 'with hosts, roles and domain' do
+      [
+        ['Debian', '12', 'mydomain.org', { 'foo' => 'myrole,primary.ma', 'bar' => 'myrole,secondary.a' },
+         ['debian12-64myrole,primary.ma{hostname=foo.mydomain.org}-debian12-64myrole,secondary.a{hostname=bar.mydomain.org}', 'Debian 12'],],
+      ].each do |os, release, domain, hosts, expected|
+        it { expect(described_class.os_release_to_setfile(os, release, domain: domain, hosts: hosts)).to eq(expected) }
+      end
+    end
+
+    context 'with hosts, roles, domain and puppet_version' do
+      [
+        ['Debian', '12', 'mydomain.org', 'puppet7', { 'foo' => 'myrole,primary.ma', 'bar' => 'myrole,secondary.a' },
+         ['debian12-64myrole,primary.ma{hostname=foo-puppet7.mydomain.org}-debian12-64myrole,secondary.a{hostname=bar-puppet7.mydomain.org}', 'Debian 12'],],
+      ].each do |os, release, domain, puppet_version, hosts, expected|
+        it { expect(described_class.os_release_to_setfile(os, release, domain: domain, puppet_version: puppet_version, hosts: hosts)).to eq(expected) }
       end
     end
   end

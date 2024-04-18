@@ -104,19 +104,16 @@ This results in the following JSON data
 ]
 ```
 
-If you need multiple hosts in your integration tests this could be achived by using the --beaker_nodes_and_roles option
+If you need custom hostname or multiple hosts in your integration tests this could be achived by using the --beaker-hosts option
 
-Option argument is '#HOST:ROLE,ROLE,...;#HOST:..;..' where
+Option argument is 'HOSTNAME:ROLES;HOSTNAME:..;..' where
 - hosts are separated by ';'
 - host number and roles are separated by ':'
-- Roles are separated by ','
+- Roles follow beaker-hostgenerator syntax
 If you don't need any extra roles use '1;2;..'
 
-The 'master' and 'agent' roles will be automatically added to the first host.
-The 'agent' role will be automatically added to the rest.
-
 ```console
-$ metadata2gha --beaker_nodes_and_roles '1:role1,other1;2:role2,other2'
+$ metadata2gha --beaker-hosts 'foo:primary.ma;bar:secondary.a'
 ```
 
 This results in the following JSON data
@@ -126,7 +123,7 @@ This results in the following JSON data
     "name": "Puppet 7 - Debian 12",
     "env": {
       "BEAKER_PUPPET_COLLECTION": "puppet7",
-      "BEAKER_SETFILE": "debian12-64role1,other1.ma{hostname=debian12-64-puppet7-1}-debian12-64role2,other2.a{hostname=debian12-64-puppet7-2}"
+      "BEAKER_SETFILE": "debian12-64primary.ma{hostname=foo-puppet7}-debian12-64secondary.a{hostname=bar-puppet7}"
     }
   }
 ]

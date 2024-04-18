@@ -161,32 +161,32 @@ describe PuppetMetadata::GithubActions do
         end
       end
 
-      context 'with option beaker_nodes_and_roles set to one node with custom roles' do
-        let(:options) { super().merge(beaker_nodes_and_roles: { '1' => ['role1', 'role2'] }) }
+      context 'with option beaker_hosts set to one node with custom roles' do
+        let(:options) { super().merge(beaker_hosts: { 'foo' => 'myrole,primary.ma' }) }
 
-        it 'is expected to contain supported os / puppet version / setfile with roles' do
+        it 'is expected to contain supported os / puppet version / custom hostname / custom roles' do
           expect(subject).to include(
-            { name: 'Distro Puppet - Archlinux rolling', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'archlinuxrolling-64role1,role2.ma' } },
+            { name: 'Distro Puppet - Archlinux rolling', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'archlinuxrolling-64myrole,primary.ma{hostname=foo}' } },
           )
         end
       end
 
-      context 'with option beaker_nodes_and_roles set to two node without custom roles' do
-        let(:options) { super().merge(beaker_nodes_and_roles: { '1' => [], '2' => [] }) }
+      context 'with option beaker_hosts set to two node without custom roles' do
+        let(:options) { super().merge(beaker_hosts: { 'foo' => nil, 'bar' => nil }) }
 
-        it 'is expected to contain supported os / puppet version / setfile with nodes' do
+        it 'is expected to contain supported os / puppet version / custom hostnames / required roles for multihost' do
           expect(subject).to include(
-            { name: 'Distro Puppet - Archlinux rolling', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'archlinuxrolling-64.ma{hostname=archlinuxrolling-64-1}-archlinuxrolling-64.a{hostname=archlinuxrolling-64-2}' } },
+            { name: 'Distro Puppet - Archlinux rolling', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'archlinuxrolling-64.ma{hostname=foo}-archlinuxrolling-64.a{hostname=bar}' } },
           )
         end
       end
 
-      context 'with option beaker_nodes_and_roles set to two node with custom roles' do
-        let(:options) { super().merge(beaker_nodes_and_roles: { '1' => ['role1'], '2' => ['role2'] }) }
+      context 'with option beaker_hosts set to two node with custom roles' do
+        let(:options) { super().merge(beaker_hosts: { 'foo' => 'primary.ma', 'bar' => 'secondary.a' }) }
 
-        it 'is expected to contain supported os / puppet version / setfile with nodes and roles' do
+        it 'is expected to contain supported os / puppet version / custom hostnames / custom roles' do
           expect(subject).to include(
-            { name: 'Distro Puppet - Archlinux rolling', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'archlinuxrolling-64role1.ma{hostname=archlinuxrolling-64-1}-archlinuxrolling-64role2.a{hostname=archlinuxrolling-64-2}' } },
+            { name: 'Distro Puppet - Archlinux rolling', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'archlinuxrolling-64primary.ma{hostname=foo}-archlinuxrolling-64secondary.a{hostname=bar}' } },
           )
         end
       end
