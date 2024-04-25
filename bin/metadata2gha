@@ -42,12 +42,13 @@ OptionParser.new do |opts|
     end
   end
   opts.on('--beaker-hosts HOSTNAME:ROLES;HOSTNAME:ROLES;...', 'Expand the setfile string to create multiple hosts with custom roles. Roles string; see beaker-hostgenerator') do |opt|
-    options[:beaker_hosts] = {}
     if opt != 'false'
+      beaker_hosts = {}
       opt.split(';').each do |host|
         hostname, roles = host.split(':', 2)
-        options[:beaker_hosts][hostname] = roles
+        beaker_hosts[hostname] = roles
       end
+      options[:beaker_hosts] = beaker_hosts unless beaker_hosts.empty?
     end
   end
 end.parse!
