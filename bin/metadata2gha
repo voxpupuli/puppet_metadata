@@ -11,6 +11,7 @@ options = {
   domain: nil,
   minimum_major_puppet_version: nil,
   beaker_fact: nil,
+  beaker_hosts: nil,
 }
 
 OptionParser.new do |opts|
@@ -38,6 +39,15 @@ OptionParser.new do |opts|
       raise OptionParser::InvalidArgument unless values
 
       options[:beaker_facter] = [fact, label, values.split(',')]
+    end
+  end
+  opts.on('--beaker-hosts HOSTNAME:ROLES;HOSTNAME:ROLES;...', 'Expand the setfile string to create multiple hosts with custom roles. Roles string; see beaker-hostgenerator') do |opt|
+    options[:beaker_hosts] = {}
+    if opt != 'false'
+      opt.split(';').each do |host|
+        hostname, roles = host.split(':', 2)
+        options[:beaker_hosts][hostname] = roles
+      end
     end
   end
 end.parse!

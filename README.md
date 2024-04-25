@@ -16,23 +16,23 @@ To get outputs [usable in Github Actions](https://docs.github.com/en/free-pro-te
 
 ```console
 $ metadata2gha
-puppet_major_versions=[{"name":"Puppet 7","value":7,"collection":"puppet7"},{"name":"Puppet 6","value":6,"collection":"puppet6"}]
-puppet_unit_test_matrix=[{"puppet":7,"ruby":"2.7"},{"puppet":6,"ruby":"2.5"}]
-github_action_test_matrix=[{"setfile":{"name":"Debian 11","value":"debian11-64"},"puppet":{"name":"Puppet 7","value":7,"collection":"puppet7"}},{"setfile":{"name":"Debian 11","value":"debian11-64"},"puppet":{"name":"Puppet 6","value":6,"collection":"puppet6"}}]
+puppet_major_versions=[{"name":"Puppet 8","value":8,"collection":"puppet8"},{"name":"Puppet 7","value":7,"collection":"puppet7"}]
+puppet_unit_test_matrix=[{"puppet":8,"ruby":"3.2"},{"puppet":7,"ruby":"2.7"}]
+puppet_beaker_test_matrix=[{"name":"Puppet 8 - Debian 12","env":{"BEAKER_PUPPET_COLLECTION":"puppet8","BEAKER_SETFILE":"debian12-64{hostname=debian12-64-puppet8}"}},{"name":"Puppet 7 - Debian 12","env":{"BEAKER_PUPPET_COLLECTION":"puppet7","BEAKER_SETFILE":"debian12-64{hostname=debian12-64-puppet7}"}}]
 ```
 
 Puppet major versions formatted for readability:
 ```json
 [
   {
+    "name": "Puppet 8",
+    "value": 8,
+    "collection": "puppet8"
+  },
+  {
     "name": "Puppet 7",
     "value": 7,
     "collection": "puppet7"
-  },
-  {
-    "name": "Puppet 6",
-    "value": 6,
-    "collection": "puppet6"
   }
 ]
 ```
@@ -41,45 +41,37 @@ Puppet unit test matrix formatted for readability:
 ```json
 [
   {
-    "puppet": 7,
-    "ruby": "2.7"
+    "puppet": 8,
+    "ruby": "3.2"
   },
   {
-    "puppet": 6,
-    "ruby": "2.5"
+    "puppet": 7,
+    "ruby": "2.7"
   }
 ]
 ```
 
-GitHub Action test matrix formatted for readability
+Beaker test matrix formatted for readability
 ```json
 [
   {
-    "setfile": {
-      "name": "Debian 11",
-      "value": "debian11-64"
-    },
-    "puppet": {
-      "name": "Puppet 7",
-      "value": 7,
-      "collection": "puppet7"
+    "name": "Puppet 8 - Debian 12",
+    "env": {
+      "BEAKER_PUPPET_COLLECTION": "puppet8",
+      "BEAKER_SETFILE": "debian12-64{hostname=debian12-64-puppet8}"
     }
   },
   {
-    "setfile": {
-      "name": "Debian 11",
-      "value": "debian11-64"
-    },
-    "puppet": {
-      "name": "Puppet 6",
-      "value": 6,
-      "collection": "puppet6"
+    "name": "Puppet 7 - Debian 12",
+    "env": {
+      "BEAKER_PUPPET_COLLECTION": "puppet7",
+      "BEAKER_SETFILE": "debian12-64{hostname=debian12-64-puppet7}"
     }
   }
 ]
 ```
 
-It is also possible to specify the path to metadata.json and customize the setfiles. For example, to ensure the setfiles use FQDNs and apply the [systemd PIDFile workaround under docker](https://github.com/docker/for-linux/issues/835). This either means either using an older image (CentOS 7, Ubuntu 16.04) or skipping (CentOS 8).
+It is possible to specify the path to metadata.json and customize the setfiles. For example, to ensure the setfiles use FQDNs and apply the [systemd PIDFile workaround under docker](https://github.com/docker/for-linux/issues/835). This either means either using an older image (CentOS 7, Ubuntu 16.04) or skipping (CentOS 8).
 
 ```console
 $ metadata2gha --use-fqdn --pidfile-workaround true /path/to/metadata.json
@@ -89,21 +81,101 @@ This results in the following JSON data
 ```json
 [
   {
-    "name": "CentOS 7",
-    "value": "centos7-64{hostname=centos7-64.example.com,image=centos:7.6.1810}"
+    "name": "Puppet 7 - CentOS 7",
+    "env": {
+      "BEAKER_PUPPET_COLLECTION": "puppet7",
+      "BEAKER_SETFILE": "centos7-64{hostname=centos7-64-puppet7.example.com,image=centos:7.6.1810}"
+    }
   },
   {
-    "name": "Debian 10",
-    "value": "debian10-64{hostname=debian10-64.example.com}"
+    "name": "Puppet 7 - Debian 12",
+    "env": {
+      "BEAKER_PUPPET_COLLECTION": "puppet7",
+      "BEAKER_SETFILE": "debian12-64{hostname=debian12-64-puppet7.example.com}"
+    }
   },
   {
-    "name": "Ubuntu 18.04",
-    "value": "ubuntu1804-64{hostname=ubuntu1804-64.example.com}"
+    "name": "Puppet 7 - Ubuntu 22.04",
+    "env": {
+      "BEAKER_PUPPET_COLLECTION": "puppet7",
+      "BEAKER_SETFILE": "ubuntu2204-64{hostname=ubuntu2204-64-puppet7.example.com}"
+    }
   }
 ]
 ```
 
-It is also possible to specify a comma separated list of operating systems as used in `metadata.json` (`CentOS,Ubuntu`).
+If you need custom hostname or multiple hosts in your integration tests this could be achived by using the --beaker-hosts option
+
+Option argument is 'HOSTNAME:ROLES;HOSTNAME:..;..' where
+- hosts are separated by ';'
+- host number and roles are separated by ':'
+- Roles follow beaker-hostgenerator syntax
+If you don't need any extra roles use '1;2;..'
+
+```console
+$ metadata2gha --beaker-hosts 'foo:primary.ma;bar:secondary.a'
+```
+
+This results in the following JSON data
+```json
+[
+  {
+    "name": "Puppet 7 - Debian 12",
+    "env": {
+      "BEAKER_PUPPET_COLLECTION": "puppet7",
+      "BEAKER_SETFILE": "debian12-64primary.ma{hostname=foo-puppet7}-debian12-64secondary.a{hostname=bar-puppet7}"
+    }
+  }
+]
+```
+
+If you need to Expand the matrix ie by product versions it could be achived by using the --beaker-facter option
+
+Option argument is 'FACT:LABEL:VALUE,VALUE,..' where
+- Fact, label and values are separated by ':'
+- Values are separated by ','
+
+```console
+$ metadata2gha --beaker-facter 'mongodb_repo_version:MongoDB:4.4,5.0,6.0,7.0'
+```
+
+This results in the following JSON data
+```json
+[
+  {
+    "name": "Puppet 7 - Debian 12 - MongoDB 4.4",
+    "env": {
+        "BEAKER_PUPPET_COLLECTION": "puppet7",
+        "BEAKER_SETFILE": "debian12-64{hostname=debian12-64-puppet7}",
+        "BEAKER_FACTER_mongodb_repo_version": "4.4"
+    }
+  },
+  {
+    "name": "Puppet 7 - Debian 12 - MongoDB 5.0",
+    "env": {
+      "BEAKER_PUPPET_COLLECTION": "puppet7",
+      "BEAKER_SETFILE": "debian12-64{hostname=debian12-64-puppet7}",
+      "BEAKER_FACTER_mongodb_repo_version": "5.0"
+    }
+  },
+  {
+    "name": "Puppet 7 - Debian 12 - MongoDB 6.0",
+    "env": {
+      "BEAKER_PUPPET_COLLECTION": "puppet7",
+      "BEAKER_SETFILE": "debian12-64{hostname=debian12-64-puppet7}",
+      "BEAKER_FACTER_mongodb_repo_version": "6.0"
+    }
+  },
+  {
+    "name": "Puppet 7 - Debian 12 - MongoDB 7.0",
+    "env": {
+      "BEAKER_PUPPET_COLLECTION": "puppet7",
+      "BEAKER_SETFILE": "debian12-64{hostname=debian12-64-puppet7}",
+      "BEAKER_FACTER_mongodb_repo_version": "7.0"
+    }
+  }
+]
+```
 
 ## Work with the API
 

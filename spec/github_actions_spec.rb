@@ -123,28 +123,28 @@ describe PuppetMetadata::GithubActions do
       it 'is expected to contain supported os / puppet version combinations' do
         expect(subject).to contain_exactly(
           { name: 'Distro Puppet - Archlinux rolling', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'archlinuxrolling-64' } },
-          { name: 'Puppet 5 - CentOS 7', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet5', 'BEAKER_SETFILE' => 'centos7-64' } },
-          { name: 'Puppet 6 - CentOS 7', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet6', 'BEAKER_SETFILE' => 'centos7-64' } },
-          { name: 'Puppet 7 - CentOS 7', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'centos7-64' } },
-          { name: 'Puppet 8 - CentOS 7', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'centos7-64' } },
-          { name: 'Puppet 5 - CentOS 8', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet5', 'BEAKER_SETFILE' => 'centos8-64' } },
-          { name: 'Puppet 6 - CentOS 8', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet6', 'BEAKER_SETFILE' => 'centos8-64' } },
-          { name: 'Puppet 7 - CentOS 8', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'centos8-64' } },
-          { name: 'Puppet 8 - CentOS 8', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'centos8-64' } },
-          { name: 'Puppet 6 - CentOS 9', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet6', 'BEAKER_SETFILE' => 'centos9-64' } },
-          { name: 'Puppet 7 - CentOS 9', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'centos9-64' } },
-          { name: 'Puppet 8 - CentOS 9', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'centos9-64' } },
-          { name: 'Puppet 5 - Debian 9', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet5', 'BEAKER_SETFILE' => 'debian9-64' } },
-          { name: 'Puppet 6 - Debian 9', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet6', 'BEAKER_SETFILE' => 'debian9-64' } },
-          { name: 'Puppet 7 - Debian 9', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'debian9-64' } },
-          { name: 'Puppet 5 - Debian 10', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet5', 'BEAKER_SETFILE' => 'debian10-64' } },
-          { name: 'Puppet 6 - Debian 10', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet6', 'BEAKER_SETFILE' => 'debian10-64' } },
-          { name: 'Puppet 7 - Debian 10', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'debian10-64' } },
-          { name: 'Puppet 8 - Debian 10', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'debian10-64' } },
-          { name: 'Puppet 7 - Debian 12', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'debian12-64' } },
-          { name: 'Puppet 8 - Debian 12', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'debian12-64' } },
-          { name: 'Puppet 7 - Fedora 36', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'fedora36-64' } },
-          { name: 'Puppet 8 - Fedora 36', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'fedora36-64' } },
+          { name: 'Puppet 5 - CentOS 7', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet5', 'BEAKER_SETFILE' => 'centos7-64{hostname=centos7-64-puppet5}' } },
+          { name: 'Puppet 6 - CentOS 7', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet6', 'BEAKER_SETFILE' => 'centos7-64{hostname=centos7-64-puppet6}' } },
+          { name: 'Puppet 7 - CentOS 7', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'centos7-64{hostname=centos7-64-puppet7}' } },
+          { name: 'Puppet 8 - CentOS 7', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'centos7-64{hostname=centos7-64-puppet8}' } },
+          { name: 'Puppet 5 - CentOS 8', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet5', 'BEAKER_SETFILE' => 'centos8-64{hostname=centos8-64-puppet5}' } },
+          { name: 'Puppet 6 - CentOS 8', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet6', 'BEAKER_SETFILE' => 'centos8-64{hostname=centos8-64-puppet6}' } },
+          { name: 'Puppet 7 - CentOS 8', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'centos8-64{hostname=centos8-64-puppet7}' } },
+          { name: 'Puppet 8 - CentOS 8', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'centos8-64{hostname=centos8-64-puppet8}' } },
+          { name: 'Puppet 6 - CentOS 9', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet6', 'BEAKER_SETFILE' => 'centos9-64{hostname=centos9-64-puppet6}' } },
+          { name: 'Puppet 7 - CentOS 9', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'centos9-64{hostname=centos9-64-puppet7}' } },
+          { name: 'Puppet 8 - CentOS 9', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'centos9-64{hostname=centos9-64-puppet8}' } },
+          { name: 'Puppet 5 - Debian 9', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet5', 'BEAKER_SETFILE' => 'debian9-64{hostname=debian9-64-puppet5}' } },
+          { name: 'Puppet 6 - Debian 9', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet6', 'BEAKER_SETFILE' => 'debian9-64{hostname=debian9-64-puppet6}' } },
+          { name: 'Puppet 7 - Debian 9', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'debian9-64{hostname=debian9-64-puppet7}' } },
+          { name: 'Puppet 5 - Debian 10', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet5', 'BEAKER_SETFILE' => 'debian10-64{hostname=debian10-64-puppet5}' } },
+          { name: 'Puppet 6 - Debian 10', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet6', 'BEAKER_SETFILE' => 'debian10-64{hostname=debian10-64-puppet6}' } },
+          { name: 'Puppet 7 - Debian 10', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'debian10-64{hostname=debian10-64-puppet7}' } },
+          { name: 'Puppet 8 - Debian 10', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'debian10-64{hostname=debian10-64-puppet8}' } },
+          { name: 'Puppet 7 - Debian 12', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'debian12-64{hostname=debian12-64-puppet7}' } },
+          { name: 'Puppet 8 - Debian 12', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'debian12-64{hostname=debian12-64-puppet8}' } },
+          { name: 'Puppet 7 - Fedora 36', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'fedora36-64{hostname=fedora36-64-puppet7}' } },
+          { name: 'Puppet 8 - Fedora 36', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'fedora36-64{hostname=fedora36-64-puppet8}' } },
           { name: 'Distro Puppet - Fedora 38', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'fedora38-64' } },
           { name: 'Distro Puppet - Fedora 40', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'fedora40-64' } },
         )
@@ -160,6 +160,36 @@ describe PuppetMetadata::GithubActions do
           )
         end
       end
+
+      context 'with option beaker_hosts set to one node with custom roles' do
+        let(:options) { super().merge(beaker_hosts: { 'foo' => 'myrole,primary.ma' }) }
+
+        it 'is expected to contain supported os / puppet version / custom hostname / custom roles' do
+          expect(subject).to include(
+            { name: 'Distro Puppet - Archlinux rolling', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'archlinuxrolling-64myrole,primary.ma{hostname=foo}' } },
+          )
+        end
+      end
+
+      context 'with option beaker_hosts set to two node without custom roles' do
+        let(:options) { super().merge(beaker_hosts: { 'foo' => nil, 'bar' => nil }) }
+
+        it 'is expected to contain supported os / puppet version / custom hostnames / required roles for multihost' do
+          expect(subject).to include(
+            { name: 'Distro Puppet - Archlinux rolling', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'archlinuxrolling-64.ma{hostname=foo}-archlinuxrolling-64.a{hostname=bar}' } },
+          )
+        end
+      end
+
+      context 'with option beaker_hosts set to two node with custom roles' do
+        let(:options) { super().merge(beaker_hosts: { 'foo' => 'primary.ma', 'bar' => 'secondary.a' }) }
+
+        it 'is expected to contain supported os / puppet version / custom hostnames / custom roles' do
+          expect(subject).to include(
+            { name: 'Distro Puppet - Archlinux rolling', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'archlinuxrolling-64primary.ma{hostname=foo}-archlinuxrolling-64secondary.a{hostname=bar}' } },
+          )
+        end
+      end
     end
 
     describe 'github_action_test_matrix' do
@@ -170,28 +200,28 @@ describe PuppetMetadata::GithubActions do
       it 'is expected to contain supported os / puppet version combinations' do
         expect(subject).to contain_exactly(
           { name: 'Distro Puppet - Archlinux rolling', setfile: { name: 'Archlinux rolling', value: 'archlinuxrolling-64' }, puppet: { collection: 'none', name: 'Distro Puppet', value: nil } },
-          { name: 'Puppet 5 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64' }, puppet: { collection: 'puppet5', name: 'Puppet 5', value: 5 } },
-          { name: 'Puppet 6 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
-          { name: 'Puppet 7 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
-          { name: 'Puppet 8 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
-          { name: 'Puppet 5 - CentOS 8', setfile: { name: 'CentOS 8', value: 'centos8-64' }, puppet: { collection: 'puppet5', name: 'Puppet 5', value: 5 } },
-          { name: 'Puppet 6 - CentOS 8', setfile: { name: 'CentOS 8', value: 'centos8-64' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
-          { name: 'Puppet 7 - CentOS 8', setfile: { name: 'CentOS 8', value: 'centos8-64' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
-          { name: 'Puppet 8 - CentOS 8', setfile: { name: 'CentOS 8', value: 'centos8-64' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
-          { name: 'Puppet 6 - CentOS 9', setfile: { name: 'CentOS 9', value: 'centos9-64' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
-          { name: 'Puppet 7 - CentOS 9', setfile: { name: 'CentOS 9', value: 'centos9-64' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
-          { name: 'Puppet 8 - CentOS 9', setfile: { name: 'CentOS 9', value: 'centos9-64' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
-          { name: 'Puppet 5 - Debian 9', setfile: { name: 'Debian 9', value: 'debian9-64' }, puppet: { collection: 'puppet5', name: 'Puppet 5', value: 5 } },
-          { name: 'Puppet 6 - Debian 9', setfile: { name: 'Debian 9', value: 'debian9-64' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
-          { name: 'Puppet 7 - Debian 9', setfile: { name: 'Debian 9', value: 'debian9-64' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
-          { name: 'Puppet 5 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64' }, puppet: { collection: 'puppet5', name: 'Puppet 5', value: 5 } },
-          { name: 'Puppet 6 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
-          { name: 'Puppet 7 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
-          { name: 'Puppet 8 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
-          { name: 'Puppet 7 - Debian 12', setfile: { name: 'Debian 12', value: 'debian12-64' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
-          { name: 'Puppet 8 - Debian 12', setfile: { name: 'Debian 12', value: 'debian12-64' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
-          { name: 'Puppet 7 - Fedora 36', setfile: { name: 'Fedora 36', value: 'fedora36-64' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
-          { name: 'Puppet 8 - Fedora 36', setfile: { name: 'Fedora 36', value: 'fedora36-64' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
+          { name: 'Puppet 5 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64{hostname=centos7-64-puppet5}' }, puppet: { collection: 'puppet5', name: 'Puppet 5', value: 5 } },
+          { name: 'Puppet 6 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64{hostname=centos7-64-puppet6}' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
+          { name: 'Puppet 7 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64{hostname=centos7-64-puppet7}' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
+          { name: 'Puppet 8 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64{hostname=centos7-64-puppet8}' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
+          { name: 'Puppet 5 - CentOS 8', setfile: { name: 'CentOS 8', value: 'centos8-64{hostname=centos8-64-puppet5}' }, puppet: { collection: 'puppet5', name: 'Puppet 5', value: 5 } },
+          { name: 'Puppet 6 - CentOS 8', setfile: { name: 'CentOS 8', value: 'centos8-64{hostname=centos8-64-puppet6}' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
+          { name: 'Puppet 7 - CentOS 8', setfile: { name: 'CentOS 8', value: 'centos8-64{hostname=centos8-64-puppet7}' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
+          { name: 'Puppet 8 - CentOS 8', setfile: { name: 'CentOS 8', value: 'centos8-64{hostname=centos8-64-puppet8}' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
+          { name: 'Puppet 6 - CentOS 9', setfile: { name: 'CentOS 9', value: 'centos9-64{hostname=centos9-64-puppet6}' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
+          { name: 'Puppet 7 - CentOS 9', setfile: { name: 'CentOS 9', value: 'centos9-64{hostname=centos9-64-puppet7}' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
+          { name: 'Puppet 8 - CentOS 9', setfile: { name: 'CentOS 9', value: 'centos9-64{hostname=centos9-64-puppet8}' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
+          { name: 'Puppet 5 - Debian 9', setfile: { name: 'Debian 9', value: 'debian9-64{hostname=debian9-64-puppet5}' }, puppet: { collection: 'puppet5', name: 'Puppet 5', value: 5 } },
+          { name: 'Puppet 6 - Debian 9', setfile: { name: 'Debian 9', value: 'debian9-64{hostname=debian9-64-puppet6}' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
+          { name: 'Puppet 7 - Debian 9', setfile: { name: 'Debian 9', value: 'debian9-64{hostname=debian9-64-puppet7}' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
+          { name: 'Puppet 5 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64{hostname=debian10-64-puppet5}' }, puppet: { collection: 'puppet5', name: 'Puppet 5', value: 5 } },
+          { name: 'Puppet 6 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64{hostname=debian10-64-puppet6}' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
+          { name: 'Puppet 7 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64{hostname=debian10-64-puppet7}' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
+          { name: 'Puppet 8 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64{hostname=debian10-64-puppet8}' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
+          { name: 'Puppet 7 - Debian 12', setfile: { name: 'Debian 12', value: 'debian12-64{hostname=debian12-64-puppet7}' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
+          { name: 'Puppet 8 - Debian 12', setfile: { name: 'Debian 12', value: 'debian12-64{hostname=debian12-64-puppet8}' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
+          { name: 'Puppet 7 - Fedora 36', setfile: { name: 'Fedora 36', value: 'fedora36-64{hostname=fedora36-64-puppet7}' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
+          { name: 'Puppet 8 - Fedora 36', setfile: { name: 'Fedora 36', value: 'fedora36-64{hostname=fedora36-64-puppet8}' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
           { name: 'Distro Puppet - Fedora 38', setfile: { name: 'Fedora 38', value: 'fedora38-64' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 7 } },
           { name: 'Distro Puppet - Fedora 40', setfile: { name: 'Fedora 40', value: 'fedora40-64' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 8 } },
         )
@@ -203,24 +233,24 @@ describe PuppetMetadata::GithubActions do
         it 'is expected to contain supported os / puppet version combinations excluding puppet 5' do
           expect(subject).to contain_exactly(
             { name: 'Distro Puppet - Archlinux rolling', setfile: { name: 'Archlinux rolling', value: 'archlinuxrolling-64' }, puppet: { collection: 'none', name: 'Distro Puppet', value: nil } },
-            { name: 'Puppet 6 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
-            { name: 'Puppet 7 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
-            { name: 'Puppet 8 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
-            { name: 'Puppet 6 - CentOS 8', setfile: { name: 'CentOS 8', value: 'centos8-64' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
-            { name: 'Puppet 7 - CentOS 8', setfile: { name: 'CentOS 8', value: 'centos8-64' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
-            { name: 'Puppet 8 - CentOS 8', setfile: { name: 'CentOS 8', value: 'centos8-64' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
-            { name: 'Puppet 6 - CentOS 9', setfile: { name: 'CentOS 9', value: 'centos9-64' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
-            { name: 'Puppet 7 - CentOS 9', setfile: { name: 'CentOS 9', value: 'centos9-64' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
-            { name: 'Puppet 8 - CentOS 9', setfile: { name: 'CentOS 9', value: 'centos9-64' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
-            { name: 'Puppet 6 - Debian 9', setfile: { name: 'Debian 9', value: 'debian9-64' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
-            { name: 'Puppet 7 - Debian 9', setfile: { name: 'Debian 9', value: 'debian9-64' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
-            { name: 'Puppet 6 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
-            { name: 'Puppet 7 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
-            { name: 'Puppet 8 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
-            { name: 'Puppet 7 - Debian 12', setfile: { name: 'Debian 12', value: 'debian12-64' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
-            { name: 'Puppet 8 - Debian 12', setfile: { name: 'Debian 12', value: 'debian12-64' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
-            { name: 'Puppet 7 - Fedora 36', setfile: { name: 'Fedora 36', value: 'fedora36-64' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
-            { name: 'Puppet 8 - Fedora 36', setfile: { name: 'Fedora 36', value: 'fedora36-64' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
+            { name: 'Puppet 6 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64{hostname=centos7-64-puppet6}' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
+            { name: 'Puppet 7 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64{hostname=centos7-64-puppet7}' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
+            { name: 'Puppet 8 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64{hostname=centos7-64-puppet8}' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
+            { name: 'Puppet 6 - CentOS 8', setfile: { name: 'CentOS 8', value: 'centos8-64{hostname=centos8-64-puppet6}' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
+            { name: 'Puppet 7 - CentOS 8', setfile: { name: 'CentOS 8', value: 'centos8-64{hostname=centos8-64-puppet7}' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
+            { name: 'Puppet 8 - CentOS 8', setfile: { name: 'CentOS 8', value: 'centos8-64{hostname=centos8-64-puppet8}' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
+            { name: 'Puppet 6 - CentOS 9', setfile: { name: 'CentOS 9', value: 'centos9-64{hostname=centos9-64-puppet6}' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
+            { name: 'Puppet 7 - CentOS 9', setfile: { name: 'CentOS 9', value: 'centos9-64{hostname=centos9-64-puppet7}' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
+            { name: 'Puppet 8 - CentOS 9', setfile: { name: 'CentOS 9', value: 'centos9-64{hostname=centos9-64-puppet8}' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
+            { name: 'Puppet 6 - Debian 9', setfile: { name: 'Debian 9', value: 'debian9-64{hostname=debian9-64-puppet6}' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
+            { name: 'Puppet 7 - Debian 9', setfile: { name: 'Debian 9', value: 'debian9-64{hostname=debian9-64-puppet7}' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
+            { name: 'Puppet 6 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64{hostname=debian10-64-puppet6}' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
+            { name: 'Puppet 7 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64{hostname=debian10-64-puppet7}' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
+            { name: 'Puppet 8 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64{hostname=debian10-64-puppet8}' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
+            { name: 'Puppet 7 - Debian 12', setfile: { name: 'Debian 12', value: 'debian12-64{hostname=debian12-64-puppet7}' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
+            { name: 'Puppet 8 - Debian 12', setfile: { name: 'Debian 12', value: 'debian12-64{hostname=debian12-64-puppet8}' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
+            { name: 'Puppet 7 - Fedora 36', setfile: { name: 'Fedora 36', value: 'fedora36-64{hostname=fedora36-64-puppet7}' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
+            { name: 'Puppet 8 - Fedora 36', setfile: { name: 'Fedora 36', value: 'fedora36-64{hostname=fedora36-64-puppet8}' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
             { name: 'Distro Puppet - Fedora 38', setfile: { name: 'Fedora 38', value: 'fedora38-64' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 7 } },
             { name: 'Distro Puppet - Fedora 40', setfile: { name: 'Fedora 40', value: 'fedora40-64' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 8 } },
           )
@@ -233,24 +263,24 @@ describe PuppetMetadata::GithubActions do
         it 'is expected to contain supported os / puppet version combinations with image option' do
           expect(subject).to contain_exactly(
             { name: 'Distro Puppet - Archlinux rolling', setfile: { name: 'Archlinux rolling', value: 'archlinuxrolling-64' }, puppet: { collection: 'none', name: 'Distro Puppet', value: nil } },
-            { name: 'Puppet 8 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64{image=centos:7.6.1810}' }, puppet: { name: 'Puppet 8', value: 8, collection: 'puppet8' } },
-            { name: 'Puppet 7 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64{image=centos:7.6.1810}' }, puppet: { name: 'Puppet 7', value: 7, collection: 'puppet7' } },
-            { name: 'Puppet 6 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64{image=centos:7.6.1810}' }, puppet: { name: 'Puppet 6', value: 6, collection: 'puppet6' } },
-            { name: 'Puppet 5 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64{image=centos:7.6.1810}' }, puppet: { name: 'Puppet 5', value: 5, collection: 'puppet5' } },
-            { name: 'Puppet 6 - CentOS 9', setfile: { name: 'CentOS 9', value: 'centos9-64' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
-            { name: 'Puppet 7 - CentOS 9', setfile: { name: 'CentOS 9', value: 'centos9-64' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
-            { name: 'Puppet 8 - CentOS 9', setfile: { name: 'CentOS 9', value: 'centos9-64' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
-            { name: 'Puppet 7 - Debian 9', setfile: { name: 'Debian 9', value: 'debian9-64' }, puppet: { name: 'Puppet 7', value: 7, collection: 'puppet7' } },
-            { name: 'Puppet 6 - Debian 9', setfile: { name: 'Debian 9', value: 'debian9-64' }, puppet: { name: 'Puppet 6', value: 6, collection: 'puppet6' } },
-            { name: 'Puppet 5 - Debian 9', setfile: { name: 'Debian 9', value: 'debian9-64' }, puppet: { name: 'Puppet 5', value: 5, collection: 'puppet5' } },
-            { name: 'Puppet 8 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64' }, puppet: { name: 'Puppet 8', value: 8, collection: 'puppet8' } },
-            { name: 'Puppet 7 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64' }, puppet: { name: 'Puppet 7', value: 7, collection: 'puppet7' } },
-            { name: 'Puppet 6 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64' }, puppet: { name: 'Puppet 6', value: 6, collection: 'puppet6' } },
-            { name: 'Puppet 5 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64' }, puppet: { name: 'Puppet 5', value: 5, collection: 'puppet5' } },
-            { name: 'Puppet 7 - Debian 12', setfile: { name: 'Debian 12', value: 'debian12-64' }, puppet: { name: 'Puppet 7', value: 7, collection: 'puppet7' } },
-            { name: 'Puppet 8 - Debian 12', setfile: { name: 'Debian 12', value: 'debian12-64' }, puppet: { name: 'Puppet 8', value: 8, collection: 'puppet8' } },
-            { name: 'Puppet 7 - Fedora 36', setfile: { name: 'Fedora 36', value: 'fedora36-64' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
-            { name: 'Puppet 8 - Fedora 36', setfile: { name: 'Fedora 36', value: 'fedora36-64' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
+            { name: 'Puppet 8 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64{hostname=centos7-64-puppet8,image=centos:7.6.1810}' }, puppet: { name: 'Puppet 8', value: 8, collection: 'puppet8' } },
+            { name: 'Puppet 7 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64{hostname=centos7-64-puppet7,image=centos:7.6.1810}' }, puppet: { name: 'Puppet 7', value: 7, collection: 'puppet7' } },
+            { name: 'Puppet 6 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64{hostname=centos7-64-puppet6,image=centos:7.6.1810}' }, puppet: { name: 'Puppet 6', value: 6, collection: 'puppet6' } },
+            { name: 'Puppet 5 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64{hostname=centos7-64-puppet5,image=centos:7.6.1810}' }, puppet: { name: 'Puppet 5', value: 5, collection: 'puppet5' } },
+            { name: 'Puppet 6 - CentOS 9', setfile: { name: 'CentOS 9', value: 'centos9-64{hostname=centos9-64-puppet6}' }, puppet: { collection: 'puppet6', name: 'Puppet 6', value: 6 } },
+            { name: 'Puppet 7 - CentOS 9', setfile: { name: 'CentOS 9', value: 'centos9-64{hostname=centos9-64-puppet7}' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
+            { name: 'Puppet 8 - CentOS 9', setfile: { name: 'CentOS 9', value: 'centos9-64{hostname=centos9-64-puppet8}' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
+            { name: 'Puppet 7 - Debian 9', setfile: { name: 'Debian 9', value: 'debian9-64{hostname=debian9-64-puppet7}' }, puppet: { name: 'Puppet 7', value: 7, collection: 'puppet7' } },
+            { name: 'Puppet 6 - Debian 9', setfile: { name: 'Debian 9', value: 'debian9-64{hostname=debian9-64-puppet6}' }, puppet: { name: 'Puppet 6', value: 6, collection: 'puppet6' } },
+            { name: 'Puppet 5 - Debian 9', setfile: { name: 'Debian 9', value: 'debian9-64{hostname=debian9-64-puppet5}' }, puppet: { name: 'Puppet 5', value: 5, collection: 'puppet5' } },
+            { name: 'Puppet 8 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64{hostname=debian10-64-puppet8}' }, puppet: { name: 'Puppet 8', value: 8, collection: 'puppet8' } },
+            { name: 'Puppet 7 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64{hostname=debian10-64-puppet7}' }, puppet: { name: 'Puppet 7', value: 7, collection: 'puppet7' } },
+            { name: 'Puppet 6 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64{hostname=debian10-64-puppet6}' }, puppet: { name: 'Puppet 6', value: 6, collection: 'puppet6' } },
+            { name: 'Puppet 5 - Debian 10', setfile: { name: 'Debian 10', value: 'debian10-64{hostname=debian10-64-puppet5}' }, puppet: { name: 'Puppet 5', value: 5, collection: 'puppet5' } },
+            { name: 'Puppet 7 - Debian 12', setfile: { name: 'Debian 12', value: 'debian12-64{hostname=debian12-64-puppet7}' }, puppet: { name: 'Puppet 7', value: 7, collection: 'puppet7' } },
+            { name: 'Puppet 8 - Debian 12', setfile: { name: 'Debian 12', value: 'debian12-64{hostname=debian12-64-puppet8}' }, puppet: { name: 'Puppet 8', value: 8, collection: 'puppet8' } },
+            { name: 'Puppet 7 - Fedora 36', setfile: { name: 'Fedora 36', value: 'fedora36-64{hostname=fedora36-64-puppet7}' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
+            { name: 'Puppet 8 - Fedora 36', setfile: { name: 'Fedora 36', value: 'fedora36-64{hostname=fedora36-64-puppet8}' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
             { name: 'Distro Puppet - Fedora 38', setfile: { name: 'Fedora 38', value: 'fedora38-64' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 7 } },
             { name: 'Distro Puppet - Fedora 40', setfile: { name: 'Fedora 40', value: 'fedora40-64' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 8 } },
           )
@@ -262,7 +292,7 @@ describe PuppetMetadata::GithubActions do
 
         it 'is expected to contain supported os / puppet version combinations with hostname option' do
           expect(subject).to contain_exactly(
-            { name: 'Distro Puppet - Archlinux rolling', setfile: { name: 'Archlinux rolling', value: 'archlinuxrolling-64{hostname=archlinuxrolling-64-none.example.com}' }, puppet: { collection: 'none', name: 'Distro Puppet', value: nil } },
+            { name: 'Distro Puppet - Archlinux rolling', setfile: { name: 'Archlinux rolling', value: 'archlinuxrolling-64{hostname=archlinuxrolling-64.example.com}' }, puppet: { collection: 'none', name: 'Distro Puppet', value: nil } },
             { name: 'Puppet 8 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64{hostname=centos7-64-puppet8.example.com}' }, puppet: { name: 'Puppet 8', value: 8, collection: 'puppet8' } },
             { name: 'Puppet 7 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64{hostname=centos7-64-puppet7.example.com}' }, puppet: { name: 'Puppet 7', value: 7, collection: 'puppet7' } },
             { name: 'Puppet 6 - CentOS 7', setfile: { name: 'CentOS 7', value: 'centos7-64{hostname=centos7-64-puppet6.example.com}' }, puppet: { name: 'Puppet 6', value: 6, collection: 'puppet6' } },
@@ -285,8 +315,8 @@ describe PuppetMetadata::GithubActions do
             { name: 'Puppet 8 - Debian 12', setfile: { name: 'Debian 12', value: 'debian12-64{hostname=debian12-64-puppet8.example.com}' }, puppet: { name: 'Puppet 8', value: 8, collection: 'puppet8' } },
             { name: 'Puppet 7 - Fedora 36', setfile: { name: 'Fedora 36', value: 'fedora36-64{hostname=fedora36-64-puppet7.example.com}' }, puppet: { collection: 'puppet7', name: 'Puppet 7', value: 7 } },
             { name: 'Puppet 8 - Fedora 36', setfile: { name: 'Fedora 36', value: 'fedora36-64{hostname=fedora36-64-puppet8.example.com}' }, puppet: { collection: 'puppet8', name: 'Puppet 8', value: 8 } },
-            { name: 'Distro Puppet - Fedora 38', setfile: { name: 'Fedora 38', value: 'fedora38-64{hostname=fedora38-64-none.example.com}' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 7 } },
-            { name: 'Distro Puppet - Fedora 40', setfile: { name: 'Fedora 40', value: 'fedora40-64{hostname=fedora40-64-none.example.com}' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 8 } },
+            { name: 'Distro Puppet - Fedora 38', setfile: { name: 'Fedora 38', value: 'fedora38-64{hostname=fedora38-64.example.com}' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 7 } },
+            { name: 'Distro Puppet - Fedora 40', setfile: { name: 'Fedora 40', value: 'fedora40-64{hostname=fedora40-64.example.com}' }, puppet: { collection: 'none', name: 'Distro Puppet', value: 8 } },
           )
         end
       end
