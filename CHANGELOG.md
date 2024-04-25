@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.7.0](https://github.com/voxpupuli/puppet_metadata/tree/3.7.0) (2024-04-25)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/3.6.0...3.7.0)
+
+**Implemented enhancements:**
+
+- Add option to generate setfile with multiple hosts and roles [\#124](https://github.com/voxpupuli/puppet_metadata/pull/124) ([h-haaks](https://github.com/h-haaks))
+
+**Merged pull requests:**
+
+- Update voxpupuli-rubocop requirement from ~\> 2.5.0 to ~\> 2.6.0 [\#123](https://github.com/voxpupuli/puppet_metadata/pull/123) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [3.6.0](https://github.com/voxpupuli/puppet_metadata/tree/3.6.0) (2024-03-07)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/3.5.0...3.6.0)
