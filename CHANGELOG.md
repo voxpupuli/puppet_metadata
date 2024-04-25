@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.7.1](https://github.com/voxpupuli/puppet_metadata/tree/3.7.1) (2024-04-25)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/3.7.0...3.7.1)
+
+**Fixed bugs:**
+
+- Fix bug in metadata2gha options parsing [\#126](https://github.com/voxpupuli/puppet_metadata/pull/126) ([h-haaks](https://github.com/h-haaks))
+
 ## [3.7.0](https://github.com/voxpupuli/puppet_metadata/tree/3.7.0) (2024-04-25)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/3.6.0...3.7.0)
