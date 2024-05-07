@@ -42,8 +42,6 @@ module PuppetMetadata
       #   The Operating System string as metadata.json knows it, which in turn is
       #   based on Facter's operatingsystem fact.
       # @param [String] release The OS release
-      # @param [Boolean] use_fqdn
-      #   Whether or not to use a FQDN, ensuring a domain (deprecated, use domain)
       # @param [Boolean, Array[String]] pidfile_workaround
       #   Whether or not to apply the systemd PIDFile workaround. This is only
       #   needed when the daemon uses PIDFile in its service file and using
@@ -63,13 +61,12 @@ module PuppetMetadata
       #
       # @return [nil] If no setfile is available
       # @return [Array<(String, String)>] The beaker setfile description with a readable name
-      def os_release_to_setfile(os, release, use_fqdn: false, pidfile_workaround: false, domain: nil, puppet_version: nil, hosts: nil)
+      def os_release_to_setfile(os, release, pidfile_workaround: false, domain: nil, puppet_version: nil, hosts: nil)
         return unless os_supported?(os)
 
         aos = adjusted_os(os)
         name = "#{aos}#{release.tr('.', '')}-64"
         human_name = "#{os} #{release}"
-        domain ||= 'example.com' if use_fqdn
 
         hosts_settings = []
         if hosts

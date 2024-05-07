@@ -15,8 +15,6 @@ module PuppetMetadata
         puppet_major_versions: puppet_major_versions,
         puppet_unit_test_matrix: puppet_unit_test_matrix,
         puppet_beaker_test_matrix: puppet_beaker_test_matrix,
-        # Deprecated
-        github_action_test_matrix: github_action_test_matrix,
       }
     end
 
@@ -108,28 +106,6 @@ module PuppetMetadata
       matrix_include
     end
 
-    def github_action_test_matrix
-      matrix_include = []
-
-      beaker_os_releases do |os, release, puppet_version|
-        next if puppet_version_below_minimum?(puppet_version[:value])
-
-        setfile = os_release_to_beaker_setfile(os, release, puppet_version[:collection])
-        next unless setfile
-
-        matrix_include << {
-          name: "#{puppet_version[:name]} - #{setfile[1]}",
-          setfile: {
-            name: setfile[1],
-            value: setfile[0],
-          },
-          puppet: puppet_version,
-        }
-      end
-
-      matrix_include
-    end
-
     def puppet_version_below_minimum?(version)
       return false unless version && options[:minimum_major_puppet_version]
 
@@ -140,7 +116,6 @@ module PuppetMetadata
       PuppetMetadata::Beaker.os_release_to_setfile(
         os,
         release,
-        use_fqdn: options[:beaker_use_fqdn],
         pidfile_workaround: options[:beaker_pidfile_workaround],
         domain: options[:domain],
         puppet_version: puppet_collection,
