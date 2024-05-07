@@ -3,6 +3,7 @@ require 'spec_helper'
 describe PuppetMetadata::GithubActions do
   subject { described_class.new(PuppetMetadata::Metadata.new(JSON.parse(JSON.dump(metadata))), options) }
 
+  let(:at) { Date.new(2020, 1, 1) }
   let(:beaker_pidfile_workaround) { false }
   let(:minimum_major_puppet_version) { nil }
   let(:options) do
@@ -48,7 +49,7 @@ describe PuppetMetadata::GithubActions do
 
   # rubocop:disable Layout/LineLength,RSpec/ExampleLength
   describe 'outputs' do
-    subject { super().outputs }
+    subject { super().outputs(at) }
 
     let(:beaker_pidfile_workaround) { false }
 
