@@ -4,11 +4,9 @@ describe PuppetMetadata::GithubActions do
   subject { described_class.new(PuppetMetadata::Metadata.new(JSON.parse(JSON.dump(metadata))), options) }
 
   let(:beaker_pidfile_workaround) { false }
-  let(:beaker_use_fqdn) { false }
   let(:minimum_major_puppet_version) { nil }
   let(:options) do
     {
-      beaker_use_fqdn: beaker_use_fqdn,
       beaker_pidfile_workaround: beaker_pidfile_workaround,
       minimum_major_puppet_version: minimum_major_puppet_version,
     }
@@ -53,7 +51,6 @@ describe PuppetMetadata::GithubActions do
     subject { super().outputs }
 
     let(:beaker_pidfile_workaround) { false }
-    let(:beaker_use_fqdn) { false }
 
     it { is_expected.to be_an_instance_of(Hash) }
     it { expect(subject.keys).to contain_exactly(:puppet_major_versions, :puppet_unit_test_matrix, :puppet_beaker_test_matrix, :github_action_test_matrix) }
@@ -287,8 +284,8 @@ describe PuppetMetadata::GithubActions do
         end
       end
 
-      context 'when beaker_use_fqdn is true' do
-        let(:beaker_use_fqdn) { true }
+      context 'when domain is set' do
+        let(:options) { super().merge(domain: 'example.com') }
 
         it 'is expected to contain supported os / puppet version combinations with hostname option' do
           expect(subject).to contain_exactly(

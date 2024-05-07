@@ -34,10 +34,10 @@ describe PuppetMetadata::Beaker do
           it { expect(described_class.os_release_to_setfile(os, release, pidfile_workaround: true)).to eq(expected) }
         end
 
-        describe 'use_fqdn' do
+        describe 'domain' do
           it {
             expect(described_class.os_release_to_setfile('CentOS', '7', pidfile_workaround: true,
-                                                                        use_fqdn: true)).to eq(['centos7-64{hostname=centos7-64.example.com,image=centos:7.6.1810}', 'CentOS 7'])
+                                                                        domain: 'example.com')).to eq(['centos7-64{hostname=centos7-64.example.com,image=centos:7.6.1810}', 'CentOS 7'])
           }
         end
       end
