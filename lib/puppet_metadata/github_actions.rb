@@ -9,12 +9,16 @@ module PuppetMetadata
       @options  = options
     end
 
+    # @param [Date] at
+    #   The date when to generate the outputs. This affects the acceptance test
+    #   matrix, which excludes EOL operating systems. Its primary purpose is
+    #   reliable (unit) tests which don't break over time.
     # @return [Hash[Symbol, Any]] The outputs for Github Actions
-    def outputs
+    def outputs(at = nil)
       {
         puppet_major_versions: puppet_major_versions,
         puppet_unit_test_matrix: puppet_unit_test_matrix,
-        puppet_beaker_test_matrix: puppet_beaker_test_matrix,
+        puppet_beaker_test_matrix: puppet_beaker_test_matrix(at),
       }
     end
 
@@ -45,7 +49,7 @@ module PuppetMetadata
       end.compact
     end
 
-    def beaker_os_releases
+    def beaker_os_releases(at = nil)
       majors = puppet_major_versions
 
       distro_puppet_version = {
@@ -60,6 +64,19 @@ module PuppetMetadata
           yield [os, 'rolling', distro_puppet_version]
         else
           releases&.each do |release|
+            if PuppetMetadata::OperatingSystem.eol?(os, release, at)
+              message = "Skipping EOL operating system #{os} #{release}"
+
+              if ENV.key?('GITHUB_ACTIONS')
+                # TODO: determine file and position within the file
+                puts "::warning file=metadata.json::#{message}"
+              else
+                warn message
+              end
+
+              next
+            end
+
             majors.each do |puppet_version|
               if AIO.has_aio_build?(os, release, puppet_version[:value])
                 yield [os, release, puppet_version]
@@ -72,10 +89,10 @@ module PuppetMetadata
       end
     end
 
-    def puppet_beaker_test_matrix
+    def puppet_beaker_test_matrix(at)
       matrix_include = []
 
-      beaker_os_releases do |os, release, puppet_version|
+      beaker_os_releases(at) do |os, release, puppet_version|
         next if puppet_version_below_minimum?(puppet_version[:value])
 
         setfile = os_release_to_beaker_setfile(os, release, puppet_version[:collection])
