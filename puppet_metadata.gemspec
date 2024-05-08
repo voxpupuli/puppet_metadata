@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name        = 'puppet_metadata'
-  s.version     = '3.7.1'
+  s.version     = '4.0.0'
   s.authors     = ['Vox Pupuli', 'Ewoud Kohl van Wijngaarden']
   s.email       = ['voxpupuli@groups.io']
   s.homepage    = 'https://github.com/voxpupuli/puppet_metadata'
