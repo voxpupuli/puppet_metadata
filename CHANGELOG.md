@@ -1,5 +1,22 @@
 # Changelog
 
+## [4.0.0](https://github.com/voxpupuli/puppet_metadata/tree/4.0.0) (2024-05-08)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/3.7.1...4.0.0)
+
+**Breaking changes:**
+
+- Drop deprecated use\_fqdn option and github\_action\_test\_matrix output [\#130](https://github.com/voxpupuli/puppet_metadata/pull/130) ([ekohl](https://github.com/ekohl))
+- Skip EOL operating systems in GHA acceptance tests [\#129](https://github.com/voxpupuli/puppet_metadata/pull/129) ([ekohl](https://github.com/ekohl))
+
+**Implemented enhancements:**
+
+- Add Ruby 3.3 to CI [\#128](https://github.com/voxpupuli/puppet_metadata/pull/128) ([bastelfreak](https://github.com/bastelfreak))
+
+**Fixed bugs:**
+
+- OracleLinux: Correct EoL Date 2024-07-01-\>2024-12-31 [\#131](https://github.com/voxpupuli/puppet_metadata/pull/131) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [3.7.1](https://github.com/voxpupuli/puppet_metadata/tree/3.7.1) (2024-04-25)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/3.7.0...3.7.1)
