@@ -50,7 +50,7 @@ module PuppetMetadata
       'OracleLinux' => {
         '9' => '2032-06-30',
         '8' => '2029-07-01',
-        '7' => '2024-07-01',
+        '7' => '2024-12-31',
       },
       # https://endoflife.software/operating-systems/linux/fedora
       'Fedora' => {
