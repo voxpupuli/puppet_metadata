@@ -112,8 +112,8 @@ module PuppetMetadata
       },
       # https://wiki.rockylinux.org/rocky/version/
       'Rocky' => {
-        '9' => '2027-05-31',
-        '8' => '2024-05-31',
+        '9' => '2032-05-31',
+        '8' => '2029-05-31',
       },
       # https://endoflife.software/operating-systems/linux/ubuntu
       'Ubuntu' => {
