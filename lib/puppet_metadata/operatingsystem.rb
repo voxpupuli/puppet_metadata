@@ -13,9 +13,9 @@ module PuppetMetadata
     # The EOL dates for the various operating systems
     # @see .eol_date
     EOL_DATES = {
-      # https://almalinux.org/ FAQ at the bottom
+      # https://wiki.almalinux.org/release-notes/
       'AlmaLinux' => {
-        '9' => nil,
+        '9' => '2032-05-31',
         '8' => '2029-05-31',
       },
       # https://endoflife.software/operating-systems/linux/centos
