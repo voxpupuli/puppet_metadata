@@ -15,7 +15,7 @@ module PuppetMetadata
     EOL_DATES = {
       # https://wiki.almalinux.org/release-notes/
       'AlmaLinux' => {
-        '9' => '2027-05-31',
+        '9' => '2032-05-31',
         '8' => '2029-05-31',
       },
       # https://endoflife.software/operating-systems/linux/centos
