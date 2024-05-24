@@ -110,10 +110,10 @@ module PuppetMetadata
         '4' => '2012-02-29',
         '3' => '2010-10-31',
       },
-      # https://endoflife.date/rocky-linux
+      # https://wiki.rockylinux.org/rocky/version/
       'Rocky' => {
-        '9' => nil,
-        '8' => '2029-05-31',
+        '9' => '2027-05-31',
+        '8' => '2024-05-31',
       },
       # https://endoflife.software/operating-systems/linux/ubuntu
       'Ubuntu' => {
