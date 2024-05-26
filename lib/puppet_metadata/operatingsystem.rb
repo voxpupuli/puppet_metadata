@@ -220,11 +220,6 @@ module PuppetMetadata
       # @return [Optional[Integer]] The Puppet major version, if any
       def os_release_puppet_version(operatingsystem, release)
         case operatingsystem
-        when 'Debian'
-          case release
-          when '12'
-            7
-          end
         when 'Fedora'
           case release
           when '39', '40'
