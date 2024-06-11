@@ -144,7 +144,8 @@ describe PuppetMetadata::GithubActions do
           { name: 'Puppet 7 - Fedora 36', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'fedora36-64{hostname=fedora36-64-puppet7}' } },
           { name: 'Puppet 8 - Fedora 36', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'fedora36-64{hostname=fedora36-64-puppet8}' } },
           { name: 'Distro Puppet - Fedora 38', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'fedora38-64' } },
-          { name: 'Distro Puppet - Fedora 40', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'fedora40-64' } },
+          { name: 'Puppet 7 - Fedora 40', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'fedora40-64{hostname=fedora40-64-puppet7}' } },
+          { name: 'Puppet 8 - Fedora 40', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'fedora40-64{hostname=fedora40-64-puppet8}' } },
         )
       end
 
