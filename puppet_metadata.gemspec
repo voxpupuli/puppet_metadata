@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = Gem::Requirement.new('>= 2.7', '< 4')
 
   s.executables << 'metadata2gha'
+  s.executables << 'puppet-metadata'
   s.files = Dir['lib/**/*.rb']
   s.extra_rdoc_files = ['README.md']
   s.rdoc_options << '--main' << 'README.md'
