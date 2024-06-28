@@ -1,5 +1,22 @@
 # Changelog
 
+## [4.1.0](https://github.com/voxpupuli/puppet_metadata/tree/4.1.0) (2024-06-28)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/4.0.0...4.1.0)
+
+**Implemented enhancements:**
+
+- Update fedora versions, remove CentOS 8 from spec test [\#138](https://github.com/voxpupuli/puppet_metadata/pull/138) ([daberkow](https://github.com/daberkow))
+- Debian 10: Add EoL date [\#137](https://github.com/voxpupuli/puppet_metadata/pull/137) ([bastelfreak](https://github.com/bastelfreak))
+- Debian 12: Cleanup legacy non-AIO code [\#136](https://github.com/voxpupuli/puppet_metadata/pull/136) ([bastelfreak](https://github.com/bastelfreak))
+- Rocky: Update EoL dates [\#135](https://github.com/voxpupuli/puppet_metadata/pull/135) ([bastelfreak](https://github.com/bastelfreak))
+- AlmaLinux: Update EoL dates [\#134](https://github.com/voxpupuli/puppet_metadata/pull/134) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- Update voxpupuli-rubocop requirement from ~\> 2.7.0 to ~\> 2.8.0 [\#139](https://github.com/voxpupuli/puppet_metadata/pull/139) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update voxpupuli-rubocop requirement from ~\> 2.6.0 to ~\> 2.7.0 [\#133](https://github.com/voxpupuli/puppet_metadata/pull/133) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [4.0.0](https://github.com/voxpupuli/puppet_metadata/tree/4.0.0) (2024-05-08)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/3.7.1...4.0.0)
