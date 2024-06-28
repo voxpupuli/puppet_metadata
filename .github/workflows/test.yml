@@ -22,7 +22,6 @@ jobs:
       - name: Run RuboCop
         run: bundle exec rake rubocop
   test:
-    needs: rubocop
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -50,6 +49,7 @@ jobs:
 
   tests:
     needs:
+      - rubocop
       - test
     runs-on: ubuntu-latest
     name: Test suite
