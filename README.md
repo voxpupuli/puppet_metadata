@@ -212,6 +212,25 @@ The metadata object has several different methods that we can call
 [7] pry(main)>
 ```
 
+## List supported setfiles
+
+When running beaker on the CLI, you can specify a specific setfile. `puppet_metadata` provides `bin/setfiles` to list all setfiles:
+
+```
+$ bundle exec setfiles
+Skipping EOL operating system Debian 10
+Skipping EOL operating system Ubuntu 18.04
+BEAKER_SETFILE="centos9-64{hostname=centos9-64-puppet8.example.com}"
+BEAKER_SETFILE="centos9-64{hostname=centos9-64-puppet7.example.com}"
+BEAKER_SETFILE="debian11-64{hostname=debian11-64-puppet8.example.com}"
+BEAKER_SETFILE="debian11-64{hostname=debian11-64-puppet7.example.com}"
+BEAKER_SETFILE="ubuntu2004-64{hostname=ubuntu2004-64-puppet8.example.com}"
+BEAKER_SETFILE="ubuntu2004-64{hostname=ubuntu2004-64-puppet7.example.com}"
+```
+
+As an argument you can provide a path to a metadata.json. If none provided, it assumes that there's a metadata.json in the same directory where you run the command.
+To make copy and paste easier, each setfile string is prefixed so it can directly be used as environment variable.
+
 ## Transfer Notice
 
 This plugin was originally authored by [Ewoud Kohl van Wijngaarden](https://github.com/ekohl).
