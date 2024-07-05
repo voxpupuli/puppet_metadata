@@ -21,8 +21,8 @@ describe PuppetMetadata::OperatingSystem do
     context 'with CentOS' do
       let(:os) { 'CentOS' }
 
-      it 'returns 7 and 9' do
-        expect(described_class.supported_releases(os)).to match_array(%w[7 9])
+      it 'returns 9' do
+        expect(described_class.supported_releases(os)).to match_array(%w[9])
       end
 
       it 'the last entry matches latest_release' do
