@@ -1,5 +1,17 @@
 # Changelog
 
+## [4.2.0](https://github.com/voxpupuli/puppet_metadata/tree/4.2.0) (2024-07-05)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/4.1.0...4.2.0)
+
+**Implemented enhancements:**
+
+- Add script to display supported setfiles [\#142](https://github.com/voxpupuli/puppet_metadata/pull/142) ([bastelfreak](https://github.com/bastelfreak))
+
+**Fixed bugs:**
+
+- Fix tests: Mark CentOS 7 as not supported [\#143](https://github.com/voxpupuli/puppet_metadata/pull/143) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [4.1.0](https://github.com/voxpupuli/puppet_metadata/tree/4.1.0) (2024-06-28)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/4.0.0...4.1.0)
