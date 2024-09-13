@@ -78,7 +78,7 @@ describe PuppetMetadata::Metadata do
             },
             {
               operatingsystem: 'Ubuntu',
-              operatingsystemrelease: ['14.04', '16.04', '18.04', '20.04', '22.04'],
+              operatingsystemrelease: ['14.04', '16.04', '18.04', '20.04', '22.04', '24.04'],
             },
           ],
         }
@@ -94,7 +94,7 @@ describe PuppetMetadata::Metadata do
           'CentOS' => %w[7 8 9],
           'Debian' => %w[9 10],
           'RedHat' => %w[7 8 9],
-          'Ubuntu' => ['14.04', '16.04', '18.04', '20.04', '22.04'],
+          'Ubuntu' => ['14.04', '16.04', '18.04', '20.04', '22.04', '24.04'],
         }
         is_expected.to eq(expected)
       end
