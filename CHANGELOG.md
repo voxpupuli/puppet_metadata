@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.3.0](https://github.com/voxpupuli/puppet_metadata/tree/4.3.0) (2024-09-13)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/4.2.0...4.3.0)
+
+**Implemented enhancements:**
+
+- Add support for Ubuntu 24.04 [\#145](https://github.com/voxpupuli/puppet_metadata/pull/145) ([root-expert](https://github.com/root-expert))
+
 ## [4.2.0](https://github.com/voxpupuli/puppet_metadata/tree/4.2.0) (2024-07-05)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/4.1.0...4.2.0)
