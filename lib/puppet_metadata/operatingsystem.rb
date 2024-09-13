@@ -125,6 +125,7 @@ module PuppetMetadata
       },
       # https://endoflife.software/operating-systems/linux/ubuntu
       'Ubuntu' => {
+        '24.04' => '2029-04-30',
         '22.04' => '2027-04-15',
         '21.10' => '2022-07-15',
         '20.10' => '2021-07-15',

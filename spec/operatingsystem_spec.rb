@@ -12,8 +12,8 @@ describe PuppetMetadata::OperatingSystem do
       expect(described_class.latest_release('CentOS')).to eq('9')
     end
 
-    it 'returns 22.04 for Ubuntu' do
-      expect(described_class.latest_release('Ubuntu')).to eq('22.04')
+    it 'returns 24.04 for Ubuntu' do
+      expect(described_class.latest_release('Ubuntu')).to eq('24.04')
     end
   end
 
@@ -33,8 +33,8 @@ describe PuppetMetadata::OperatingSystem do
     context 'with Ubuntu' do
       let(:os) { 'Ubuntu' }
 
-      it 'returns 20.04 and 22.04' do
-        expect(described_class.supported_releases(os)).to contain_exactly('20.04', '22.04')
+      it 'returns 20.04, 22.04 and 24.04' do
+        expect(described_class.supported_releases(os)).to contain_exactly('20.04', '22.04', '24.04')
       end
 
       it 'the last entry matches latest_release' do
