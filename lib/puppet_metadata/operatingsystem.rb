@@ -32,7 +32,7 @@ module PuppetMetadata
       'Debian' => {
         # TODO: EOL is standard support, not the extended life cycle
         '12' => nil, # '~2026',
-        '11' => nil, # '~2024',
+        '11' => '2024-08-14',
         '10' => '2022-09-10',
         '9' => '2020-07-06',
         '8' => '2018-06-17',
