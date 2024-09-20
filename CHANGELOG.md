@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.4.0](https://github.com/voxpupuli/puppet_metadata/tree/4.4.0) (2024-09-20)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/4.3.0...4.4.0)
+
+**Implemented enhancements:**
+
+- Add Debian 11 EoL Date: 2024-08-14 [\#147](https://github.com/voxpupuli/puppet_metadata/pull/147) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [4.3.0](https://github.com/voxpupuli/puppet_metadata/tree/4.3.0) (2024-09-13)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/4.2.0...4.3.0)
