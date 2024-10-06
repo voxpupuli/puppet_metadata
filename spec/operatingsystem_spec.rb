@@ -45,8 +45,8 @@ describe PuppetMetadata::OperatingSystem do
     context 'with Debian' do
       let(:os) { 'Debian' }
 
-      it 'returns 12' do
-        expect(described_class.supported_releases(os)).to contain_exactly('12')
+      it 'returns 11 and 12' do
+        expect(described_class.supported_releases(os)).to contain_exactly('11', '12')
       end
 
       it 'the last entry matches latest_release' do
