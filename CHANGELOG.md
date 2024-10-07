@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.5.0](https://github.com/voxpupuli/puppet_metadata/tree/4.5.0) (2024-10-06)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/4.4.0...4.5.0)
+
+**Implemented enhancements:**
+
+- Debian: Support LTS releases [\#149](https://github.com/voxpupuli/puppet_metadata/pull/149) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [4.4.0](https://github.com/voxpupuli/puppet_metadata/tree/4.4.0) (2024-09-20)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/4.3.0...4.4.0)
