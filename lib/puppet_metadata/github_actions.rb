@@ -31,7 +31,7 @@ module PuppetMetadata
         {
           name: "Puppet #{version}",
           value: version,
-          collection: "puppet#{version}",
+          collection: "openvox#{version}",
         }
       end.compact
     end
