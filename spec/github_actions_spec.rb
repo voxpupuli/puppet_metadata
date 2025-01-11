@@ -61,22 +61,24 @@ describe PuppetMetadata::GithubActions do
 
       it { is_expected.to be_an_instance_of(Array) }
 
-      it 'is expected to contain major versions 4, 5, 6 and 7' do
+      it 'is expected to contain major version 8' do
         expect(subject).to contain_exactly(
           { puppet: 8, ruby: '3.2' },
-          { puppet: 7, ruby: '2.7' },
         )
       end
 
-      context 'when minimum_major_puppet_version is set to 8' do
-        let(:minimum_major_puppet_version) { '8' }
+      # Test only makes sense when we've multiple supported versions
+      # context 'when minimum_major_puppet_version is set to 6' do
+      #  let(:minimum_major_puppet_version) { '6' }
 
-        it 'is expected to contain major versions 8' do
-          expect(subject).to contain_exactly(
-            { puppet: 8, ruby: '3.2' },
-          )
-        end
-      end
+      #  it 'is expected to contain major versions 6,7 and 8' do
+      #    expect(subject).to contain_exactly(
+      #      { puppet: 8, ruby: '3.2' },
+      #      { puppet: 7, ruby: '2.7' },
+      #      { puppet: 6, ruby: '2.5' },
+      #    )
+      #  end
+      # end
     end
 
     describe 'puppet_beaker_test_matrix' do
@@ -87,20 +89,12 @@ describe PuppetMetadata::GithubActions do
       it 'is expected to contain supported os / puppet version combinations' do
         expect(subject).to contain_exactly(
           { name: 'Distro Puppet - Archlinux rolling', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'archlinuxrolling-64' } },
-          { name: 'Puppet 7 - CentOS 7', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'centos7-64{hostname=centos7-64-puppet7}' } },
-          { name: 'Puppet 8 - CentOS 7', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'centos7-64{hostname=centos7-64-puppet8}' } },
-          { name: 'Puppet 7 - CentOS 8', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'centos8-64{hostname=centos8-64-puppet7}' } },
           { name: 'Puppet 8 - CentOS 8', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'centos8-64{hostname=centos8-64-puppet8}' } },
-          { name: 'Puppet 7 - CentOS 9', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'centos9-64{hostname=centos9-64-puppet7}' } },
           { name: 'Puppet 8 - CentOS 9', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'centos9-64{hostname=centos9-64-puppet8}' } },
-          { name: 'Puppet 7 - Debian 11', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'debian11-64{hostname=debian11-64-puppet7}' } },
           { name: 'Puppet 8 - Debian 11', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'debian11-64{hostname=debian11-64-puppet8}' } },
-          { name: 'Puppet 7 - Debian 12', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'debian12-64{hostname=debian12-64-puppet7}' } },
           { name: 'Puppet 8 - Debian 12', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'debian12-64{hostname=debian12-64-puppet8}' } },
-          { name: 'Puppet 7 - Fedora 36', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'fedora36-64{hostname=fedora36-64-puppet7}' } },
           { name: 'Puppet 8 - Fedora 36', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'fedora36-64{hostname=fedora36-64-puppet8}' } },
           { name: 'Distro Puppet - Fedora 38', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'fedora38-64' } },
-          { name: 'Puppet 7 - Fedora 40', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'fedora40-64{hostname=fedora40-64-puppet7}' } },
           { name: 'Puppet 8 - Fedora 40', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'fedora40-64{hostname=fedora40-64-puppet8}' } },
         )
       end
