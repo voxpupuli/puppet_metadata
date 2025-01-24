@@ -137,21 +137,28 @@ module PuppetMetadata
       matches?(requirements[name], version)
     end
 
+    def puppet_major_versions
+      major_versions('puppet')
+    end
+
+    def openvox_major_versions
+      major_versions('openvox')
+    end
+
     # @return [Array[Integer]] Supported major Puppet versions
     # @see #requirements
-    def puppet_major_versions
-      requirement = requirements['puppet']
-      raise Exception, 'No Puppet requirement found' unless requirement
+    def major_versions(requirement_name)
+      requirement = requirements[requirement_name]
+      return [] unless requirement
 
-      # Current latest major is 8. It is highly recommended that modules
-      # actually specify exact bounds, but this prevents an infinite loop.
-      end_major = (requirement.end == SemanticPuppet::Version::MAX) ? 8 : requirement.end.major
+      major_version_for_requirement(requirement)
+    end
 
-      (requirement.begin.major..end_major).select do |major|
-        requirement.include?(SemanticPuppet::Version.new(major, 0,
-                                                         0)) || requirement.include?(SemanticPuppet::Version.new(major,
-                                                                                                                 99, 99))
-      end
+    def major_versions!(requirement_name)
+      requirement = requirements[requirement_name]
+      raise Exception, "No '#{requirement_name}' requirement found'" unless requirement
+
+      major_version_for_requirement(requirement)
     end
 
     # A hash representation of the dependencies
@@ -193,6 +200,16 @@ module PuppetMetadata
     end
 
     private
+
+    def major_version_for_requirement(requirement)
+      # Current latest major is 8. It is highly recommended that modules
+      # actually specify exact bounds, but this prevents an infinite loop.
+      end_major = (requirement.end == SemanticPuppet::Version::MAX) ? 8 : requirement.end.major
+
+      (requirement.begin.major..end_major).select do |major|
+        requirement.include?(SemanticPuppet::Version.new(major, 0, 0)) || requirement.include?(SemanticPuppet::Version.new(major, 99, 99))
+      end
+    end
 
     def build_version_requirement_hash(array)
       return {} if array.nil?
