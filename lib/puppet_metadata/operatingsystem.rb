@@ -19,8 +19,9 @@ module PuppetMetadata
         '8' => '2029-05-31',
       },
       # https://endoflife.software/operating-systems/linux/centos
+      # https://endoflife.date/centos-stream
       'CentOS' => {
-        '9' => nil, # EOL Date is not yet announced.
+        '9' => '2027-05-31',
         '8' => '2024-05-31',
         '7' => '2024-06-30',
         '6' => '2020-11-30',
