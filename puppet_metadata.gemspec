@@ -17,8 +17,8 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ['README.md']
   s.rdoc_options << '--main' << 'README.md'
 
-  s.add_runtime_dependency 'metadata-json-lint', '>= 2.0', '< 5'
-  s.add_runtime_dependency 'semantic_puppet', '~> 1.0'
+  s.add_dependency 'metadata-json-lint', '>= 2.0', '< 5'
+  s.add_dependency 'semantic_puppet', '~> 1.0'
 
   s.add_development_dependency 'rake', '~> 13.0'
   s.add_development_dependency 'rdoc', '~> 6.0'
