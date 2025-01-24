@@ -37,7 +37,7 @@ describe PuppetMetadata::GithubActions do
         },
         {
           operatingsystem: 'Debian',
-          operatingsystemrelease: %w[9 10 12],
+          operatingsystemrelease: %w[9 10 11 12],
         },
         {
           operatingsystem: 'Fedora',
@@ -139,6 +139,9 @@ describe PuppetMetadata::GithubActions do
           { name: 'Puppet 6 - Debian 10', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet6', 'BEAKER_SETFILE' => 'debian10-64{hostname=debian10-64-puppet6}' } },
           { name: 'Puppet 7 - Debian 10', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'debian10-64{hostname=debian10-64-puppet7}' } },
           { name: 'Puppet 8 - Debian 10', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'debian10-64{hostname=debian10-64-puppet8}' } },
+          { name: 'Puppet 6 - Debian 11', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet6', 'BEAKER_SETFILE' => 'debian11-64{hostname=debian11-64-puppet6}' } },
+          { name: 'Puppet 7 - Debian 11', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'debian11-64{hostname=debian11-64-puppet7}' } },
+          { name: 'Puppet 8 - Debian 11', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'debian11-64{hostname=debian11-64-puppet8}' } },
           { name: 'Puppet 7 - Debian 12', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'debian12-64{hostname=debian12-64-puppet7}' } },
           { name: 'Puppet 8 - Debian 12', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'debian12-64{hostname=debian12-64-puppet8}' } },
           { name: 'Puppet 7 - Fedora 36', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'fedora36-64{hostname=fedora36-64-puppet7}' } },
