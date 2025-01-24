@@ -1,6 +1,22 @@
 # Changelog
 
-## [4.5.0](https://github.com/voxpupuli/puppet_metadata/tree/4.5.0) (2024-10-06)
+## [4.6.0](https://github.com/voxpupuli/puppet_metadata/tree/4.6.0) (2025-01-24)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/4.5.0...4.6.0)
+
+**Implemented enhancements:**
+
+- rspec-its: Allow 2.x [\#159](https://github.com/voxpupuli/puppet_metadata/pull/159) ([bastelfreak](https://github.com/bastelfreak))
+- Add Debian 11 to unit tests [\#157](https://github.com/voxpupuli/puppet_metadata/pull/157) ([bastelfreak](https://github.com/bastelfreak))
+- CentOS 9: Add EoL date [\#155](https://github.com/voxpupuli/puppet_metadata/pull/155) ([bastelfreak](https://github.com/bastelfreak))
+- Add Ruby 3.4 support [\#158](https://github.com/voxpupuli/puppet_metadata/pull/158) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- Drop broken coverage reports [\#154](https://github.com/voxpupuli/puppet_metadata/pull/154) ([bastelfreak](https://github.com/bastelfreak))
+- Update voxpupuli-rubocop requirement from ~\> 2.8.0 to ~\> 3.0.0 [\#151](https://github.com/voxpupuli/puppet_metadata/pull/151) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [4.5.0](https://github.com/voxpupuli/puppet_metadata/tree/4.5.0) (2024-10-07)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/4.4.0...4.5.0)
 
