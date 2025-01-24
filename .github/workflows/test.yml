@@ -21,20 +21,26 @@ jobs:
           bundler-cache: true
       - name: Run RuboCop
         run: bundle exec rake rubocop
-  test:
+  setup_matrix:
+    name: 'Determine Ruby versions'
     runs-on: ubuntu-latest
+    outputs:
+      ruby: ${{ steps.ruby.outputs.versions }}
+    steps:
+      - id: ruby
+        uses: voxpupuli/ruby-version@v0
+
+  test:
+    name: "Ruby ${{ matrix.ruby }}"
+    runs-on: ubuntu-latest
+    needs: setup_matrix
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - ruby: "2.7"
-          - ruby: "3.0"
-          - ruby: "3.1"
-          - ruby: "3.2"
-          - ruby: "3.3"
+        ruby: ${{ fromJSON(needs.setup_matrix.outputs.ruby) }}
     steps:
       - uses: actions/checkout@v4
-      - name: Install Ruby ${{ matrix.ruby }}
+      - name: Setup ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
