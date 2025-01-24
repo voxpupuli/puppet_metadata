@@ -17,7 +17,7 @@ module PuppetMetadata
     def outputs(at = nil)
       {
         puppet_unit_test_matrix: puppet_unit_test_matrix,
-        puppet_beaker_test_matrix: puppet_beaker_test_matrix(at),
+        puppet_beaker_test_matrix: puppet_beaker_test_matrix(at) + openvox_beaker_test_matrix(at),
       }
     end
 
@@ -35,6 +35,18 @@ module PuppetMetadata
       end.compact
     end
 
+    def openvox_major_versions
+      metadata.openvox_major_versions.sort.reverse.map do |version|
+        next if puppet_version_below_minimum?(version)
+
+        {
+          name: "Puppet #{version}",
+          value: version,
+          collection: "openvox#{version}",
+        }
+      end.compact
+    end
+
     def puppet_unit_test_matrix
       metadata.puppet_major_versions.sort.reverse.map do |puppet|
         ruby = PuppetMetadata::AIO::PUPPET_RUBY_VERSIONS[puppet]
@@ -48,15 +60,19 @@ module PuppetMetadata
       end.compact
     end
 
-    def beaker_os_releases(at = nil)
-      majors = puppet_major_versions
+    def beaker_os_releases(at = nil, collection)
+      majors = case collection
+               when 'puppet'
+                 puppet_major_versions
+               when 'openvox'
+                 openvox_major_versions
+               end
 
       distro_puppet_version = {
         name: 'Distro Puppet',
         value: nil, # We don't know the version and since it's rolling, it can be anything
         collection: 'none',
       }
-
       metadata.operatingsystems.each do |os, releases|
         case os
         when 'Archlinux', 'Gentoo'
@@ -89,9 +105,17 @@ module PuppetMetadata
     end
 
     def puppet_beaker_test_matrix(at)
+      beaker_test_matrix(at, 'puppet')
+    end
+
+    def openvox_beaker_test_matrix(at)
+      beaker_test_matrix(at, 'openvox')
+    end
+
+    def beaker_test_matrix(at, collection)
       matrix_include = []
 
-      beaker_os_releases(at) do |os, release, puppet_version|
+      beaker_os_releases(at, collection) do |os, release, puppet_version|
         next if puppet_version_below_minimum?(puppet_version[:value])
 
         setfile = os_release_to_beaker_setfile(os, release, puppet_version[:collection])
@@ -99,7 +123,7 @@ module PuppetMetadata
 
         name = "#{puppet_version[:name]} - #{setfile[1]}"
         env = {
-          'BEAKER_PUPPET_COLLECTION' => puppet_version[:collection],
+          "BEAKER_#{collection.upcase}_COLLECTION" => puppet_version[:collection],
           'BEAKER_SETFILE' => setfile[0],
         }
 
