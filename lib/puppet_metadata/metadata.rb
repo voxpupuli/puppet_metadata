@@ -137,20 +137,28 @@ module PuppetMetadata
       matches?(requirements[name], version)
     end
 
+    def puppet_major_versions
+      major_versions('puppet')
+    end
+
+    def openvox_major_versions
+      major_versions('openvox')
+    end
+
     # @return [Array[Integer]] Supported major Puppet versions
     # @see #requirements
-    def puppet_major_versions
-      requirement = requirements['puppet']
-      raise Exception, 'No Puppet requirement found' unless requirement
+    def major_versions(collection)
+      requirement = requirements[collection]
+      # don't raise an exception
+      # raise Exception, "No #{collection} requirement found" unless requirement
+      return [] unless requirement
 
       # Current latest major is 7. It is highly recommended that modules
       # actually specify exact bounds, but this prevents an infinite loop.
       end_major = (requirement.end == SemanticPuppet::Version::MAX) ? 7 : requirement.end.major
 
       (requirement.begin.major..end_major).select do |major|
-        requirement.include?(SemanticPuppet::Version.new(major, 0,
-                                                         0)) || requirement.include?(SemanticPuppet::Version.new(major,
-                                                                                                                 99, 99))
+        requirement.include?(SemanticPuppet::Version.new(major, 0, 0)) || requirement.include?(SemanticPuppet::Version.new(major, 99, 99))
       end
     end
 
