@@ -54,36 +54,7 @@ describe PuppetMetadata::GithubActions do
     let(:beaker_pidfile_workaround) { false }
 
     it { is_expected.to be_an_instance_of(Hash) }
-    it { expect(subject.keys).to contain_exactly(:puppet_major_versions, :puppet_unit_test_matrix, :puppet_beaker_test_matrix) }
-
-    describe 'puppet_major_versions' do
-      subject { super()[:puppet_major_versions] }
-
-      it { is_expected.to be_an_instance_of(Array) }
-
-      it 'is expected to contain major versions 3, 4, 5, 6, 7 and 8' do
-        expect(subject).to contain_exactly(
-          { collection: 'puppet8', name: 'Puppet 8', value: 8 },
-          { collection: 'puppet7', name: 'Puppet 7', value: 7 },
-          { collection: 'puppet6', name: 'Puppet 6', value: 6 },
-          { collection: 'puppet5', name: 'Puppet 5', value: 5 },
-          { collection: 'puppet4', name: 'Puppet 4', value: 4 },
-          { collection: 'puppet3', name: 'Puppet 3', value: 3 },
-        )
-      end
-
-      context 'when minimum_major_puppet_version is set to 6' do
-        let(:minimum_major_puppet_version) { '6' }
-
-        it 'is expected to contain major versions 6, 7 and 8' do
-          expect(subject).to contain_exactly(
-            { collection: 'puppet8', name: 'Puppet 8', value: 8 },
-            { collection: 'puppet7', name: 'Puppet 7', value: 7 },
-            { collection: 'puppet6', name: 'Puppet 6', value: 6 },
-          )
-        end
-      end
-    end
+    it { expect(subject.keys).to contain_exactly(:puppet_unit_test_matrix, :puppet_beaker_test_matrix) }
 
     describe 'puppet_unit_test_matrix' do
       subject { super()[:puppet_unit_test_matrix] }

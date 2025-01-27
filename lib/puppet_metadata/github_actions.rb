@@ -16,7 +16,6 @@ module PuppetMetadata
     # @return [Hash[Symbol, Any]] The outputs for Github Actions
     def outputs(at = nil)
       {
-        puppet_major_versions: puppet_major_versions,
         puppet_unit_test_matrix: puppet_unit_test_matrix,
         puppet_beaker_test_matrix: puppet_beaker_test_matrix(at),
       }
