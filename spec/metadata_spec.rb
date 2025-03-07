@@ -153,7 +153,7 @@ describe PuppetMetadata::Metadata do
                           ])
           end
 
-          it { expect(subject.puppet_major_versions).to eq([5, 6, 7]) }
+          it { expect(subject.puppet_major_versions).to eq([5, 6, 7, 8]) }
         end
       end
 
