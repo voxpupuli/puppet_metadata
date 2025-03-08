@@ -129,7 +129,7 @@ describe PuppetMetadata::Metadata do
       end
 
       describe '#puppet_major_versions' do
-        it { expect(subject.puppet_major_versions).to eq([5, 6]) }
+        it { expect(subject.requirements_with_major_versions).to eq({ 'puppet' => [5, 6] }) }
 
         context 'with no lower bound' do
           let(:metadata) do
@@ -141,7 +141,7 @@ describe PuppetMetadata::Metadata do
                           ])
           end
 
-          it { expect(subject.puppet_major_versions).to eq([0, 1, 2, 3, 4, 5, 6]) }
+          it { expect(subject.requirements_with_major_versions).to eq({ 'puppet' => [0, 1, 2, 3, 4, 5, 6] }) }
         end
 
         context 'with no upper bound' do
@@ -154,7 +154,37 @@ describe PuppetMetadata::Metadata do
                           ])
           end
 
-          it { expect(subject.puppet_major_versions).to eq([5, 6, 7, 8]) }
+          it { expect(subject.requirements_with_major_versions).to eq({ 'puppet' => [5, 6, 7, 8] }) }
+        end
+
+        context 'with OpenVox & Puppet' do
+          let(:metadata) do
+            super().merge(requirements: [
+                            {
+                              name: 'puppet',
+                              version_requirement: '>= 5.5.8 < 8',
+                            },
+                            {
+                              name: 'openvox',
+                              version_requirement: '>= 6 < 9',
+                            },
+                          ])
+          end
+
+          it { expect(subject.requirements_with_major_versions).to eq({ 'openvox' => [6, 7, 8], 'puppet' => [5, 6, 7] }) }
+        end
+
+        context 'with OpenVox' do
+          let(:metadata) do
+            super().merge(requirements: [
+                            {
+                              name: 'openvox',
+                              version_requirement: '>= 6 < 9',
+                            },
+                          ])
+          end
+
+          it { expect(subject.requirements_with_major_versions).to eq({ 'openvox' => [6, 7, 8] }) }
         end
       end
 

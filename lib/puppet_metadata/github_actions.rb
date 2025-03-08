@@ -23,32 +23,26 @@ module PuppetMetadata
 
     private
 
-    def puppet_major_versions
-      metadata.puppet_major_versions.sort.reverse.map do |version|
-        next if requirement_name_version_below_minimum?(version)
+    def beaker_major_versions
+      metadata.requirements_with_major_versions.flat_map do |requirement, versions|
+        versions.sort.reverse.filter_map do |version|
+          next if requirement_name_version_below_minimum?(version)
 
-        {
-          name: "Puppet #{version}",
-          value: version,
-          collection: "puppet#{version}",
-        }
-      end.compact
-    end
+          label = (requirement == 'openvox') ? 'OpenVox' : requirement.capitalize
 
-    def openvox_major_versions
-      metadata.openvox_major_versions.sort.reverse.map do |version|
-        next if requirement_name_version_below_minimum?(version)
-
-        {
-          name: "OpenVox #{version}",
-          value: version,
-          collection: "openvox#{version}",
-        }
-      end.compact
+          {
+            name: "#{label} #{version}",
+            value: version,
+            collection: "#{requirement}#{version}",
+            requirement: requirement,
+          }
+        end
+      end
     end
 
     def puppet_unit_test_matrix
-      metadata.puppet_major_versions.sort.reverse.map do |puppet|
+      majors = metadata.requirements_with_major_versions.first[1]
+      majors.sort.reverse.map do |puppet|
         ruby = PuppetMetadata::AIO::PUPPET_RUBY_VERSIONS[puppet]
         next unless ruby
         next if requirement_name_version_below_minimum?(puppet)
@@ -60,26 +54,18 @@ module PuppetMetadata
       end.compact
     end
 
-    def beaker_os_releases(requirement_name, at = nil)
-      majors = case requirement_name
-               when 'puppet'
-                 puppet_major_versions
-               when 'openvox'
-                 openvox_major_versions
-               else
-                 raise StandardError, "Unknown requirement '#{requirement_name}'"
-               end
-
+    def beaker_os_releases(at = nil)
       distro_puppet_version = {
         name: 'Distro Puppet',
         value: nil, # We don't know the version and since it's rolling, it can be anything
         collection: 'none',
+        requirement: 'puppet',
       }
       metadata.operatingsystems.each do |os, releases|
         case os
         when 'Archlinux', 'Gentoo'
           # both currently only ship puppet, not openvox yet
-          yield [os, 'rolling', distro_puppet_version] if requirement_name == 'puppet'
+          yield [os, 'rolling', distro_puppet_version]
         else
           releases&.each do |release|
             if PuppetMetadata::OperatingSystem.eol?(os, release, at)
@@ -95,9 +81,10 @@ module PuppetMetadata
               next
             end
 
-            majors.each do |puppet_version|
+            beaker_major_versions.each do |puppet_version|
               if AIO.has_aio_build?(os, release, puppet_version[:value])
                 yield [os, release, puppet_version]
+              # TODO: also match requirement here
               elsif PuppetMetadata::OperatingSystem.os_release_puppet_version(os, release) == puppet_version[:value]
                 yield [os, release, distro_puppet_version.merge(value: puppet_version[:value])]
               end
@@ -108,23 +95,15 @@ module PuppetMetadata
     end
 
     def puppet_beaker_test_matrix(at)
-      beaker_test_matrix('openvox', at) + beaker_test_matrix('puppet', at)
-    end
-
-    def beaker_test_matrix(requirement_name, at)
-      raise StandardError, "Unknown requirement '#{requirement_name}'" if requirement_name == ''
-
       matrix_include = []
 
-      beaker_os_releases(requirement_name, at) do |os, release, implementation|
+      beaker_os_releases(at) do |os, release, implementation|
         next if requirement_name_version_below_minimum?(implementation[:value])
 
         setfile = os_release_to_beaker_setfile(os, release, implementation[:collection])
         next unless setfile
 
         name = "#{implementation[:name]} - #{setfile[1]}"
-        # when we want to make this dynamic, switch to:
-        # "BEAKER_#{requirement_name.upcase}_COLLECTION"
         env = {
           'BEAKER_PUPPET_COLLECTION' => implementation[:collection],
           'BEAKER_SETFILE' => setfile[0],
