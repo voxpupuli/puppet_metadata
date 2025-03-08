@@ -42,6 +42,8 @@ module PuppetMetadata
       8 => '3.2',
     }.freeze
 
+    OPENVOX_RUBY_VERSIONS = PUPPET_RUBY_VERSIONS
+
     class << self
       def find_base_os(os)
         COMPATIBLE.fetch(os, os)
