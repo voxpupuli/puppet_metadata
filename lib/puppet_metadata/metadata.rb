@@ -20,7 +20,7 @@ module PuppetMetadata
 
   # An abstraction over Puppet metadata
   class Metadata
-    SUPPORTED_REQUIREMENTS = ['openvox', 'puppet']
+    SUPPORTED_REQUIREMENTS = ['openvox', 'puppet'].freeze
 
     attr_reader :metadata
 
