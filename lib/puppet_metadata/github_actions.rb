@@ -23,23 +23,29 @@ module PuppetMetadata
 
     private
 
-    def puppet_major_versions
-      metadata.puppet_major_versions.sort.reverse.map do |version|
-        next if puppet_version_below_minimum?(version)
+    def beaker_major_versions
+      metadata.requirements_with_major_versions.flat_map do |requirement, versions|
+        versions.sort.reverse.filter_map do |version|
+          next if requirement_name_version_below_minimum?(version)
 
-        {
-          name: "Puppet #{version}",
-          value: version,
-          collection: "puppet#{version}",
-        }
-      end.compact
+          label = (requirement == 'openvox') ? 'OpenVox' : requirement.capitalize
+
+          {
+            name: "#{label} #{version}",
+            value: version,
+            collection: "#{requirement}#{version}",
+            requirement: requirement,
+          }
+        end
+      end
     end
 
     def puppet_unit_test_matrix
-      metadata.puppet_major_versions.sort.reverse.map do |puppet|
+      majors = metadata.requirements_with_major_versions.first[1]
+      majors.sort.reverse.map do |puppet|
         ruby = PuppetMetadata::AIO::PUPPET_RUBY_VERSIONS[puppet]
         next unless ruby
-        next if puppet_version_below_minimum?(puppet)
+        next if requirement_name_version_below_minimum?(puppet)
 
         {
           puppet: puppet,
@@ -49,17 +55,17 @@ module PuppetMetadata
     end
 
     def beaker_os_releases(at = nil)
-      majors = puppet_major_versions
-
+      majors = beaker_major_versions
       distro_puppet_version = {
         name: 'Distro Puppet',
         value: nil, # We don't know the version and since it's rolling, it can be anything
         collection: 'none',
+        requirement: 'puppet',
       }
-
       metadata.operatingsystems.each do |os, releases|
         case os
         when 'Archlinux', 'Gentoo'
+          # both currently only ship puppet, not openvox yet
           yield [os, 'rolling', distro_puppet_version]
         else
           releases&.each do |release|
@@ -79,6 +85,7 @@ module PuppetMetadata
             majors.each do |puppet_version|
               if AIO.has_aio_build?(os, release, puppet_version[:value])
                 yield [os, release, puppet_version]
+              # TODO: also match requirement here
               elsif PuppetMetadata::OperatingSystem.os_release_puppet_version(os, release) == puppet_version[:value]
                 yield [os, release, distro_puppet_version.merge(value: puppet_version[:value])]
               end
@@ -91,15 +98,15 @@ module PuppetMetadata
     def puppet_beaker_test_matrix(at)
       matrix_include = []
 
-      beaker_os_releases(at) do |os, release, puppet_version|
-        next if puppet_version_below_minimum?(puppet_version[:value])
+      beaker_os_releases(at) do |os, release, implementation|
+        next if requirement_name_version_below_minimum?(implementation[:value])
 
-        setfile = os_release_to_beaker_setfile(os, release, puppet_version[:collection])
+        setfile = os_release_to_beaker_setfile(os, release, implementation[:collection])
         next unless setfile
 
-        name = "#{puppet_version[:name]} - #{setfile[1]}"
+        name = "#{implementation[:name]} - #{setfile[1]}"
         env = {
-          'BEAKER_PUPPET_COLLECTION' => puppet_version[:collection],
+          'BEAKER_PUPPET_COLLECTION' => implementation[:collection],
           'BEAKER_SETFILE' => setfile[0],
         }
 
@@ -122,7 +129,7 @@ module PuppetMetadata
       matrix_include
     end
 
-    def puppet_version_below_minimum?(version)
+    def requirement_name_version_below_minimum?(version)
       return false unless version && options[:minimum_major_puppet_version]
 
       Gem::Version.new(version) < Gem::Version.new(options[:minimum_major_puppet_version])
