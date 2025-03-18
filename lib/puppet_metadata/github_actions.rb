@@ -55,6 +55,7 @@ module PuppetMetadata
     end
 
     def beaker_os_releases(at = nil)
+      majors = beaker_major_versions
       distro_puppet_version = {
         name: 'Distro Puppet',
         value: nil, # We don't know the version and since it's rolling, it can be anything
@@ -81,7 +82,7 @@ module PuppetMetadata
               next
             end
 
-            beaker_major_versions.each do |puppet_version|
+            majors.each do |puppet_version|
               if AIO.has_aio_build?(os, release, puppet_version[:value])
                 yield [os, release, puppet_version]
               # TODO: also match requirement here
