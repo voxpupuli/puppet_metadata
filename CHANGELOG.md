@@ -1,5 +1,23 @@
 # Changelog
 
+## [5.0.0](https://github.com/voxpupuli/puppet_metadata/tree/5.0.0) (2025-03-18)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/4.6.0...5.0.0)
+
+**Breaking changes:**
+
+- metadata2gha: Remove puppet\_major\_versions key [\#166](https://github.com/voxpupuli/puppet_metadata/pull/166) ([bastelfreak](https://github.com/bastelfreak))
+- Implement OpenVox support [\#165](https://github.com/voxpupuli/puppet_metadata/pull/165) ([bastelfreak](https://github.com/bastelfreak))
+- Drop support for EoL Redhat 5/6 [\#164](https://github.com/voxpupuli/puppet_metadata/pull/164) ([bastelfreak](https://github.com/bastelfreak))
+- Drop support for EoL Puppet 4/5/6 [\#163](https://github.com/voxpupuli/puppet_metadata/pull/163) ([bastelfreak](https://github.com/bastelfreak))
+- Drop support for EoL Fedora 26-34 [\#162](https://github.com/voxpupuli/puppet_metadata/pull/162) ([bastelfreak](https://github.com/bastelfreak))
+- Drop support for EoL Ubuntu 14.04/16.04/18.04 [\#161](https://github.com/voxpupuli/puppet_metadata/pull/161) ([bastelfreak](https://github.com/bastelfreak))
+- Drop support for EoL Debian 7/8/9/10 [\#156](https://github.com/voxpupuli/puppet_metadata/pull/156) ([bastelfreak](https://github.com/bastelfreak))
+
+**Fixed bugs:**
+
+- Set latest puppet version from 7-\>8 [\#167](https://github.com/voxpupuli/puppet_metadata/pull/167) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [4.6.0](https://github.com/voxpupuli/puppet_metadata/tree/4.6.0) (2025-01-24)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/4.5.0...4.6.0)
@@ -7,9 +25,9 @@
 **Implemented enhancements:**
 
 - rspec-its: Allow 2.x [\#159](https://github.com/voxpupuli/puppet_metadata/pull/159) ([bastelfreak](https://github.com/bastelfreak))
+- Add Ruby 3.4 support [\#158](https://github.com/voxpupuli/puppet_metadata/pull/158) ([bastelfreak](https://github.com/bastelfreak))
 - Add Debian 11 to unit tests [\#157](https://github.com/voxpupuli/puppet_metadata/pull/157) ([bastelfreak](https://github.com/bastelfreak))
 - CentOS 9: Add EoL date [\#155](https://github.com/voxpupuli/puppet_metadata/pull/155) ([bastelfreak](https://github.com/bastelfreak))
-- Add Ruby 3.4 support [\#158](https://github.com/voxpupuli/puppet_metadata/pull/158) ([bastelfreak](https://github.com/bastelfreak))
 
 **Merged pull requests:**
 
