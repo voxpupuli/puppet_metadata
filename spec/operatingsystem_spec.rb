@@ -34,7 +34,7 @@ describe PuppetMetadata::OperatingSystem do
       let(:os) { 'Ubuntu' }
 
       it 'returns 20.04, 22.04 and 24.04' do
-        expect(described_class.supported_releases(os)).to contain_exactly('20.04', '22.04', '24.04')
+        expect(described_class.supported_releases(os)).to contain_exactly('22.04', '24.04')
       end
 
       it 'the last entry matches latest_release' do
