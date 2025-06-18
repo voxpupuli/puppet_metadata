@@ -125,6 +125,14 @@ module PuppetMetadata
         '9' => '2032-05-31',
         '8' => '2029-05-31',
       },
+      # https://www.suse.com/lifecycle/#product-suse-linux-enterprise-server
+      # General support end dates, not LTSS
+      'SLES' => {
+        '15' => '2031-07-31',
+        '12' => '2024-10-31',
+        '11' => '2019-03-31',
+        '10' => '2013-07-31',
+      },
       # https://endoflife.software/operating-systems/linux/ubuntu
       'Ubuntu' => {
         '24.04' => '2029-04-30',
