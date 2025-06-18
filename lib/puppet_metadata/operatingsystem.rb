@@ -18,6 +18,31 @@ module PuppetMetadata
         '9' => '2032-05-31',
         '8' => '2029-05-31',
       },
+      'Amazon' => {
+        # Amazon Linux AMI
+        # https://aws.amazon.com/amazon-linux-ami/
+        '2018.03' => '2023-12-31',
+        '2017.09' => '2023-12-31',
+        '2017.03' => '2023-12-31',
+        '2016.09' => '2023-12-31',
+        '2016.03' => '2023-12-31',
+        '2015.09' => '2023-12-31',
+        '2015.03' => '2023-12-31',
+        '2014.09' => '2023-12-31',
+        '2014.03' => '2023-12-31',
+        '2013.09' => '2023-12-31',
+        '2013.03' => '2023-12-31',
+        '2012.09' => '2023-12-31',
+        '2012.03' => '2023-12-31',
+        '2011.09' => '2023-12-31',
+        '2010.11' => '2023-12-31',
+        # Amazon Linux 2
+        # https://aws.amazon.com/amazon-linux-2/faqs/
+        '2.0' => '2026-06-30',
+        # Amazon Linux 2023
+        # https://docs.aws.amazon.com/linux/al2023/ug/release-cadence.html
+        '2023' => '2027-06-30',
+      },
       # https://endoflife.software/operating-systems/linux/centos
       # https://endoflife.date/centos-stream
       'CentOS' => {
