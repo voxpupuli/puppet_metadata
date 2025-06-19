@@ -56,7 +56,7 @@ module PuppetMetadata
       # https://docs.fedoraproject.org/en-US/releases/eol/
       'Fedora' => {
         '41' => nil,
-        '40' => nil,
+        '40' => '2025-05-13',
         '39' => '2024-11-26',
         '38' => '2024-05-21',
         '37' => '2023-12-05',
