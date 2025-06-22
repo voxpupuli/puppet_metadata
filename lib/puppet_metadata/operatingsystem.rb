@@ -150,6 +150,15 @@ module PuppetMetadata
         '9' => '2032-05-31',
         '8' => '2029-05-31',
       },
+      # https://scientificlinux.org/category/uncategorized/scientific-linux-end-of-life/
+      'Scientific' => {
+        '8' => '2024-06-30', # This is not really a Scientific release, but I have seen it in module metadata ..
+        '7' => '2024-06-30',
+        '6' => '2020-11-30',
+        '5' => '2017-03-31',
+        '4' => '2012-02-29',
+        '3' => '2010-10-30',
+      },
       # https://www.suse.com/lifecycle/#product-suse-linux-enterprise-server
       # General support end dates, not LTSS
       'SLES' => {
