@@ -83,9 +83,8 @@ module PuppetMetadata
             end
 
             majors.each do |puppet_version|
-              if AIO.has_aio_build?(os, release, puppet_version[:value])
+              if AIO.has_aio_build?(os, release, puppet_version[:value], puppet_version[:requirement])
                 yield [os, release, puppet_version]
-              # TODO: also match requirement here
               elsif PuppetMetadata::OperatingSystem.os_release_puppet_version(os, release) == puppet_version[:value]
                 yield [os, release, distro_puppet_version.merge(value: puppet_version[:value])]
               end

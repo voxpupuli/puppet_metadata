@@ -37,7 +37,7 @@ describe PuppetMetadata::GithubActions do
         },
         {
           operatingsystem: 'CentOS',
-          operatingsystemrelease: %w[7 8 9],
+          operatingsystemrelease: %w[7 8 9 10],
         },
         {
           operatingsystem: 'Debian',
@@ -97,6 +97,8 @@ describe PuppetMetadata::GithubActions do
           { name: 'OpenVox 8 - CentOS 8', env: { 'BEAKER_PUPPET_COLLECTION' => 'openvox8', 'BEAKER_SETFILE' => 'centos8-64{hostname=centos8-64-openvox8}' } },
           { name: 'OpenVox 7 - CentOS 9', env: { 'BEAKER_PUPPET_COLLECTION' => 'openvox7', 'BEAKER_SETFILE' => 'centos9-64{hostname=centos9-64-openvox7}' } },
           { name: 'OpenVox 8 - CentOS 9', env: { 'BEAKER_PUPPET_COLLECTION' => 'openvox8', 'BEAKER_SETFILE' => 'centos9-64{hostname=centos9-64-openvox8}' } },
+          { name: 'OpenVox 7 - CentOS 10', env: { 'BEAKER_PUPPET_COLLECTION' => 'openvox7', 'BEAKER_SETFILE' => 'centos10-64{hostname=centos10-64-openvox7}' } },
+          { name: 'OpenVox 8 - CentOS 10', env: { 'BEAKER_PUPPET_COLLECTION' => 'openvox8', 'BEAKER_SETFILE' => 'centos10-64{hostname=centos10-64-openvox8}' } },
           { name: 'OpenVox 7 - Debian 11', env: { 'BEAKER_PUPPET_COLLECTION' => 'openvox7', 'BEAKER_SETFILE' => 'debian11-64{hostname=debian11-64-openvox7}' } },
           { name: 'OpenVox 8 - Debian 11', env: { 'BEAKER_PUPPET_COLLECTION' => 'openvox8', 'BEAKER_SETFILE' => 'debian11-64{hostname=debian11-64-openvox8}' } },
           { name: 'OpenVox 7 - Debian 12', env: { 'BEAKER_PUPPET_COLLECTION' => 'openvox7', 'BEAKER_SETFILE' => 'debian12-64{hostname=debian12-64-openvox7}' } },

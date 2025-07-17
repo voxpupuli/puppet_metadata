@@ -9,7 +9,7 @@ module PuppetMetadata
       'Scientific' => 'RedHat',
     }.freeze
 
-    BUILDS = {
+    PUPPET_BUILDS = {
       # RPM-based
       'RedHat' => {
         '7' => 7..8,
@@ -37,6 +37,15 @@ module PuppetMetadata
       },
     }.freeze
 
+    OPENVOX_BUILDS = PUPPET_BUILDS.merge({
+                                           'RedHat' => {
+                                             '7' => 7..8,
+                                             '8' => 7..8,
+                                             '9' => 7..8,
+                                             '10' => 7..8,
+                                           },
+                                         }).freeze
+
     PUPPET_RUBY_VERSIONS = {
       7 => '2.7',
       8 => '3.2',
@@ -49,8 +58,9 @@ module PuppetMetadata
         COMPATIBLE.fetch(os, os)
       end
 
-      def has_aio_build?(os, release, puppet_version)
-        BUILDS.dig(find_base_os(os), release)&.include?(puppet_version)
+      def has_aio_build?(os, release, puppet_version, requirement)
+        builds = (requirement == 'openvox') ? OPENVOX_BUILDS : PUPPET_BUILDS
+        builds.dig(find_base_os(os), release)&.include?(puppet_version)
       end
     end
   end
