@@ -58,6 +58,7 @@ module PuppetMetadata
       'Debian' => {
         # EOL is extended life cycle, not standard support
         # https://github.com/voxpupuli/voxpupuli.github.io/pull/386
+        '13' => '2030-08-09',
         '12' => '2028-06-30',
         '11' => '2026-08-31',
         '10' => '2022-09-10',
