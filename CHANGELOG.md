@@ -1,5 +1,19 @@
 # Changelog
 
+## [5.1.0](https://github.com/voxpupuli/puppet_metadata/tree/5.1.0) (2025-08-12)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/5.0.0...5.1.0)
+
+**Implemented enhancements:**
+
+- Add Debian 13 "trixie" to OS matrix [\#178](https://github.com/voxpupuli/puppet_metadata/pull/178) ([jcharaoui](https://github.com/jcharaoui))
+- Add support for OpenVox on EL 10 [\#177](https://github.com/voxpupuli/puppet_metadata/pull/177) ([smortex](https://github.com/smortex))
+- Add Scientific eol dates [\#176](https://github.com/voxpupuli/puppet_metadata/pull/176) ([h-haaks](https://github.com/h-haaks))
+- Set Fedora 40 eol date [\#175](https://github.com/voxpupuli/puppet_metadata/pull/175) ([h-haaks](https://github.com/h-haaks))
+- Add Amazon eol dates [\#174](https://github.com/voxpupuli/puppet_metadata/pull/174) ([h-haaks](https://github.com/h-haaks))
+- Add SLES eol dates [\#173](https://github.com/voxpupuli/puppet_metadata/pull/173) ([h-haaks](https://github.com/h-haaks))
+- Fedora 39: Add 2024-11-26 EoL date [\#169](https://github.com/voxpupuli/puppet_metadata/pull/169) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [5.0.0](https://github.com/voxpupuli/puppet_metadata/tree/5.0.0) (2025-03-18)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/4.6.0...5.0.0)
@@ -32,7 +46,6 @@
 **Merged pull requests:**
 
 - Drop broken coverage reports [\#154](https://github.com/voxpupuli/puppet_metadata/pull/154) ([bastelfreak](https://github.com/bastelfreak))
-- Update voxpupuli-rubocop requirement from ~\> 2.8.0 to ~\> 3.0.0 [\#151](https://github.com/voxpupuli/puppet_metadata/pull/151) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [4.5.0](https://github.com/voxpupuli/puppet_metadata/tree/4.5.0) (2024-10-07)
 
@@ -82,11 +95,6 @@
 - Rocky: Update EoL dates [\#135](https://github.com/voxpupuli/puppet_metadata/pull/135) ([bastelfreak](https://github.com/bastelfreak))
 - AlmaLinux: Update EoL dates [\#134](https://github.com/voxpupuli/puppet_metadata/pull/134) ([bastelfreak](https://github.com/bastelfreak))
 
-**Merged pull requests:**
-
-- Update voxpupuli-rubocop requirement from ~\> 2.7.0 to ~\> 2.8.0 [\#139](https://github.com/voxpupuli/puppet_metadata/pull/139) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Update voxpupuli-rubocop requirement from ~\> 2.6.0 to ~\> 2.7.0 [\#133](https://github.com/voxpupuli/puppet_metadata/pull/133) ([dependabot[bot]](https://github.com/apps/dependabot))
-
 ## [4.0.0](https://github.com/voxpupuli/puppet_metadata/tree/4.0.0) (2024-05-08)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/3.7.1...4.0.0)
@@ -120,10 +128,6 @@
 
 - Add option to generate setfile with multiple hosts and roles [\#124](https://github.com/voxpupuli/puppet_metadata/pull/124) ([h-haaks](https://github.com/h-haaks))
 
-**Merged pull requests:**
-
-- Update voxpupuli-rubocop requirement from ~\> 2.5.0 to ~\> 2.6.0 [\#123](https://github.com/voxpupuli/puppet_metadata/pull/123) ([dependabot[bot]](https://github.com/apps/dependabot))
-
 ## [3.6.0](https://github.com/voxpupuli/puppet_metadata/tree/3.6.0) (2024-03-07)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/3.5.0...3.6.0)
@@ -138,8 +142,6 @@
 
 **Merged pull requests:**
 
-- Update voxpupuli-rubocop requirement from ~\> 2.4.0 to ~\> 2.5.0 [\#118](https://github.com/voxpupuli/puppet_metadata/pull/118) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Update voxpupuli-rubocop requirement from ~\> 2.0.0 to ~\> 2.4.0 [\#116](https://github.com/voxpupuli/puppet_metadata/pull/116) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Document API in README.md [\#34](https://github.com/voxpupuli/puppet_metadata/pull/34) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [3.5.0](https://github.com/voxpupuli/puppet_metadata/tree/3.5.0) (2023-10-18)
@@ -166,10 +168,6 @@
 **Implemented enhancements:**
 
 - Add a name to the GHA beaker test matrix [\#35](https://github.com/voxpupuli/puppet_metadata/pull/35) ([ekohl](https://github.com/ekohl))
-
-**Merged pull requests:**
-
-- Update metadata-json-lint requirement from \>= 2.0, \< 4 to \>= 2.0, \< 5 [\#101](https://github.com/voxpupuli/puppet_metadata/pull/101) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [3.2.0](https://github.com/voxpupuli/puppet_metadata/tree/3.2.0) (2023-08-11)
 
