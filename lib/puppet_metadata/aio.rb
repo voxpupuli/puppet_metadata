@@ -44,6 +44,11 @@ module PuppetMetadata
                                              '9' => 7..8,
                                              '10' => 7..8,
                                            },
+                                           'Debian' => {
+                                             '11' => 7..8,
+                                             '12' => 7..8,
+                                             '13' => [8],
+                                           },
                                          }).freeze
 
     PUPPET_RUBY_VERSIONS = {

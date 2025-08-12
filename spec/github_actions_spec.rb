@@ -41,7 +41,7 @@ describe PuppetMetadata::GithubActions do
         },
         {
           operatingsystem: 'Debian',
-          operatingsystemrelease: %w[9 10 11 12],
+          operatingsystemrelease: %w[9 10 11 12 13],
         },
         {
           operatingsystem: 'Fedora',
@@ -103,6 +103,7 @@ describe PuppetMetadata::GithubActions do
           { name: 'OpenVox 8 - Debian 11', env: { 'BEAKER_PUPPET_COLLECTION' => 'openvox8', 'BEAKER_SETFILE' => 'debian11-64{hostname=debian11-64-openvox8}' } },
           { name: 'OpenVox 7 - Debian 12', env: { 'BEAKER_PUPPET_COLLECTION' => 'openvox7', 'BEAKER_SETFILE' => 'debian12-64{hostname=debian12-64-openvox7}' } },
           { name: 'OpenVox 8 - Debian 12', env: { 'BEAKER_PUPPET_COLLECTION' => 'openvox8', 'BEAKER_SETFILE' => 'debian12-64{hostname=debian12-64-openvox8}' } },
+          { name: 'OpenVox 8 - Debian 13', env: { 'BEAKER_PUPPET_COLLECTION' => 'openvox8', 'BEAKER_SETFILE' => 'debian13-64{hostname=debian13-64-openvox8}' } },
           { name: 'OpenVox 7 - Fedora 36', env: { 'BEAKER_PUPPET_COLLECTION' => 'openvox7', 'BEAKER_SETFILE' => 'fedora36-64{hostname=fedora36-64-openvox7}' } },
           { name: 'OpenVox 8 - Fedora 36', env: { 'BEAKER_PUPPET_COLLECTION' => 'openvox8', 'BEAKER_SETFILE' => 'fedora36-64{hostname=fedora36-64-openvox8}' } },
           { name: 'Distro Puppet - Fedora 38', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'fedora38-64' } },
