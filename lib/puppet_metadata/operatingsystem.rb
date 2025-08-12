@@ -46,6 +46,7 @@ module PuppetMetadata
       # https://endoflife.software/operating-systems/linux/centos
       # https://endoflife.date/centos-stream
       'CentOS' => {
+        '10' => '2030-01-01',
         '9' => '2027-05-31',
         '8' => '2024-05-31',
         '7' => '2024-06-30',
