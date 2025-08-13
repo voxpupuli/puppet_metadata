@@ -1,5 +1,13 @@
 # Changelog
 
+## [5.2.0](https://github.com/voxpupuli/puppet_metadata/tree/5.2.0) (2025-08-13)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/5.1.0...5.2.0)
+
+**Implemented enhancements:**
+
+- metadata-json-lint: Allow 5.x [\#182](https://github.com/voxpupuli/puppet_metadata/pull/182) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [5.1.0](https://github.com/voxpupuli/puppet_metadata/tree/5.1.0) (2025-08-12)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/5.0.0...5.1.0)
