@@ -8,8 +8,8 @@ describe PuppetMetadata::OperatingSystem do
       expect(described_class.latest_release('DoesNotExist')).to be_nil
     end
 
-    it 'returns 9 for CentOS' do
-      expect(described_class.latest_release('CentOS')).to eq('9')
+    it 'returns 10 for CentOS' do
+      expect(described_class.latest_release('CentOS')).to eq('10')
     end
 
     it 'returns 24.04 for Ubuntu' do
@@ -21,8 +21,8 @@ describe PuppetMetadata::OperatingSystem do
     context 'with CentOS' do
       let(:os) { 'CentOS' }
 
-      it 'returns 9' do
-        expect(described_class.supported_releases(os)).to match_array(%w[9])
+      it 'returns 9 & 10' do
+        expect(described_class.supported_releases(os)).to contain_exactly('9', '10')
       end
 
       it 'the last entry matches latest_release' do
