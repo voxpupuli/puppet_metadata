@@ -15,6 +15,7 @@ module PuppetMetadata
     EOL_DATES = {
       # https://wiki.almalinux.org/release-notes/
       'AlmaLinux' => {
+        '10' => '2035-05-31',
         '9' => '2032-05-31',
         '8' => '2029-05-31',
       },
@@ -76,7 +77,7 @@ module PuppetMetadata
       },
       # https://endoflife.date/oraclelinux
       'OracleLinux' => {
-        '10' => '2032-06-30', # I didn't find an EoL date yet, so I used the one from OL9
+        '10' => '2035-05-31', # projected based on RHEL EOL
         '9' => '2032-06-30',
         '8' => '2029-07-01',
         '7' => '2024-12-31',
@@ -138,9 +139,12 @@ module PuppetMetadata
         '5' => '2008-05-31',
         '4' => '2007-01-31',
       },
+      # https://access.redhat.com/support/policy/updates/errata/
       # https://endoflife.software/operating-systems/linux/red-hat-enterprise-linux-rhel
       'RedHat' => {
         # TODO: EOL is standard support, not the extended life cycle
+        '10' => '2035-05-31',
+        '9' => '2032-05-31',
         '8' => '2029-05-31',
         '7' => '2024-06-30',
         '6' => '2020-11-30',
@@ -150,6 +154,7 @@ module PuppetMetadata
       },
       # https://wiki.rockylinux.org/rocky/version/
       'Rocky' => {
+        '10' => '2035-05-31',
         '9' => '2032-05-31',
         '8' => '2029-05-31',
       },

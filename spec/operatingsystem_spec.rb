@@ -57,8 +57,8 @@ describe PuppetMetadata::OperatingSystem do
     context 'with Rocky' do
       let(:os) { 'Rocky' }
 
-      it 'returns 8 and 9' do
-        expect(described_class.supported_releases(os)).to match_array(%w[8 9])
+      it 'returns 8, 9 and 10' do
+        expect(described_class.supported_releases(os)).to match_array(%w[8 9 10])
       end
 
       it 'the last entry matches latest_release' do
@@ -69,8 +69,8 @@ describe PuppetMetadata::OperatingSystem do
     context 'with AlmaLinux' do
       let(:os) { 'AlmaLinux' }
 
-      it 'returns 8 and 9' do
-        expect(described_class.supported_releases(os)).to match_array(%w[8 9])
+      it 'returns 8, 9 and 10' do
+        expect(described_class.supported_releases(os)).to match_array(%w[8 9 10])
       end
 
       it 'the last entry matches latest_release' do
