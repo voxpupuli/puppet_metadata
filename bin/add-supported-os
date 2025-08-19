@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+require 'optparse'
+require 'puppet_metadata'
+
+filename = ARGV[0]
+filename = 'metadata.json' if filename.nil? || filename.empty?
+
+begin
+  metadata = PuppetMetadata.read(filename)
+rescue StandardError => e
+  warn "Failed to read #{filename}: #{e}"
+  exit 2
+end
+
+added = metadata.add_supported_operatingsystems
+
+if added.any?
+  PuppetMetadata.write(filename, metadata)
+  puts 'Added support:'
+  added.each do |os, releases|
+    puts "#{os} => #{releases.join(', ')}"
+  end
+end
