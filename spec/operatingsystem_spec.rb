@@ -30,6 +30,19 @@ describe PuppetMetadata::OperatingSystem do
       end
     end
 
+    context 'with CentOS and a date in the past' do
+      let(:os) { 'CentOS' }
+      let(:date) { '2025-04-15' }
+
+      it 'returns 9 and 10' do
+        expect(described_class.supported_releases(os, date)).to match_array(%w[9 10])
+      end
+
+      it 'the last entry matches latest_release' do
+        expect(described_class.supported_releases(os).last).to eq(described_class.latest_release(os))
+      end
+    end
+
     context 'with Ubuntu' do
       let(:os) { 'Ubuntu' }
 
