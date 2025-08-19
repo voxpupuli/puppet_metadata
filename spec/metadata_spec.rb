@@ -215,6 +215,17 @@ describe PuppetMetadata::Metadata do
           expect(subject.satisfies_dependency?('puppetlabs/concat', '7.0.0')).to be(false)
         end
       end
+      describe 'add_supported_operatingsystems' do
+        let(:date) { Date.parse('2027-04-15') }
+
+        it 'with defaults' do
+          expect(subject.add_supported_operatingsystems).to eq({ 'CentOS' => ['10'], 'Debian' => ['11', '12', '13'], 'RedHat' => ['10'] })
+        end
+
+        it 'with date' do
+          expect(subject.add_supported_operatingsystems(date)).to eq({ 'CentOS' => ['10'], 'Debian' => ['12', '13'], 'RedHat' => ['10'] })
+        end
+      end
     end
   end
 end

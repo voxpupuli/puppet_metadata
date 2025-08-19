@@ -109,6 +109,28 @@ module PuppetMetadata
       unsupported.compact.to_h
     end
 
+    # @param [Date] at The date to check the EOL time. Today is used when nil.
+    # @return [Hash[String, Array[String]]]
+    #   All added releases for each operating system
+    def add_supported_operatingsystems(at = nil)
+      added = {}
+
+      metadata['operatingsystem_support'] = operatingsystems.map do |os, releases|
+        result = {
+          'operatingsystem' => os,
+        }
+        unless releases.nil?
+          supported = OperatingSystem.supported_releases(os, at)
+          releases_added = supported - releases
+          added[os] = releases_added if releases_added.any?
+          result['operatingsystemrelease'] = releases | supported
+        end
+        result
+      end
+
+      added
+    end
+
     # A hash representation of the requirements
     #
     # Every element in the original array is converted. The name is used as a
