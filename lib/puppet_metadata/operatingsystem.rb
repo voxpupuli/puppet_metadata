@@ -75,6 +75,7 @@ module PuppetMetadata
       },
       # https://endoflife.date/oraclelinux
       'OracleLinux' => {
+        '10' => '2032-06-30', # I didn't find an EoL date yet, so I used the one from OL9
         '9' => '2032-06-30',
         '8' => '2029-07-01',
         '7' => '2024-12-31',
