@@ -1,5 +1,14 @@
 # Changelog
 
+## [5.3.0](https://github.com/voxpupuli/puppet_metadata/tree/5.3.0) (2025-08-19)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/5.2.0...5.3.0)
+
+**Implemented enhancements:**
+
+- Add CentOS 10 support [\#185](https://github.com/voxpupuli/puppet_metadata/pull/185) ([bastelfreak](https://github.com/bastelfreak))
+- Add OracleLinux 10 support [\#184](https://github.com/voxpupuli/puppet_metadata/pull/184) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [5.2.0](https://github.com/voxpupuli/puppet_metadata/tree/5.2.0) (2025-08-13)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/5.1.0...5.2.0)
