@@ -130,7 +130,7 @@ module PuppetMetadata
       end
 
       def build_setfile(name, options)
-        "#{name}#{options.any? ? "{#{options.map { |key, value| "#{key}=#{value}" }.join(',')}}" : ''}"
+        "#{name}#{"{#{options.map { |key, value| "#{key}=#{value}" }.join(',')}}" if options.any?}"
       end
     end
   end

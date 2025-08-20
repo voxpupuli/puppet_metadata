@@ -9,3 +9,6 @@ Layout/LineLength:
 
 Style/WordArray:
   Enabled: false
+
+AllCops:
+  TargetRubyVersion: 3.2
