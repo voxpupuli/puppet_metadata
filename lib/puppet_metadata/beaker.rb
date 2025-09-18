@@ -109,8 +109,10 @@ module PuppetMetadata
 
         setfile_parts = []
         hosts_settings.each do |host_settings|
+          options[:ip] = '127.0.0.1'
           options[:hostname] = host_settings['hostname'] unless host_settings['hostname'].empty?
           options[:image] = image_to_use if image_to_use
+          options[:hypervisor] = 'none'
           setfile_parts << build_setfile(host_settings['name'], options)
         end
 
@@ -120,7 +122,7 @@ module PuppetMetadata
       # Return whether a Beaker setfile can be generated for the given OS
       # @param [String] os The operating system
       def os_supported?(os)
-        %w[Archlinux CentOS Fedora Debian Ubuntu Rocky AlmaLinux OracleLinux].include?(os)
+        %w[Archlinux CentOS Fedora Debian Ubuntu Rocky AlmaLinux OracleLinux Windows].include?(os)
       end
 
       private

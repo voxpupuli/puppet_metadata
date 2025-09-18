@@ -214,6 +214,11 @@ module PuppetMetadata
         '5.04' => '2006-10-31',
         '4.10' => '2006-04-30',
       },
+      # https://endoflife.date/windows-server
+      'Windows' => {
+        '2025' => '2029-10-10',
+        '2022' => '2026-10-13',
+      },
     }.freeze
 
     class << self

@@ -49,6 +49,10 @@ module PuppetMetadata
                                              '12' => 7..8,
                                              '13' => [8],
                                            },
+                                           'Windows' => {
+                                             '2022' => [8],
+                                             '2025' => [8],
+                                           },
                                          }).freeze
 
     PUPPET_RUBY_VERSIONS = {
