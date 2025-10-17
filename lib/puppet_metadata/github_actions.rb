@@ -138,7 +138,6 @@ module PuppetMetadata
       PuppetMetadata::Beaker.os_release_to_setfile(
         os,
         release,
-        pidfile_workaround: options[:beaker_pidfile_workaround],
         domain: options[:domain],
         puppet_version: puppet_collection,
         hosts: options[:beaker_hosts],

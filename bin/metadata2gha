@@ -3,10 +3,7 @@ require 'optparse'
 require 'json'
 require 'puppet_metadata'
 
-PidfileWorkaround = Object.new
-
 options = {
-  beaker_pidfile_workaround: false,
   domain: nil,
   minimum_major_puppet_version: nil,
   beaker_fact: nil,
@@ -14,20 +11,8 @@ options = {
 }
 
 OptionParser.new do |opts|
-  opts.accept(PidfileWorkaround) do |value|
-    case value
-    when 'true'
-      true
-    when 'false'
-      false
-    else
-      value.split(',')
-    end
-  end
-
   opts.banner = "Usage: #{$0} [options] metadata"
 
-  opts.on('--pidfile-workaround VALUE', 'Generate the systemd PIDFile workaround to work around a docker bug', PidfileWorkaround) { |opt| options[:beaker_pidfile_workaround] = opt }
   opts.on('-d', '--domain VALUE', 'the domain for the box, only used when --use-fqdn is set to true') { |opt| options[:domain] = opt }
   opts.on('--minimum-major-puppet-version VERSION', "Don't create actions for Puppet versions less than this major version") { |opt| options[:minimum_major_puppet_version] = opt }
   opts.on('--beaker-facter FACT:LABEL:VALUES', 'Expand the matrix based on a fact. Separate values using commas') do |opt|
