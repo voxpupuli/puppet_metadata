@@ -265,6 +265,11 @@ module PuppetMetadata
       # @return [Array] All Operating System versions that aren't EoL today
       def supported_releases(operatingsystem)
         releases = EOL_DATES[operatingsystem]
+
+        # return an empty array if one OS has zero dates
+        # Happens for esoteric distros like windows, where we currently don't have any data in EOL_DATES
+        return [] unless releases
+
         today = Date.today
         releases.select { |_release, eol_date| !eol_date || Date.parse(eol_date) > today }.keys
                 .sort_by { |release| Gem::Version.new(release) }

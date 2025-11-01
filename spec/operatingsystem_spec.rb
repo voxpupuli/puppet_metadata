@@ -77,5 +77,17 @@ describe PuppetMetadata::OperatingSystem do
         expect(described_class.supported_releases(os).last).to eq(described_class.latest_release(os))
       end
     end
+
+    context 'with Solaris' do
+      let(:os) { 'Solaris' }
+
+      it 'returns []' do
+        expect(described_class.supported_releases(os)).to be_empty
+      end
+
+      it 'the last entry matches latest_release' do
+        expect(described_class.supported_releases(os).last).to eq(described_class.latest_release(os))
+      end
+    end
   end
 end
