@@ -212,6 +212,20 @@ The metadata object has several different methods that we can call
 [7] pry(main)>
 ```
 
+## Get all versions for an Operating System that are not EoL
+
+```
+[1] pry(main)> require 'puppet_metadata'
+=> true
+[2] pry(main)> os = PuppetMetadata::OperatingSystem.supported_releases('RedHat')
+=> ["8", "9", "10"]
+[3] pry(main)> os = PuppetMetadata::OperatingSystem.supported_releases('windows')
+=> []
+[4] pry(main)>
+```
+
+**For Operating systems without any known releases, an empty array is returned.**
+
 ## List supported setfiles
 
 When running beaker on the CLI, you can specify a specific setfile. `puppet_metadata` provides `bin/setfiles` to list all setfiles:
