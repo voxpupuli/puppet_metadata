@@ -18,7 +18,7 @@ def main
   global = OptionParser.new do |opts|
     opts.banner = "Usage: #{opts.program_name} [options] <action> [options]"
     opts.on('--filename METADATA', 'Metadata filename') do |value|
-      options[:verbose] = value
+      options[:filename] = value
     end
 
     opts.separator ''
