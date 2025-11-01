@@ -21,43 +21,6 @@ describe PuppetMetadata::Beaker do
 
     it { expect(described_class.os_release_to_setfile('SLES', '11')).to be_nil }
 
-    context 'with pidfile_workaround' do
-      describe 'true' do
-        [
-          ['CentOS', '6', ['centos6-64', 'CentOS 6']],
-          ['CentOS', '7', ['centos7-64{image=centos:7.6.1810}', 'CentOS 7']],
-          ['CentOS', '8', nil],
-          ['CentOS', '9', ['centos9-64', 'CentOS 9']],
-          ['Ubuntu', '16.04', ['ubuntu1604-64{image=ubuntu:xenial-20191212}', 'Ubuntu 16.04']],
-          ['Ubuntu', '18.04', ['ubuntu1804-64', 'Ubuntu 18.04']],
-        ].each do |os, release, expected|
-          it { expect(described_class.os_release_to_setfile(os, release, pidfile_workaround: true)).to eq(expected) }
-        end
-
-        describe 'domain' do
-          it {
-            expect(described_class.os_release_to_setfile('CentOS', '7', pidfile_workaround: true,
-                                                                        domain: 'example.com')).to eq(['centos7-64{hostname=centos7-64.example.com,image=centos:7.6.1810}', 'CentOS 7'])
-          }
-        end
-      end
-
-      describe 'as an array' do
-        it {
-          expect(described_class.os_release_to_setfile('CentOS', '8',
-                                                       pidfile_workaround: [])).to eq(['centos8-64', 'CentOS 8'])
-        }
-
-        it {
-          expect(described_class.os_release_to_setfile('CentOS', '8',
-                                                       pidfile_workaround: ['Debian'])).to eq(['centos8-64',
-                                                                                               'CentOS 8',])
-        }
-
-        it { expect(described_class.os_release_to_setfile('CentOS', '8', pidfile_workaround: ['CentOS'])).to be_nil }
-      end
-    end
-
     context 'with domain' do
       it {
         expect(described_class.os_release_to_setfile('CentOS', '7', domain: 'mydomain.org')).to eq(['centos7-64{hostname=centos7-64.mydomain.org}', 'CentOS 7'])
