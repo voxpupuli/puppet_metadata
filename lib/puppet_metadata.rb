@@ -23,4 +23,11 @@ module PuppetMetadata
   def self.read(path)
     parse(File.read(path))
   end
+
+  # Write metadata back to disk
+  # @param path The path metadata.json
+  # @param [PuppetMetadata::Metadata] A Metadata object
+  def self.write(path, metadata)
+    File.write(path, "#{JSON.pretty_generate(metadata.metadata)}\n")
+  end
 end
