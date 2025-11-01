@@ -212,7 +212,7 @@ The metadata object has several different methods that we can call
 [7] pry(main)>
 ```
 
-## Get all versions for an Operating System that are not EoL
+### Get all versions for an Operating System that are not EoL
 
 ```
 [1] pry(main)> require 'puppet_metadata'
