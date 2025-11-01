@@ -32,7 +32,7 @@ describe PuppetMetadata::OperatingSystem do
 
     context 'with CentOS and a date in the past' do
       let(:os) { 'CentOS' }
-      let(:date) { '2025-04-15' }
+      let(:date) { Date.parse('2025-04-15') }
 
       it 'returns 9 and 10' do
         expect(described_class.supported_releases(os, date)).to match_array(%w[9 10])
