@@ -4,11 +4,9 @@ describe PuppetMetadata::GithubActions do
   subject { described_class.new(PuppetMetadata::Metadata.new(JSON.parse(JSON.dump(metadata))), options) }
 
   let(:at) { Date.new(2020, 1, 1) }
-  let(:beaker_pidfile_workaround) { false }
   let(:minimum_major_puppet_version) { nil }
   let(:options) do
     {
-      beaker_pidfile_workaround: beaker_pidfile_workaround,
       minimum_major_puppet_version: minimum_major_puppet_version,
     }
   end
@@ -54,8 +52,6 @@ describe PuppetMetadata::GithubActions do
   # rubocop:disable Layout/LineLength,RSpec/ExampleLength
   describe 'outputs' do
     subject { super().outputs(at) }
-
-    let(:beaker_pidfile_workaround) { false }
 
     it { is_expected.to be_an_instance_of(Hash) }
     it { expect(subject.keys).to contain_exactly(:puppet_unit_test_matrix, :puppet_beaker_test_matrix) }

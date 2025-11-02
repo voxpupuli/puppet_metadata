@@ -16,7 +16,6 @@ rescue StandardError => e
 end
 
 options = {
-  beaker_pidfile_workaround: false,
   domain: 'example.com',
   minimum_major_puppet_version: nil,
   beaker_fact: nil,

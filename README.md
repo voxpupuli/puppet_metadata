@@ -143,39 +143,6 @@ Beaker test matrix formatted for readability
 ]
 ```
 
-It is possible to specify the path to metadata.json and customize the setfiles. For example, to ensure the setfiles use FQDNs and apply the [systemd PIDFile workaround under docker](https://github.com/docker/for-linux/issues/835). This either means either using an older image (CentOS 7, Ubuntu 16.04) or skipping (CentOS 8).
-
-```console
-$ metadata2gha --use-fqdn --pidfile-workaround true /path/to/metadata.json
-```
-
-This results in the following JSON data
-```json
-[
-  {
-    "name": "Puppet 7 - CentOS 7",
-    "env": {
-      "BEAKER_PUPPET_COLLECTION": "puppet7",
-      "BEAKER_SETFILE": "centos7-64{hostname=centos7-64-puppet7.example.com,image=centos:7.6.1810}"
-    }
-  },
-  {
-    "name": "Puppet 7 - Debian 12",
-    "env": {
-      "BEAKER_PUPPET_COLLECTION": "puppet7",
-      "BEAKER_SETFILE": "debian12-64{hostname=debian12-64-puppet7.example.com}"
-    }
-  },
-  {
-    "name": "Puppet 7 - Ubuntu 22.04",
-    "env": {
-      "BEAKER_PUPPET_COLLECTION": "puppet7",
-      "BEAKER_SETFILE": "ubuntu2204-64{hostname=ubuntu2204-64-puppet7.example.com}"
-    }
-  }
-]
-```
-
 If you need custom hostname or multiple hosts in your integration tests this could be achived by using the --beaker-hosts option
 
 Option argument is 'HOSTNAME:ROLES;HOSTNAME:..;..' where
