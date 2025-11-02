@@ -10,6 +10,18 @@
 
 The gem intends to provide an abstraction over Puppet's metadata.json file. Its API allow easy iteration over its illogical data structures.
 
+* [Generating Github Actions outputs](#generating-github-actions-outputs)
+* [Work with the API](#work-with-the-api)
+    * [List all supported operating systems](#list-all-supported-operating-systems)
+    * [List supported major puppet versions](#list-supported-major-puppet-versions)
+    * [Check if an operating systems is supported](#check-if-an-operating-systems-is-supported)
+    * [Get all versions for an Operating System that are not EoL](#get-all-versions-for-an-operating-system-that-are-not-eol)
+    * [Get all versions for an Operating System that are not EoL after a certain date](#get-all-versions-for-an-operating-system-that-are-not-eol-after-a-certain-date)
+* [List supported setfiles](list-supported-setfiles)
+* [Transfer Notice](#transfer-notice)
+* [License](#license)
+* [Release information](#release-information)
+
 ## Generating Github Actions outputs
 
 To get outputs [usable in Github Actions](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions), there is the `metadata2gha` command available. This generates based on metadata.json, such as [Beaker](https://github.com/voxpupuli/beaker) setfiles, Puppet major versions and a Puppet unit test matrix.
