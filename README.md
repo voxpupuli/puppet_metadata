@@ -10,6 +10,78 @@
 
 The gem intends to provide an abstraction over Puppet's metadata.json file. Its API allow easy iteration over its illogical data structures.
 
+* [New CLI interface in 6.0.0](#new-cli-interface-in-6.0.0)
+* [Generating Github Actions outputs](#generating-github-actions-outputs)
+* [Work with the API](#work-with-the-api)
+    * [List all supported operating systems](#list-all-supported-operating-systems)
+    * [List supported major puppet versions](#list-supported-major-puppet-versions)
+    * [Check if an operating systems is supported](#check-if-an-operating-systems-is-supported)
+    * [Get all versions for an Operating System that are not EoL](#get-all-versions-for-an-operating-system-that-are-not-eol)
+    * [Get all versions for an Operating System that are not EoL after a certain date](#get-all-versions-for-an-operating-system-that-are-not-eol-after-a-certain-date)
+* [List supported setfiles](list-supported-setfiles)
+* [Transfer Notice](#transfer-notice)
+* [License](#license)
+* [Release information](#release-information)
+
+## New CLI interface in 6.0.0
+
+Version 6.0.0 introduces a new CLI interface, in `bin/puppet-metadata`.
+It provides a new way of handling default CLI options, like the path to the metadata.json.
+
+```
+$ bundle exec bin/puppet-metadata --help
+Usage: puppet-metadata [options] <action> [options]
+        --filename METADATA          Metadata filename
+
+ACTIONS
+  eol                 Show which operating systems are end of life
+  add_supported_os    Add supported operating systems to metadata.json
+
+See 'puppet-metadata ACTION --help' for more information on a specific action.
+```
+
+`--filename ` is optional.
+If ommitted, a metadata.json in the current directory will be parsed.
+
+Each action is implemented as a file in `lib/puppet_metadata/command/*rb` and automatically loaded via `lib/puppet_metadata/command.rb`.
+
+## List EoL OS releases in metadata.json
+
+We can list all releases from metadata.json, that reached their EoL date:
+
+```
+$ bundle exec bin/puppet-metadata eol
+Found EOL operating systems
+Fedora 40
+Ubuntu 20.04
+```
+
+You can also provide a date as YYYY-MM-DD to check for releases that are EoL at a specific date:
+
+```
+$ bundle exec bin/puppet-metadata eol --help
+Usage: puppet-metadata eol [options]
+        --at DATE                    The date to use
+```
+
+## Add supported OS releases to metadata.json
+
+You can read the metadata.json, get all OSes, and afterwards add all releases that aren't EoL:
+(as mentioned above, `--filename` is optional)
+
+```
+bundle exec bin/puppet-metadata --filename "$file" list_supported_os
+```
+
+Available parameters:
+
+```
+$ bundle exec bin/puppet-metadata add_supported_os --help
+Usage: puppet-metadata add_supported_os [options]
+        --at DATE                    The date to use
+        --os operatingsystem         Only honour the specific operating system
+```
+
 ## Generating Github Actions outputs
 
 To get outputs [usable in Github Actions](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions), there is the `metadata2gha` command available. This generates based on metadata.json, such as [Beaker](https://github.com/voxpupuli/beaker) setfiles, Puppet major versions and a Puppet unit test matrix.
