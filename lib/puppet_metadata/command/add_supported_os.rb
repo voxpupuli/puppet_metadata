@@ -8,11 +8,14 @@ class AddSupportedOSCommand < PuppetMetadata::BaseCommand
       opts.on('--at DATE', Date, 'The date to use') do |value|
         options[:at] = value
       end
+      opts.on('--os operatingsystem', nil, 'Only honour the specific operating system') do |value|
+        options[:os] = value
+      end
     end
   end
 
   def run
-    added = metadata.add_supported_operatingsystems
+    added = metadata.add_supported_operatingsystems(@options[:at], @options[:os])
 
     return unless added.any?
 

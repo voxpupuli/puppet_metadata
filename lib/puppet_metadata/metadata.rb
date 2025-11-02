@@ -110,15 +110,21 @@ module PuppetMetadata
     end
 
     # @param [Date] at The date to check the EOL time. Today is used when nil.
+    # @param [String] desired_os the name of the operating system from metadata.json we want to update
     # @return [Hash[String, Array[String]]]
     #   All added releases for each operating system
-    def add_supported_operatingsystems(at = nil)
+    def add_supported_operatingsystems(at = nil, desired_os = nil)
       added = {}
 
       metadata['operatingsystem_support'] = operatingsystems.map do |os, releases|
         result = {
           'operatingsystem' => os,
         }
+
+        # desired_os is a filter
+        # if set, we only care about this OS, otherwise we want all OSes from metadata.json
+        next if desired_os && desired_os != os
+
         unless releases.nil?
           supported = OperatingSystem.supported_releases(os, at)
           releases_added = supported - releases
