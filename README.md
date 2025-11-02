@@ -212,19 +212,32 @@ The metadata object has several different methods that we can call
 [7] pry(main)>
 ```
 
-## Get all versions for an Operating System that are not EoL
+### Get all versions for an Operating System that are not EoL
 
 ```
 [1] pry(main)> require 'puppet_metadata'
 => true
-[2] pry(main)> os = PuppetMetadata::OperatingSystem.supported_releases('RedHat')
+[2] pry(main)> PuppetMetadata::OperatingSystem.supported_releases('RedHat')
 => ["8", "9", "10"]
-[3] pry(main)> os = PuppetMetadata::OperatingSystem.supported_releases('windows')
+[3] pry(main)> PuppetMetadata::OperatingSystem.supported_releases('windows')
 => []
 [4] pry(main)>
 ```
 
 **For Operating systems without any known releases, an empty array is returned.**
+
+### Get all versions for an Operating System that are not EoL after a certain date
+
+```
+[1] pry(main)> require 'puppet_metadata'
+=> true
+[2] pry(main)> PuppetMetadata::OperatingSystem.supported_releases('CentOS', Date.parse('2025-04-15'))
+=> ["9", "10"]
+[3] pry(main)>
+```
+
+CentOS 8 and older aren't listed.
+8 is EoL since 2024-05-31.
 
 ## List supported setfiles
 
