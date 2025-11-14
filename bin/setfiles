@@ -22,6 +22,8 @@ options = {
   beaker_hosts: nil,
 }
 
+warn 'Command deprecated - call puppet-metadata setfiles instead'
+
 metadata.github_actions(options).outputs[:puppet_beaker_test_matrix].each do |os|
   puts "BEAKER_SETFILE=\"#{os[:env]['BEAKER_SETFILE']}\""
 end
