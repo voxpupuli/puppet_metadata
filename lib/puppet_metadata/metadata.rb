@@ -123,7 +123,11 @@ module PuppetMetadata
 
         # desired_os is a filter
         # if set, we only care about this OS, otherwise we want all OSes from metadata.json
-        next if desired_os && desired_os != os
+        if desired_os && desired_os != os
+          # Preserve the original entry unchanged
+          result['operatingsystemrelease'] = releases unless releases.nil?
+          next result
+        end
 
         unless releases.nil?
           supported = OperatingSystem.supported_releases(os, at)
@@ -133,6 +137,9 @@ module PuppetMetadata
         end
         result
       end
+
+      # Clear the memoized operatingsystems so it gets recalculated
+      @operatingsystems = nil
 
       added
     end

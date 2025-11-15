@@ -229,11 +229,19 @@ describe PuppetMetadata::Metadata do
         end
 
         it 'with OS' do
+          # Only Debian should be in the added hash
           expect(subject.add_supported_operatingsystems(nil, desired_os)).to eq({ 'Debian' => ['11', '12', '13'] })
+          # Other OSes should remain unchanged
+          expect(subject.operatingsystems['CentOS']).to eq(['7', '8', '9'])
+          expect(subject.operatingsystems['RedHat']).to eq(['7', '8', '9'])
         end
 
         it 'with date & OS' do
+          # Only Debian should be in the added hash
           expect(subject.add_supported_operatingsystems(date, desired_os)).to eq({ 'Debian' => ['12', '13'] })
+          # Other OSes should remain unchanged
+          expect(subject.operatingsystems['CentOS']).to eq(['7', '8', '9'])
+          expect(subject.operatingsystems['RedHat']).to eq(['7', '8', '9'])
         end
       end
     end
