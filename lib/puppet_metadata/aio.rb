@@ -11,6 +11,9 @@ module PuppetMetadata
 
     PUPPET_BUILDS = {
       # RPM-based
+      'Amazonlinux' => {
+        '2023' => [8],
+      },
       'RedHat' => {
         '7' => 7..8,
         '8' => 7..8,
