@@ -244,6 +244,62 @@ describe PuppetMetadata::Metadata do
           expect(subject.operatingsystems['RedHat']).to eq(['7', '8', '9'])
         end
       end
+
+      describe 'remove_eol_operatingsystems' do
+        it 'removes EOL operating systems' do
+          expect(subject.remove_eol_operatingsystems(at)).to eq({ 'Ubuntu' => ['14.04'] })
+          expect(subject.operatingsystems['Ubuntu']).to eq(['16.04', '18.04', '20.04', '22.04', '24.04'])
+        end
+
+        context 'with date' do
+          let(:removed) do
+            subject.remove_eol_operatingsystems(Date.new(2099, 1, 1))
+          end
+
+          it 'returns removed operating systems' do
+            expect(removed).to eq({
+                                    'CentOS' => ['7', '8', '9'],
+                                    'Debian' => ['9', '10'],
+                                    'RedHat' => ['7', '8', '9'],
+                                    'Ubuntu' => ['14.04', '16.04', '18.04', '20.04', '22.04', '24.04'],
+                                  })
+          end
+
+          it 'clears all EOL versions' do
+            removed
+            expect(subject.operatingsystems['Ubuntu']).to eq([])
+            expect(subject.operatingsystems['Debian']).to eq([])
+            expect(subject.operatingsystems['CentOS']).to eq([])
+            expect(subject.operatingsystems['RedHat']).to eq([])
+          end
+        end
+
+        context 'with OS' do
+          let(:desired_os) { 'Ubuntu' }
+
+          it 'only removes EOL versions for the specified OS' do
+            expect(subject.remove_eol_operatingsystems(at, desired_os)).to eq({ 'Ubuntu' => ['14.04'] })
+            expect(subject.operatingsystems['Ubuntu']).to eq(['16.04', '18.04', '20.04', '22.04', '24.04'])
+            # Other OSes should remain unchanged (even if they have EOL versions)
+            expect(subject.operatingsystems['ArchLinux']).to be_nil
+            expect(subject.operatingsystems['CentOS']).to eq(['7', '8', '9'])
+          end
+        end
+
+        context 'with date & OS' do
+          let(:desired_os) { 'Debian' }
+          let(:date) { Date.new(2099, 1, 1) }
+
+          it 'only removes EOL versions for the specified OS at the specified date' do
+            expect(subject.remove_eol_operatingsystems(date, desired_os)).to eq({ 'Debian' => ['9', '10'] })
+            expect(subject.operatingsystems['Debian']).to eq([])
+            # Other OSes should remain unchanged
+            expect(subject.operatingsystems['ArchLinux']).to be_nil
+            expect(subject.operatingsystems['CentOS']).to eq(['7', '8', '9'])
+            expect(subject.operatingsystems['Ubuntu']).to eq(['14.04', '16.04', '18.04', '20.04', '22.04', '24.04'])
+          end
+        end
+      end
     end
   end
 end

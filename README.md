@@ -10,18 +10,23 @@
 
 The gem intends to provide an abstraction over Puppet's metadata.json file. Its API allow easy iteration over its illogical data structures.
 
-* [New CLI interface in 6.0.0](#new-cli-interface-in-6.0.0)
-* [Generating Github Actions outputs](#generating-github-actions-outputs)
-* [Work with the API](#work-with-the-api)
-    * [List all supported operating systems](#list-all-supported-operating-systems)
-    * [List supported major puppet versions](#list-supported-major-puppet-versions)
-    * [Check if an operating systems is supported](#check-if-an-operating-systems-is-supported)
-    * [Get all versions for an Operating System that are not EoL](#get-all-versions-for-an-operating-system-that-are-not-eol)
-    * [Get all versions for an Operating System that are not EoL after a certain date](#get-all-versions-for-an-operating-system-that-are-not-eol-after-a-certain-date)
-* [List supported setfiles](list-supported-setfiles)
-* [Transfer Notice](#transfer-notice)
-* [License](#license)
-* [Release information](#release-information)
+- [puppet\_metadata](#puppet_metadata)
+  - [New CLI interface in 6.0.0](#new-cli-interface-in-600)
+  - [Manage OS versions in metadata.json](#manage-os-versions-in-metadatajson)
+    - [List supported OS versions](#list-supported-os-versions)
+    - [Add missing supported OS versions](#add-missing-supported-os-versions)
+    - [Remove EOL OS versions](#remove-eol-os-versions)
+  - [Generating Github Actions outputs](#generating-github-actions-outputs)
+  - [Work with the API](#work-with-the-api)
+    - [List all supported operating systems](#list-all-supported-operating-systems)
+    - [List supported major puppet versions](#list-supported-major-puppet-versions)
+    - [Check if an operating systems is supported](#check-if-an-operating-systems-is-supported)
+    - [Get all versions for an Operating System that are not EoL](#get-all-versions-for-an-operating-system-that-are-not-eol)
+    - [Get all versions for an Operating System that are not EoL after a certain date](#get-all-versions-for-an-operating-system-that-are-not-eol-after-a-certain-date)
+  - [List supported setfiles](#list-supported-setfiles)
+  - [Transfer Notice](#transfer-notice)
+  - [License](#license)
+  - [Release information](#release-information)
 
 ## New CLI interface in 6.0.0
 
@@ -34,8 +39,8 @@ Usage: puppet-metadata [options] <action> [options]
         --filename METADATA          Metadata filename
 
 ACTIONS
-  eol                 Show which operating systems are end of life
-  add_supported_os    Add supported operating systems to metadata.json
+  os_versions         Manage operating system versions in metadata.json
+  setfiles            Show the various setfiles supported by the metadata
 
 See 'puppet-metadata ACTION --help' for more information on a specific action.
 ```
@@ -45,41 +50,71 @@ If ommitted, a metadata.json in the current directory will be parsed.
 
 Each action is implemented as a file in `lib/puppet_metadata/command/*rb` and automatically loaded via `lib/puppet_metadata/command.rb`.
 
-## List EoL OS releases in metadata.json
+## Manage OS versions in metadata.json
 
-We can list all releases from metadata.json, that reached their EoL date:
+The `os_versions` command provides a unified interface to view, add, and remove operating system versions in the metadata.json.
 
-```
-$ bundle exec bin/puppet-metadata eol
-Found EOL operating systems
-Fedora 40
-Ubuntu 20.04
-```
+### List supported OS versions
 
-You can also provide a date as YYYY-MM-DD to check for releases that are EoL at a specific date:
+By default, `os_versions` shows which OS versions in your metadata.json are still supported and which are EOL:
 
 ```
-$ bundle exec bin/puppet-metadata eol --help
-Usage: puppet-metadata eol [options]
-        --at DATE                    The date to use
+$ bundle exec puppet-metadata os_versions
+module-name supports these non-EOL operating system versions:
+  AlmaLinux: 8, 9
+  CentOS: 9
+  Debian: 11, 12
+  OracleLinux: 8, 9, 10
+  RedHat: 8, 9
+  Rocky: 8, 9
+  Ubuntu: 22.04, 24.04
+
+module-name supports these EOL operating system versions:
+  Fedora: 40
+  Ubuntu: 20.04
 ```
 
-## Add supported OS releases to metadata.json
-
-You can read the metadata.json, get all OSes, and afterwards add all releases that aren't EoL:
-(as mentioned above, `--filename` is optional)
+You can filter to a specific OS:
 
 ```
-bundle exec bin/puppet-metadata --filename "$file" list_supported_os
+$ bundle exec puppet-metadata os_versions --os Ubuntu
+module-name supports these non-EOL operating system versions:
+  Ubuntu: 22.04, 24.04
+
+module-name supports these EOL operating system versions:
+  Ubuntu: 20.04
 ```
 
-Available parameters:
+### Add missing supported OS versions
+
+Use `--add-missing` to automatically add all non-EOL OS versions to metadata.json:
 
 ```
-$ bundle exec bin/puppet-metadata add_supported_os --help
-Usage: puppet-metadata add_supported_os [options]
-        --at DATE                    The date to use
-        --os operatingsystem         Only honour the specific operating system
+$ bundle exec puppet-metadata os_versions --add-missing
+Added support:
+CentOS => 10
+Debian => 13
+```
+
+### Remove EOL OS versions
+
+Use `--remove-eol` to automatically remove all EOL OS versions from metadata.json:
+
+```
+$ bundle exec puppet-metadata os_versions --remove-eol
+Removed EOL operating systems:
+CentOS => 7, 8
+Debian => 9, 10
+Ubuntu => 20.04
+```
+
+You can preview changes without modifying metadata.json using `--noop`:
+
+```
+$ bundle exec puppet-metadata os_versions --add-missing --noop
+[NOOP] Would add support:
+CentOS => 10
+Debian => 13
 ```
 
 ## Generating Github Actions outputs
