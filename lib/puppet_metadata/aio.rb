@@ -2,7 +2,6 @@ module PuppetMetadata
   class AIO
     COMPATIBLE = {
       'AlmaLinux' => 'RedHat',
-      'Amazon' => 'RedHat',
       'CentOS' => 'RedHat',
       'OracleLinux' => 'RedHat',
       'Rocky' => 'RedHat',
@@ -38,6 +37,10 @@ module PuppetMetadata
     }.freeze
 
     OPENVOX_BUILDS = PUPPET_BUILDS.merge({
+                                           # RPM-based
+                                           'Amazon' => {
+                                             '2023' => [8],
+                                           },
                                            'RedHat' => {
                                              '7' => 7..8,
                                              '8' => 7..8,

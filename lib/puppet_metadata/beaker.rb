@@ -12,6 +12,8 @@ module PuppetMetadata
         case os
         when 'OracleLinux'
           'oracle'
+        when 'Amazonlinux', 'AmazonLinux' # Vox Pupuli default is Amazon in metadata.json
+          'amazon'
         else
           os.downcase
         end
@@ -83,7 +85,7 @@ module PuppetMetadata
       # Return whether a Beaker setfile can be generated for the given OS
       # @param [String] os The operating system
       def os_supported?(os)
-        %w[Archlinux CentOS Fedora Debian Ubuntu Rocky AlmaLinux OracleLinux].include?(os)
+        %w[Amazonlinux Amazon Archlinux CentOS Fedora Debian Ubuntu Rocky AlmaLinux OracleLinux].include?(os)
       end
 
       private
