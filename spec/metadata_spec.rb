@@ -217,20 +217,53 @@ describe PuppetMetadata::Metadata do
       end
 
       describe 'add_supported_operatingsystems' do
+        # Mock EOL dates for stable tests
+        let(:mock_eol_dates) do
+          {
+            'CentOS' => {
+              '10' => '2030-01-01',
+              '9' => '2027-05-31',
+              '8' => '2024-05-31',
+              '7' => '2024-06-30',
+            },
+            'Debian' => {
+              '13' => '2028-08-09',
+              '12' => '2026-06-10',
+              '11' => '2024-08-14',
+            },
+            'RedHat' => {
+              '10' => '2035-05-31',
+              '9' => '2032-05-31',
+              '8' => '2029-05-31',
+              '7' => '2024-06-30',
+            },
+            'Ubuntu' => {
+              '24.10' => '2026-07-10',
+              '24.04' => '2029-04-25',
+              '22.04' => '2027-04-01',
+            },
+          }
+        end
+
         let(:date) { Date.parse('2027-04-15') }
         let(:desired_os) { 'Debian' }
 
+        before do
+          stub_const('PuppetMetadata::OperatingSystem::EOL_DATES', mock_eol_dates)
+        end
+
         it 'with defaults' do
-          expect(subject.add_supported_operatingsystems).to eq({ 'CentOS' => ['10'], 'Debian' => ['11', '12', '13'], 'RedHat' => ['10'] })
+          # Ubuntu already has 24.04 in metadata, so only 24.10 is added
+          expect(subject.add_supported_operatingsystems).to eq({ 'CentOS' => ['10'], 'Debian' => ['12', '13'], 'RedHat' => ['10'], 'Ubuntu' => ['24.10'] })
         end
 
         it 'with date' do
-          expect(subject.add_supported_operatingsystems(date)).to eq({ 'CentOS' => ['10'], 'Debian' => ['12', '13'], 'RedHat' => ['10'] })
+          expect(subject.add_supported_operatingsystems(date)).to eq({ 'CentOS' => ['10'], 'Debian' => ['13'], 'RedHat' => ['10'] })
         end
 
         it 'with OS' do
           # Only Debian should be in the added hash
-          expect(subject.add_supported_operatingsystems(nil, desired_os)).to eq({ 'Debian' => ['11', '12', '13'] })
+          expect(subject.add_supported_operatingsystems(nil, desired_os)).to eq({ 'Debian' => ['12', '13'] })
           # Other OSes should remain unchanged
           expect(subject.operatingsystems['CentOS']).to eq(['7', '8', '9'])
           expect(subject.operatingsystems['RedHat']).to eq(['7', '8', '9'])
@@ -238,7 +271,7 @@ describe PuppetMetadata::Metadata do
 
         it 'with date & OS' do
           # Only Debian should be in the added hash
-          expect(subject.add_supported_operatingsystems(date, desired_os)).to eq({ 'Debian' => ['12', '13'] })
+          expect(subject.add_supported_operatingsystems(date, desired_os)).to eq({ 'Debian' => ['13'] })
           # Other OSes should remain unchanged
           expect(subject.operatingsystems['CentOS']).to eq(['7', '8', '9'])
           expect(subject.operatingsystems['RedHat']).to eq(['7', '8', '9'])
