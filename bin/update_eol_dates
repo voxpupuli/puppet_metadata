@@ -1,0 +1,267 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# This script updates the EOL dates data file using the endoflife.date API
+# It can be run manually or via GitHub Actions automation
+
+require 'json'
+require 'net/http'
+require 'uri'
+require 'date'
+
+# Mapping between internal OS names and endoflife.date identifiers; only OSes listed here will be updated
+OS_MAPPING = {
+  'AlmaLinux' => 'almalinux',
+  'Amazon' => 'amazon-linux',
+  'CentOS' => 'centos',
+  'Debian' => 'debian',
+  'OracleLinux' => 'oracle-linux',
+  'Fedora' => 'fedora',
+  'FreeBSD' => 'freebsd',
+  'RedHat' => 'rhel',
+  'Rocky' => 'rocky-linux',
+  'Scientific' => nil, # Not in endoflife.date
+  'SLES' => 'sles',
+  'Ubuntu' => 'ubuntu',
+}.freeze
+
+def fetch_eol_data(product)
+  uri = URI("https://endoflife.date/api/#{product}.json")
+  response = Net::HTTP.get_response(uri)
+
+  unless response.is_a?(Net::HTTPSuccess)
+    warn "Failed to fetch data for #{product}: #{response.code} #{response.message}"
+    return nil
+  end
+
+  JSON.parse(response.body)
+rescue StandardError => e
+  warn "Error fetching data for #{product}: #{e.message}"
+  nil
+end
+
+def parse_eol_date(eol_value)
+  # endoflife.date returns different formats:
+  # - Date string: "2024-06-30"
+  # - Boolean false: not yet EOL
+  # - Boolean true: EOL date unknown
+  case eol_value
+  when String
+    # Validate it's a proper date
+    Date.parse(eol_value)
+    eol_value
+  when false, 'false', true, 'true'
+    # false: Not yet EOL
+    # true: EOL date unknown - keep existing data or skip
+    nil
+  end
+rescue Date::Error
+  nil
+end
+
+def update_os_data(os_name, product_id, current_data)
+  return current_data unless product_id
+
+  puts "Fetching data for #{os_name} (#{product_id})..."
+  api_data = fetch_eol_data(product_id)
+  return current_data unless api_data
+
+  updated_data = {}
+
+  api_data.each do |cycle|
+    # The API returns an array of cycles, each with:
+    # - cycle: version number
+    # - eol: end of life date or boolean
+    version = cycle['cycle'].to_s
+    eol_value = if os_name == 'Debian' && cycle.key?('extendedSupport')
+                  cycle['extendedSupport']
+                else
+                  cycle['eol']
+                end
+
+    eol = parse_eol_date(eol_value)
+
+    if eol
+      updated_data[version] = eol
+      puts "  #{version}: #{eol}"
+    elsif eol_value == false || cycle['eol'] == false
+      # Track versions that aren't EOL yet
+      updated_data[version] = nil
+      puts "  #{version}: not yet EOL"
+    end
+  end
+
+  current_data[os_name]&.each do |version, date|
+    unless updated_data.key?(version)
+      puts "  Preserving #{version}: #{date || 'nil'} (not in API)"
+      updated_data[version] = date
+    end
+  end
+
+  updated_data
+end
+
+def handle_amazon_linux(current_data)
+  puts 'Fetching data for Amazon Linux...'
+
+  updated_data = {}
+
+  al_data = fetch_eol_data('amazon-linux')
+  al_data&.each do |cycle|
+    version = cycle['cycle'].to_s
+    eol = parse_eol_date(cycle['eol'])
+
+    # Map version "2" to "2.0" for compatibility with existing metadata entries
+    version = '2.0' if version == '2'
+
+    if eol
+      updated_data[version] = eol
+      puts "  #{version}: #{eol}"
+    elsif cycle['eol'] == false
+      updated_data[version] = nil
+      puts "  #{version}: not yet EOL"
+    end
+  end
+
+  current_data['Amazon']&.each do |version, date|
+    unless updated_data.key?(version)
+      puts "  Preserving #{version}: #{date || 'nil'} (not in API)"
+      updated_data[version] = date
+    end
+  end
+
+  updated_data
+end
+
+def handle_centos(current_data)
+  puts 'Fetching data for CentOS...'
+
+  updated_data = {}
+
+  centos_data = fetch_eol_data('centos')
+  centos_data&.each do |cycle|
+    version = cycle['cycle'].to_s
+    eol = parse_eol_date(cycle['eol'])
+
+    if eol
+      updated_data[version] = eol
+      puts "  #{version}: #{eol}"
+    elsif cycle['eol'] == false
+      updated_data[version] = nil
+      puts "  #{version}: not yet EOL"
+    end
+  end
+
+  # Fetch CentOS Stream versions after CentOS. Stream takes precedence for overlapping versions.
+  stream_data = fetch_eol_data('centos-stream')
+  stream_data&.each do |cycle|
+    version = cycle['cycle'].to_s
+    eol = parse_eol_date(cycle['eol'])
+
+    if eol
+      updated_data[version] = eol
+      puts "  #{version}: #{eol}"
+    elsif cycle['eol'] == false
+      updated_data[version] = nil
+      puts "  #{version}: not yet EOL"
+    end
+  end
+
+  current_data['CentOS']&.each do |version, date|
+    unless updated_data.key?(version)
+      puts "  Preserving #{version}: #{date || 'nil'} (not in API)"
+      updated_data[version] = date
+    end
+  end
+
+  updated_data
+end
+
+def handle_ubuntu(current_data)
+  puts 'Fetching data for Ubuntu...'
+
+  updated_data = {}
+
+  ubuntu_data = fetch_eol_data('ubuntu')
+  ubuntu_data&.each do |cycle|
+    version = cycle['cycle'].to_s
+    eol = parse_eol_date(cycle['eol'])
+
+    if eol
+      updated_data[version] = eol
+      puts "  #{version}: #{eol}"
+    elsif cycle['eol'] == false
+      updated_data[version] = nil
+      puts "  #{version}: not yet EOL"
+    end
+  end
+
+  current_data['Ubuntu']&.each do |version, date|
+    next if updated_data.key?(version)
+
+    puts "  Preserving #{version}: #{date || 'nil'} (not in API)"
+    updated_data[version] = date
+  end
+
+  updated_data
+end
+
+def main
+  data_file = File.expand_path('../data/eol_dates.json', __dir__)
+
+  # Load current data
+  current_data = JSON.parse(File.read(data_file))
+
+  # Update each OS
+  updated_data = {}
+
+  OS_MAPPING.each do |os_name, product_id|
+    if os_name == 'Amazon'
+      updated_data[os_name] = handle_amazon_linux(current_data)
+    elsif os_name == 'CentOS'
+      updated_data[os_name] = handle_centos(current_data)
+    elsif os_name == 'Ubuntu'
+      updated_data[os_name] = handle_ubuntu(current_data)
+    elsif product_id
+      updated_data[os_name] = update_os_data(os_name, product_id, current_data)
+    else
+      puts "Preserving #{os_name} (not in endoflife.date API)"
+      updated_data[os_name] = current_data[os_name]
+    end
+  end
+
+  # Sort each OS's versions by EOL date (latest EOL first, then nulls)
+  sorted_data = {}
+  updated_data.each do |os_name, versions|
+    sorted_versions = versions.sort do |a, b|
+      version_a, eol_a = a
+      version_b, eol_b = b
+
+      # Handle nil values (not yet EOL) - they go first
+      return -1 if eol_a.nil? && !eol_b.nil?
+      return 1 if !eol_a.nil? && eol_b.nil?
+
+      if eol_a == eol_b
+        # Same EOL date (or both nil) - sort by version number descending
+        Gem::Version.new(version_b) <=> Gem::Version.new(version_a)
+      else
+        # Different EOL dates - sort by date descending (later date first)
+        (eol_b || '0000-00-00') <=> (eol_a || '0000-00-00')
+      end
+    end.to_h
+    sorted_data[os_name] = sorted_versions
+  end
+
+  File.write(data_file, "#{JSON.pretty_generate(sorted_data)}\n")
+  puts "\nUpdated #{data_file}"
+
+  if current_data == updated_data
+    puts 'No changes detected.'
+    exit 0
+  else
+    puts 'Changes detected!'
+    exit 1 # Exit with 1 to signal changes (useful for CI)
+  end
+end
+
+main if __FILE__ == $0
