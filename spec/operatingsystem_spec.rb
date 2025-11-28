@@ -3,6 +3,43 @@
 require 'spec_helper'
 
 describe PuppetMetadata::OperatingSystem do
+  # Mock EOL dates for stable tests
+  let(:mock_eol_dates) do
+    {
+      'CentOS' => {
+        '10' => '2030-01-01',
+        '9' => '2027-05-31',
+        '8' => '2024-05-31',
+        '7' => '2024-06-30',
+      },
+      'Ubuntu' => {
+        '24.10' => '2026-07-10',
+        '24.04' => '2029-04-25',
+        '22.04' => '2027-04-01',
+        '20.04' => '2024-05-31',
+      },
+      'Debian' => {
+        '13' => '2028-08-09',
+        '12' => '2026-06-10',
+        '11' => '2024-08-14',
+      },
+      'Rocky' => {
+        '10' => '2035-05-31',
+        '9' => '2032-05-31',
+        '8' => '2029-05-31',
+      },
+      'AlmaLinux' => {
+        '10' => '2035-05-31',
+        '9' => '2032-05-31',
+        '8' => '2029-03-01',
+      },
+    }
+  end
+
+  before do
+    stub_const('PuppetMetadata::OperatingSystem::EOL_DATES', mock_eol_dates)
+  end
+
   describe 'latest_release' do
     it 'returns nil for an unknown os' do
       expect(described_class.latest_release('DoesNotExist')).to be_nil
@@ -12,8 +49,8 @@ describe PuppetMetadata::OperatingSystem do
       expect(described_class.latest_release('CentOS')).to eq('10')
     end
 
-    it 'returns 24.04 for Ubuntu' do
-      expect(described_class.latest_release('Ubuntu')).to eq('24.04')
+    it 'returns 24.10 for Ubuntu' do
+      expect(described_class.latest_release('Ubuntu')).to eq('24.10')
     end
   end
 
@@ -46,8 +83,8 @@ describe PuppetMetadata::OperatingSystem do
     context 'with Ubuntu' do
       let(:os) { 'Ubuntu' }
 
-      it 'returns 20.04, 22.04 and 24.04' do
-        expect(described_class.supported_releases(os)).to contain_exactly('22.04', '24.04')
+      it 'returns 22.04, 24.04, and 24.10' do
+        expect(described_class.supported_releases(os)).to contain_exactly('22.04', '24.04', '24.10')
       end
 
       it 'the last entry matches latest_release' do
@@ -58,8 +95,8 @@ describe PuppetMetadata::OperatingSystem do
     context 'with Debian' do
       let(:os) { 'Debian' }
 
-      it 'returns 11, 12 and 13' do
-        expect(described_class.supported_releases(os)).to contain_exactly('11', '12', '13')
+      it 'returns 12 and 13' do
+        expect(described_class.supported_releases(os)).to contain_exactly('12', '13')
       end
 
       it 'the last entry matches latest_release' do
