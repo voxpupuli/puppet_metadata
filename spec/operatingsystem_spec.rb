@@ -15,6 +15,10 @@ describe PuppetMetadata::OperatingSystem do
     it 'returns 24.04 for Ubuntu' do
       expect(described_class.latest_release('Ubuntu')).to eq('24.04')
     end
+
+    it 'returns 2023 for Amazon' do
+      expect(described_class.latest_release('Amazon')).to eq('2023')
+    end
   end
 
   describe 'supported_releases' do
