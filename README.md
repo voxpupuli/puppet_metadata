@@ -10,18 +10,23 @@
 
 The gem intends to provide an abstraction over Puppet's metadata.json file. Its API allow easy iteration over its illogical data structures.
 
-* [New CLI interface in 6.0.0](#new-cli-interface-in-6.0.0)
-* [Generating Github Actions outputs](#generating-github-actions-outputs)
-* [Work with the API](#work-with-the-api)
-    * [List all supported operating systems](#list-all-supported-operating-systems)
-    * [List supported major puppet versions](#list-supported-major-puppet-versions)
-    * [Check if an operating systems is supported](#check-if-an-operating-systems-is-supported)
-    * [Get all versions for an Operating System that are not EoL](#get-all-versions-for-an-operating-system-that-are-not-eol)
-    * [Get all versions for an Operating System that are not EoL after a certain date](#get-all-versions-for-an-operating-system-that-are-not-eol-after-a-certain-date)
-* [List supported setfiles](list-supported-setfiles)
-* [Transfer Notice](#transfer-notice)
-* [License](#license)
-* [Release information](#release-information)
+- [puppet\_metadata](#puppet_metadata)
+  - [New CLI interface in 6.0.0](#new-cli-interface-in-600)
+  - [List EoL OS releases in metadata.json](#list-eol-os-releases-in-metadatajson)
+  - [Add supported OS releases to metadata.json](#add-supported-os-releases-to-metadatajson)
+  - [Generating Github Actions outputs](#generating-github-actions-outputs)
+  - [Work with the API](#work-with-the-api)
+    - [List all supported operating systems](#list-all-supported-operating-systems)
+    - [List supported major puppet versions](#list-supported-major-puppet-versions)
+    - [Check if an operating systems is supported](#check-if-an-operating-systems-is-supported)
+    - [Get all versions for an Operating System that are not EoL](#get-all-versions-for-an-operating-system-that-are-not-eol)
+    - [Get all versions for an Operating System that are not EoL after a certain date](#get-all-versions-for-an-operating-system-that-are-not-eol-after-a-certain-date)
+  - [Updating OS EOL dates](#updating-os-eol-dates)
+    - [Adding new operating systems](#adding-new-operating-systems)
+  - [List supported setfiles](#list-supported-setfiles)
+  - [Transfer Notice](#transfer-notice)
+  - [License](#license)
+  - [Release information](#release-information)
 
 ## New CLI interface in 6.0.0
 
@@ -277,6 +282,25 @@ The metadata object has several different methods that we can call
 
 CentOS 8 and older aren't listed.
 8 is EoL since 2024-05-31.
+
+## Updating OS EOL dates
+
+The EOL dates for operating systems are stored in `data/eol_dates.json` and are automatically updated weekly via GitHub Actions using data from [endoflife.date](https://endoflife.date/).
+
+To manually update the EOL dates:
+
+```bash
+./bin/update_eol_dates
+```
+
+### Adding new operating systems
+
+To add a new operating system to the EOL tracking:
+
+1. Add an entry to the `OS_MAPPING` hash in `bin/update_eol_dates`
+2. Map it to the corresponding [endoflife.date product identifier](https://endoflife.date/docs/api/)
+3. Run `./bin/update_eol_dates` to fetch the data
+4. If the OS requires special handling (like Amazon Linux which uses multiple API endpoints), add a custom handler function
 
 ## List supported setfiles
 
