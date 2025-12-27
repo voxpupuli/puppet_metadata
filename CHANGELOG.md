@@ -1,5 +1,33 @@
 # Changelog
 
+## [6.0.0](https://github.com/voxpupuli/puppet_metadata/tree/6.0.0) (2025-12-27)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/5.3.0...6.0.0)
+
+**Breaking changes:**
+
+- Add Amazonlinux support [\#205](https://github.com/voxpupuli/puppet_metadata/pull/205) ([bastelfreak](https://github.com/bastelfreak))
+- Remove pidfile support [\#192](https://github.com/voxpupuli/puppet_metadata/pull/192) ([bastelfreak](https://github.com/bastelfreak))
+- Require Ruby 3.2 or newer [\#189](https://github.com/voxpupuli/puppet_metadata/pull/189) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- Add Ruby 4 to CI [\#213](https://github.com/voxpupuli/puppet_metadata/pull/213) ([bastelfreak](https://github.com/bastelfreak))
+- rdoc: Allow 7.x  [\#212](https://github.com/voxpupuli/puppet_metadata/pull/212) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Add `os_versions` subcommand [\#204](https://github.com/voxpupuli/puppet_metadata/pull/204) ([bwitt](https://github.com/bwitt))
+- Implement setfiles as a command [\#198](https://github.com/voxpupuli/puppet_metadata/pull/198) ([ekohl](https://github.com/ekohl))
+- Allow getting the supported OS releases at a certain date [\#197](https://github.com/voxpupuli/puppet_metadata/pull/197) ([bastelfreak](https://github.com/bastelfreak))
+- Add missing supported operating system releases [\#188](https://github.com/voxpupuli/puppet_metadata/pull/188) ([ekohl](https://github.com/ekohl))
+- Implement puppet-metadata with various subcommands [\#120](https://github.com/voxpupuli/puppet_metadata/pull/120) ([ekohl](https://github.com/ekohl))
+
+**Fixed bugs:**
+
+- `add_supported_os` with `--os` filter still modifies all OSes [\#201](https://github.com/voxpupuli/puppet_metadata/issues/201)
+- Fix `add_supported_os` with os filter [\#202](https://github.com/voxpupuli/puppet_metadata/pull/202) ([bwitt](https://github.com/bwitt))
+- supported\_releases: Don't fail on unknown operating systems [\#196](https://github.com/voxpupuli/puppet_metadata/pull/196) ([bastelfreak](https://github.com/bastelfreak))
+- CLI: Use correct option for metadata.json path [\#195](https://github.com/voxpupuli/puppet_metadata/pull/195) ([bastelfreak](https://github.com/bastelfreak))
+- Correct Enterprise Linux EOL dates & add Fedora 42 [\#187](https://github.com/voxpupuli/puppet_metadata/pull/187) ([ekohl](https://github.com/ekohl))
+
 ## [5.3.0](https://github.com/voxpupuli/puppet_metadata/tree/5.3.0) (2025-08-19)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/5.2.0...5.3.0)
