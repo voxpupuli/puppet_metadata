@@ -144,6 +144,44 @@ module PuppetMetadata
       added
     end
 
+    # @param [Date, nil] at The date to check the EOL time. Today is used when nil.
+    # @param [String, nil] desired_os the name of the operating system from metadata.json we want to update. All OSes are processed when nil.
+    # @return [Hash[String, Array[String]]]
+    #   All removed EOL releases for each operating system
+    def remove_eol_operatingsystems(at = nil, desired_os = nil)
+      removed = {}
+
+      metadata['operatingsystem_support'] = operatingsystems.map do |os, releases|
+        result = {
+          'operatingsystem' => os,
+        }
+
+        # desired_os is a filter
+        # if set, we only care about this OS, otherwise we want all OSes from metadata.json
+        if desired_os && desired_os != os
+          # Preserve the original entry unchanged
+          result['operatingsystemrelease'] = releases unless releases.nil?
+          next result
+        end
+
+        unless releases.nil?
+          eol = releases.select { |rel| OperatingSystem.eol?(os, rel, at) }
+          if eol.any?
+            removed[os] = eol
+            result['operatingsystemrelease'] = releases - eol
+          else
+            result['operatingsystemrelease'] = releases
+          end
+        end
+        result
+      end
+
+      # Clear the memoized operatingsystems so it gets recalculated
+      @operatingsystems = nil
+
+      removed
+    end
+
     # A hash representation of the requirements
     #
     # Every element in the original array is converted. The name is used as a
