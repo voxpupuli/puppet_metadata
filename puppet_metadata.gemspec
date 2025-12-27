@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = Gem::Requirement.new('>= 3.2', '< 5')
 
   s.executables << 'puppet-metadata'
+  s.executables << 'update_eol_dates'
 
   # Deprecated executables
   s.executables << 'metadata2gha'
