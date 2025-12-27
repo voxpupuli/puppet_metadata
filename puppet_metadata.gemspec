@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'semantic_puppet', '~> 1.0'
 
   s.add_development_dependency 'rake', '~> 13.0'
-  s.add_development_dependency 'rdoc', '~> 6.0'
+  s.add_development_dependency 'rdoc', '>= 6.0', '< 8'
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'rspec-its', '>= 1.0', '< 3' # 2.x requires Ruby 3. We allow 1.x because we still support Ruby 2.7
   s.add_development_dependency 'voxpupuli-rubocop', '~> 5.1.0'
