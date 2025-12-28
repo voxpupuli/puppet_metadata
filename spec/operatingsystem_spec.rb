@@ -3,6 +3,22 @@
 require 'spec_helper'
 
 describe PuppetMetadata::OperatingSystem do
+  describe '.ubuntu_lts_version?' do
+    it 'returns true for even-year .04 releases' do
+      expect(described_class.ubuntu_lts_version?('22.04')).to be(true)
+      expect(described_class.ubuntu_lts_version?('24.04')).to be(true)
+    end
+
+    it 'returns false for odd-year .04 releases' do
+      expect(described_class.ubuntu_lts_version?('25.04')).to be(false)
+    end
+
+    it 'returns false for non-.04 releases' do
+      expect(described_class.ubuntu_lts_version?('24.10')).to be(false)
+      expect(described_class.ubuntu_lts_version?('23.10')).to be(false)
+    end
+  end
+
   describe 'latest_release' do
     it 'returns nil for an unknown os' do
       expect(described_class.latest_release('DoesNotExist')).to be_nil
@@ -18,6 +34,10 @@ describe PuppetMetadata::OperatingSystem do
 
     it 'returns 2023 for Amazon' do
       expect(described_class.latest_release('Amazon')).to eq('2023')
+    end
+
+    it 'returns 15 for SLES' do
+      expect(described_class.latest_release('SLES')).to eq('15')
     end
   end
 
@@ -104,6 +124,15 @@ describe PuppetMetadata::OperatingSystem do
 
       it 'the last entry matches latest_release' do
         expect(described_class.supported_releases(os).last).to eq(described_class.latest_release(os))
+      end
+    end
+
+    context 'with SLES' do
+      let(:os) { 'SLES' }
+      let(:date) { Date.parse('2025-01-01') }
+
+      it 'returns only major versions' do
+        expect(described_class.supported_releases(os, date)).to contain_exactly('15')
       end
     end
   end

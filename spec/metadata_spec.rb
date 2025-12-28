@@ -224,6 +224,45 @@ describe PuppetMetadata::Metadata do
           expect(subject.add_supported_operatingsystems).to eq({ 'CentOS' => ['10'], 'Debian' => ['11', '12', '13'], 'RedHat' => ['10'] })
         end
 
+        context 'when Ubuntu metadata lacks latest LTS' do
+          let(:metadata) do
+            parent = super()
+            parent.merge(
+              operatingsystem_support: parent[:operatingsystem_support].map do |entry|
+                next entry unless entry[:operatingsystem] == 'Ubuntu'
+
+                entry.merge(operatingsystemrelease: ['22.04'])
+              end,
+            )
+          end
+
+          it 'adds only the latest Ubuntu LTS (not interim releases)' do
+            added = subject.add_supported_operatingsystems
+            expect(added).to include('Ubuntu' => ['24.04'])
+            expect(added['Ubuntu']).not_to include('25.04')
+            expect(added['Ubuntu']).not_to include('25.10')
+          end
+        end
+
+        context 'when adding SLES support' do
+          let(:metadata) do
+            parent = super()
+            parent.merge(
+              operatingsystem_support: parent[:operatingsystem_support] + [
+                {
+                  operatingsystem: 'SLES',
+                  operatingsystemrelease: ['12'],
+                },
+              ],
+            )
+          end
+
+          it 'adds only major SLES versions' do
+            added = subject.add_supported_operatingsystems(Date.parse('2025-01-01'), 'SLES')
+            expect(added).to eq({ 'SLES' => ['15'] })
+          end
+        end
+
         it 'with date' do
           expect(subject.add_supported_operatingsystems(date)).to eq({ 'CentOS' => ['10'], 'Debian' => ['12', '13'], 'RedHat' => ['10'] })
         end
