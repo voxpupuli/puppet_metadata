@@ -3,6 +3,7 @@
 require 'spec_helper'
 
 describe PuppetMetadata::OperatingSystem do
+  include_context 'with mock eol dates'
   describe '.ubuntu_lts_version?' do
     it 'returns true for even-year .04 releases' do
       expect(described_class.ubuntu_lts_version?('22.04')).to be(true)
@@ -70,7 +71,7 @@ describe PuppetMetadata::OperatingSystem do
     context 'with Ubuntu' do
       let(:os) { 'Ubuntu' }
 
-      it 'returns 20.04, 22.04 and 24.04' do
+      it 'returns supported Ubuntu releases' do
         expect(described_class.supported_releases(os)).to contain_exactly('22.04', '24.04')
       end
 

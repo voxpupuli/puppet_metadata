@@ -217,6 +217,8 @@ describe PuppetMetadata::Metadata do
       end
 
       describe 'add_supported_operatingsystems' do
+        include_context 'with mock eol dates'
+
         let(:date) { Date.parse('2027-04-15') }
         let(:desired_os) { 'Debian' }
 

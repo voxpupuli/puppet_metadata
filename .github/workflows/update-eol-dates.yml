@@ -1,0 +1,98 @@
+---
+name: Update EOL Dates
+
+on:
+  schedule:
+    # Run weekly on Monday at 8:00 UTC
+    - cron: '0 8 * * 1'
+  workflow_dispatch: {} # Allow manual triggering
+
+permissions:
+  contents: read
+
+env:
+  GIT_AUTHOR_NAME: pccibot
+  GIT_AUTHOR_EMAIL: 12855858+pccibot@users.noreply.github.com
+  GIT_COMMITTER_NAME: pccibot
+  GIT_COMMITTER_EMAIL: 12855858+pccibot@users.noreply.github.com
+  SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+
+jobs:
+  update-eol-dates:
+    runs-on: ubuntu-latest
+    if: ${{ github.repository_owner == 'voxpupuli' }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Install Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4'
+          bundler-cache: true
+
+      - name: Add SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.PCCI_SSH_PRIVATE_KEY }}" > ~/.ssh/github_actions
+          chmod 600 ~/.ssh/github_actions
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-add ~/.ssh/github_actions
+
+      - name: set git user & email & commit signing
+        run: |
+          git config --global user.email "$GIT_AUTHOR_EMAIL"
+          git config --global user.name "$GIT_AUTHOR_NAME"
+          git config --global gpg.format ssh
+          git config --global user.signingkey ~/.ssh/github_actions
+          git config --global commit.gpgsign true
+
+      - name: Update EOL dates
+        run: ./bin/update_eol_dates
+
+      - name: Create Pull Request
+        id: create-pr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.PCCI_PAT_MODULESYNC_PR }}
+          commit-message: 'Update OS EOL dates from endoflife.date'
+          title: 'Update OS EOL dates from endoflife.date'
+          body: |
+            This PR updates the OS End-of-Life dates using data from [endoflife.date](https://endoflife.date/).
+
+            The data is automatically fetched from the endoflife.date API and updates the `data/eol_dates.json` file.
+
+            ## Changes
+
+            This PR includes updated EOL dates for:
+            - AlmaLinux
+            - Amazon Linux
+            - CentOS / CentOS Stream
+            - Debian
+            - Oracle Linux
+            - Fedora
+            - FreeBSD
+            - Red Hat Enterprise Linux
+            - Rocky Linux
+            - SUSE Linux Enterprise Server
+            - Ubuntu
+
+            ## How to Review
+
+            1. Check the diff in `data/eol_dates.json` for any unexpected changes
+            2. Verify the dates against [endoflife.date](https://endoflife.date/)
+
+            ---
+            This PR was automatically created by the Update EOL Dates workflow.
+          branch: eol-dates-update
+          delete-branch: true
+          labels: |
+            eol-dates-update
+            automated
+          draft: false
+
+      - name: PR Summary
+        if: steps.create-pr.outputs.pull-request-number
+        run: |
+          echo "Pull Request ${{ steps.create-pr.outputs.pull-request-operation }}: #${{ steps.create-pr.outputs.pull-request-number }}"
+          echo "${{ steps.create-pr.outputs.pull-request-url }}"

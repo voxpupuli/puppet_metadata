@@ -8,6 +8,8 @@ require 'json'
 describe OsVersionsCommand do
   subject(:command) { described_class.new([], options) }
 
+  include_context 'with mock eol dates'
+
   let(:metadata_file) { 'metadata.json' }
   let(:metadata_content) do
     {
@@ -111,7 +113,7 @@ describe OsVersionsCommand do
           allow(PuppetMetadata).to receive(:write) do |_path, metadata|
             written_data << metadata
           end
-          command.run
+          capture_stdout { command.run }
         end
 
         it 'preserves CentOS unchanged' do
@@ -140,7 +142,7 @@ describe OsVersionsCommand do
           allow(PuppetMetadata).to receive(:write) do |_path, metadata|
             written_data << metadata
           end
-          command.run
+          capture_stdout { command.run }
         end
 
         it 'preserves CentOS unchanged' do
@@ -157,7 +159,7 @@ describe OsVersionsCommand do
       let(:options) { super().merge(at: Date.new(2025, 1, 1)) }
 
       it 'uses the specified date for EOL checks' do
-        expect { command.run }.not_to raise_error
+        expect { capture_stdout { command.run } }.not_to raise_error
       end
     end
 
@@ -166,7 +168,7 @@ describe OsVersionsCommand do
 
       it 'runs both operations in sequence' do
         allow(PuppetMetadata).to receive(:write)
-        expect { command.run }.not_to raise_error
+        expect { capture_stdout { command.run } }.not_to raise_error
       end
     end
 

@@ -23,6 +23,8 @@ The gem intends to provide an abstraction over Puppet's metadata.json file. Its 
     - [Check if an operating systems is supported](#check-if-an-operating-systems-is-supported)
     - [Get all versions for an Operating System that are not EoL](#get-all-versions-for-an-operating-system-that-are-not-eol)
     - [Get all versions for an Operating System that are not EoL after a certain date](#get-all-versions-for-an-operating-system-that-are-not-eol-after-a-certain-date)
+  - [Updating OS EOL dates](#updating-os-eol-dates)
+    - [Adding new operating systems](#adding-new-operating-systems)
   - [List supported setfiles](#list-supported-setfiles)
   - [Transfer Notice](#transfer-notice)
   - [License](#license)
@@ -317,6 +319,33 @@ The metadata object has several different methods that we can call
 
 CentOS 8 and older aren't listed.
 8 is EoL since 2024-05-31.
+
+## Updating OS EOL dates
+
+The EOL dates for operating systems are stored in `data/eol_dates.json` and are automatically updated weekly via GitHub Actions using data from [endoflife.date](https://endoflife.date/).
+
+- For Amazon Linux, this is security support, not standard support.
+- For Debian, this is extended life cycle, not standard support.
+- For CentOS, this is security support, not active support.
+- For OracleLinux, this is basic support, not extended support.
+- For RedHat, this is maintenance support, not extended life cycle.
+- For Rocky, this is security support, not active support.
+- For SLES, this is general support, not long term service pack support.
+
+To manually update the EOL dates:
+
+```bash
+./bin/update_eol_dates
+```
+
+### Adding new operating systems
+
+To add a new operating system to the EOL tracking:
+
+1. Add an entry to the `OS_MAPPING` hash in `bin/update_eol_dates`
+2. Map it to the corresponding [endoflife.date product identifier](https://endoflife.date/docs/api/)
+3. Run `./bin/update_eol_dates` to fetch the data
+4. If the OS requires special handling (like Amazon Linux which uses multiple API endpoints), add a custom handler function
 
 ## List supported setfiles
 
