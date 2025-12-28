@@ -96,6 +96,11 @@ CentOS => 10
 Debian => 13
 ```
 
+These OSes are exceptions (to align with [beaker-hostgenerator](https://github.com/voxpupuli/beaker-hostgenerator) support):
+
+- For SLES, only major versions are added.
+- For Ubuntu, only LTS versions are added.
+
 ### Remove EOL OS versions
 
 Use `--remove-eol` to automatically remove all EOL OS versions from metadata.json:

@@ -178,6 +178,8 @@ module PuppetMetadata
       },
       # https://endoflife.software/operating-systems/linux/ubuntu
       'Ubuntu' => {
+        '25.10' => '2026-07-01',
+        '25.04' => '2026-01-17',
         '24.04' => '2029-04-30',
         '22.04' => '2027-04-15',
         '21.10' => '2022-07-15',
@@ -217,6 +219,19 @@ module PuppetMetadata
     }.freeze
 
     class << self
+      def ubuntu_lts_version?(release)
+        # Ubuntu LTS releases are even-year April releases (e.g. 22.04, 24.04).
+        match = release.match(/^([0-9]+)\.04$/)
+        return false unless match
+
+        year = match[1].to_i
+        year.even?
+      end
+
+      def sles_major_version?(release)
+        release.match?(/^\d+$/)
+      end
+
       # Return the EOL date for the given operating system release
       # @param [String] operatingsystem
       #   The operating system
@@ -257,7 +272,12 @@ module PuppetMetadata
       #   known
       def latest_release(operatingsystem)
         releases = EOL_DATES[operatingsystem]
-        releases&.keys&.max_by { |release| Gem::Version.new(release) }
+        return unless releases
+
+        keys = releases.keys
+        keys = keys.select { |release| ubuntu_lts_version?(release) } if operatingsystem == 'Ubuntu'
+        keys = keys.select { |release| sles_major_version?(release) } if operatingsystem == 'SLES'
+        keys.max_by { |release| Gem::Version.new(release) }
       end
 
       # Return an array of all Operating System versions that aren't EoL
@@ -270,6 +290,9 @@ module PuppetMetadata
         # return an empty array if one OS has zero dates
         # Happens for esoteric distros like windows, where we currently don't have any data in EOL_DATES
         return [] unless releases
+
+        releases = releases.select { |release, _eol_date| ubuntu_lts_version?(release) } if operatingsystem == 'Ubuntu'
+        releases = releases.select { |release, _eol_date| sles_major_version?(release) } if operatingsystem == 'SLES'
 
         at ||= Date.today
         releases.select { |_release, eol_date| !eol_date || Date.parse(eol_date) > at }.keys
