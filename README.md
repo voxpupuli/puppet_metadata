@@ -41,7 +41,7 @@ Usage: puppet-metadata [options] <action> [options]
         --filename METADATA          Metadata filename
 
 ACTIONS
-  os_versions         Manage operating system versions in metadata.json
+  os-versions         Manage operating system versions in metadata.json
   setfiles            Show the various setfiles supported by the metadata
 
 See 'puppet-metadata ACTION --help' for more information on a specific action.
@@ -54,14 +54,14 @@ Each action is implemented as a file in `lib/puppet_metadata/command/*rb` and au
 
 ## Manage OS versions in metadata.json
 
-The `os_versions` command provides a unified interface to view, add, and remove operating system versions in the metadata.json.
+The `os-versions` command provides a unified interface to view, add, and remove operating system versions in the metadata.json.
 
 ### List supported OS versions
 
-By default, `os_versions` shows which OS versions in your metadata.json are still supported and which are EOL:
+By default, `os-versions` shows which OS versions in your metadata.json are still supported and which are EOL:
 
 ```
-$ bundle exec puppet-metadata os_versions
+$ bundle exec puppet-metadata os-versions
 module-name supports these non-EOL operating system versions:
   AlmaLinux: 8, 9
   CentOS: 9
@@ -79,7 +79,7 @@ module-name supports these EOL operating system versions:
 You can filter to a specific OS:
 
 ```
-$ bundle exec puppet-metadata os_versions --os Ubuntu
+$ bundle exec puppet-metadata os-versions --os Ubuntu
 module-name supports these non-EOL operating system versions:
   Ubuntu: 22.04, 24.04
 
@@ -92,7 +92,7 @@ module-name supports these EOL operating system versions:
 Use `--add-missing` to automatically add all non-EOL OS versions to metadata.json:
 
 ```
-$ bundle exec puppet-metadata os_versions --add-missing
+$ bundle exec puppet-metadata os-versions --add-missing
 Added support:
 CentOS => 10
 Debian => 13
@@ -108,7 +108,7 @@ These OSes are exceptions (to align with [beaker-hostgenerator](https://github.c
 Use `--remove-eol` to automatically remove all EOL OS versions from metadata.json:
 
 ```
-$ bundle exec puppet-metadata os_versions --remove-eol
+$ bundle exec puppet-metadata os-versions --remove-eol
 Removed EOL operating systems:
 CentOS => 7, 8
 Debian => 9, 10
@@ -118,7 +118,7 @@ Ubuntu => 20.04
 You can preview changes without modifying metadata.json using `--noop`:
 
 ```
-$ bundle exec puppet-metadata os_versions --add-missing --noop
+$ bundle exec puppet-metadata os-versions --add-missing --noop
 [NOOP] Would add support:
 CentOS => 10
 Debian => 13
