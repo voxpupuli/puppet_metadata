@@ -52,7 +52,7 @@ jobs:
 
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.PCCI_PAT_MODULESYNC_PR }}
           commit-message: 'Update OS EOL dates from endoflife.date'
