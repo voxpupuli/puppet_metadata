@@ -13,6 +13,7 @@ options = {
 OptionParser.new do |opts|
   opts.banner = "Usage: #{$0} [options] metadata"
 
+  opts.on('-c', '--collection VALUE', 'Limit GitHub jobs to only test this specific collection') { |opt| options[:collection] = opt }
   opts.on('-d', '--domain VALUE', 'the domain for the box, only used when --use-fqdn is set to true') { |opt| options[:domain] = opt }
   opts.on('--minimum-major-puppet-version VERSION', "Don't create actions for Puppet versions less than this major version") { |opt| options[:minimum_major_puppet_version] = opt }
   opts.on('--beaker-facter FACT:LABEL:VALUES', 'Expand the matrix based on a fact. Separate values using commas') do |opt|
