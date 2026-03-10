@@ -56,37 +56,66 @@ module PuppetMetadata
 
     def beaker_os_releases(at = nil)
       majors = beaker_major_versions
-      distro_puppet_version = {
-        name: 'Distro Puppet',
-        value: nil, # We don't know the version and since it's rolling, it can be anything
-        collection: 'none',
-        requirement: 'puppet',
-      }
-      metadata.operatingsystems.each do |os, releases|
-        case os
-        when 'Archlinux', 'Gentoo'
-          # both currently only ship puppet, not openvox yet
-          yield [os, 'rolling', distro_puppet_version]
-        else
-          releases&.each do |release|
-            if PuppetMetadata::OperatingSystem.eol?(os, release, at)
-              message = "Skipping EOL operating system #{os} #{release}"
+      # for staging, we don't want to have one job per major openvox/puppet version
+      # we just want to pull a specific, unreleased, package from a webserver
+      # and we only do this for AIO builds, because we don't have other packages
+      collection = options[:collection]
+      if collection == 'staging'
+        latest = majors.first
+        latest[:collection] = 'staging'
+        no_aio = ['Archlinux', 'Gentoo']
+        metadata.operatingsystems.each do |os, releases|
+          # we don't have any AIO packages for those platforms
+          next if no_aio.include?(os)
 
-              if ENV.key?('GITHUB_ACTIONS')
-                # TODO: determine file and position within the file
-                puts "::warning file=metadata.json::#{message}"
-              else
-                warn message
+          # iterates on all releases for one OS
+          # `&` in case the OS has no releases in metadata.json
+          releases&.each do |release|
+            next if PuppetMetadata::OperatingSystem.eol?(os, release, at)
+
+            yield [os, release, latest] if AIO.has_aio_build?(os, release, latest[:value], latest[:requirement])
+          end
+        end
+      else
+        distro_puppet_version = {
+          name: 'Distro Puppet',
+          value: nil, # We don't know the version and since it's rolling, it can be anything
+          collection: 'none',
+          requirement: 'puppet',
+        }
+        metadata.operatingsystems.each do |os, releases|
+          case os
+          when 'Archlinux', 'Gentoo'
+            # we filter out the rolling distributions because we don't know which openvox/puppet version we get and we want a specific collection
+            next if collection && collection != ''
+
+            # both currently only ship puppet, not openvox yet
+            yield [os, 'rolling', distro_puppet_version]
+          else
+            releases&.each do |release|
+              if PuppetMetadata::OperatingSystem.eol?(os, release, at)
+                message = "Skipping EOL operating system #{os} #{release}"
+
+                if ENV.key?('GITHUB_ACTIONS')
+                  # TODO: determine file and position within the file
+                  puts "::warning file=metadata.json::#{message}"
+                else
+                  warn message
+                end
+
+                next
               end
 
-              next
-            end
+              majors.each do |puppet_version|
+                # if a collection is set, it's not 'staging'
+                # we then want to filter out all results that don't match our provided collection
+                next if collection && collection != '' && puppet_version[:collection] != collection
 
-            majors.each do |puppet_version|
-              if AIO.has_aio_build?(os, release, puppet_version[:value], puppet_version[:requirement])
-                yield [os, release, puppet_version]
-              elsif PuppetMetadata::OperatingSystem.os_release_puppet_version(os, release) == puppet_version[:value]
-                yield [os, release, distro_puppet_version.merge(value: puppet_version[:value])]
+                if AIO.has_aio_build?(os, release, puppet_version[:value], puppet_version[:requirement])
+                  yield [os, release, puppet_version]
+                elsif PuppetMetadata::OperatingSystem.os_release_puppet_version(os, release) == puppet_version[:value]
+                  yield [os, release, distro_puppet_version.merge(value: puppet_version[:value])]
+                end
               end
             end
           end
