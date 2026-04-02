@@ -8,7 +8,8 @@
 [![RubyGem Downloads](https://img.shields.io/gem/dt/puppet_metadata.svg)](https://rubygems.org/gems/puppet_metadata)
 [![Donated by Ewoud Kohl van Wijngaarden](https://img.shields.io/badge/donated%20by-Ewoud%20Kohl%20van%20Wijngaarden-fb7047.svg)](#transfer-notice)
 
-The gem intends to provide an abstraction over Puppet's metadata.json file. Its API allow easy iteration over its illogical data structures.
+The gem intends to provide an abstraction over Puppet's metadata.json file.
+Its API allow easy iteration over its illogical data structures.
 
 - [puppet\_metadata](#puppet_metadata)
   - [New CLI interface in 6.0.0](#new-cli-interface-in-600)
@@ -126,7 +127,8 @@ Debian => 13
 
 ## Generating Github Actions outputs
 
-To get outputs [usable in Github Actions](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions), there is the `metadata2gha` command available. This generates based on metadata.json, such as [Beaker](https://github.com/voxpupuli/beaker) setfiles, Puppet major versions and a Puppet unit test matrix.
+To get outputs [usable in Github Actions](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions), there is the `metadata2gha` command available.
+This generates based on metadata.json, such as [Beaker](https://github.com/voxpupuli/beaker) setfiles, Puppet major versions and a Puppet unit test matrix.
 
 ```console
 $ metadata2gha
@@ -253,6 +255,75 @@ This results in the following JSON data
       "BEAKER_PUPPET_COLLECTION": "puppet7",
       "BEAKER_SETFILE": "debian12-64{hostname=debian12-64-puppet7}",
       "BEAKER_FACTER_mongodb_repo_version": "7.0"
+    }
+  }
+]
+```
+
+We can also limit the matrix to a specific collection:
+
+```console
+$ metadata2gha --collection openvox8
+```
+
+```
+[
+  {
+    "name": "OpenVox 8 - AlmaLinux 8",
+    "env": {
+      "BEAKER_PUPPET_COLLECTION": "openvox8",
+      "BEAKER_SETFILE": "almalinux8-64{hostname=almalinux8-64-openvox8}"
+    }
+  },
+  {
+    "name": "OpenVox 8 - AlmaLinux 9",
+    "env": {
+      "BEAKER_PUPPET_COLLECTION": "openvox8",
+      "BEAKER_SETFILE": "almalinux9-64{hostname=almalinux9-64-openvox8}"
+    }
+  },
+  {
+    "name": "OpenVox 8 - CentOS 9",
+    "env": {
+      "BEAKER_PUPPET_COLLECTION": "openvox8",
+      "BEAKER_SETFILE": "centos9-64{hostname=centos9-64-openvox8}"
+    }
+  },
+  {
+    "name": "OpenVox 8 - Debian 11",
+    "env": {
+      "BEAKER_PUPPET_COLLECTION": "openvox8",
+      "BEAKER_SETFILE": "debian11-64{hostname=debian11-64-openvox8}"
+    }
+  }
+]
+```
+
+There is also the special collection `staging`.
+This will generate a matrix for all OS releases with AIO packages.
+The idea is to test unreleased packages.
+
+```
+[
+  {
+    "name": "OpenVox 8 - AlmaLinux 8",
+    "env": {
+      "BEAKER_PUPPET_COLLECTION": "staging",
+      "BEAKER_SETFILE": "almalinux8-64{hostname=almalinux8-64-staging}"
+    }
+  },
+  {
+    "name": "OpenVox 8 - AlmaLinux 9",
+    "env": {
+      "BEAKER_PUPPET_COLLECTION": "staging",
+      "BEAKER_SETFILE": "almalinux9-64{hostname=almalinux9-64-staging}"
+    }
+  },
+  {
+    "name": "OpenVox 8 - CentOS 9",
+    "env": {
+      "BEAKER_PUPPET_COLLECTION": "staging",
+      "BEAKER_SETFILE": "centos9-64{hostname=centos9-64-staging}"
     }
   }
 ]

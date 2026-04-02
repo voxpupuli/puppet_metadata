@@ -173,6 +173,34 @@ describe PuppetMetadata::GithubActions do
           )
         end
       end
+
+      context 'when collection is set' do
+        context 'with value staging' do
+          let(:options) { super().merge(collection: 'staging') }
+
+          it 'is expected to contain supported os / puppet version combinations with hostname option' do
+            expect(subject).to include(
+              { name: 'OpenVox 8 - CentOS 10', env: { 'BEAKER_PUPPET_COLLECTION' => 'staging', 'BEAKER_SETFILE' => 'centos10-64{hostname=centos10-64-staging}' } },
+            )
+            expect(subject).not_to include(
+              { name: 'Distro Puppet - Archlinux rolling', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'archlinuxrolling-64' } },
+            )
+          end
+        end
+
+        context 'with value openvox8' do
+          let(:options) { super().merge(collection: 'openvox8') }
+
+          it 'is expected to contain supported os / puppet version combinations' do
+            expect(subject).to include(
+              { name: 'OpenVox 8 - CentOS 10', env: { 'BEAKER_PUPPET_COLLECTION' => 'openvox8', 'BEAKER_SETFILE' => 'centos10-64{hostname=centos10-64-openvox8}' } },
+            )
+            expect(subject).not_to include(
+              { name: 'Distro Puppet - Archlinux rolling', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'archlinuxrolling-64' } },
+            )
+          end
+        end
+      end
     end
   end
   # rubocop:enable Layout/LineLength,RSpec/ExampleLength
