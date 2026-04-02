@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.1.0](https://github.com/voxpupuli/puppet_metadata/tree/6.1.0) (2026-04-02)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/6.0.0...6.1.0)
+
+**Implemented enhancements:**
+
+- Implement support for installing staging packages [\#220](https://github.com/voxpupuli/puppet_metadata/pull/220) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [6.0.0](https://github.com/voxpupuli/puppet_metadata/tree/6.0.0) (2025-12-28)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/5.3.0...6.0.0)
