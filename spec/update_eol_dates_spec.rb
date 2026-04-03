@@ -353,7 +353,7 @@ RSpec.describe 'update_eol_dates' do
     end
   end
 
-  describe 'sorting logic' do
+  describe '#sort_versions' do
     let(:unsorted_versions) do
       {
         '10' => '2030-01-01',
@@ -364,24 +364,7 @@ RSpec.describe 'update_eol_dates' do
       }
     end
 
-    let(:sorted) do
-      unsorted_versions.sort do |a, b|
-        version_a, eol_a = a
-        version_b, eol_b = b
-
-        # Handle nil values (not yet EOL) - they go first
-        next -1 if eol_a.nil? && !eol_b.nil?
-        next 1 if !eol_a.nil? && eol_b.nil?
-
-        if eol_a == eol_b
-          # Same EOL date (or both nil) - sort by version number descending
-          Gem::Version.new(version_b) <=> Gem::Version.new(version_a)
-        else
-          # Different EOL dates - sort by date descending (later date first)
-          (eol_b || '0000-00-00') <=> (eol_a || '0000-00-00')
-        end
-      end.to_h
-    end
+    let(:sorted) { sort_versions(unsorted_versions) }
 
     it 'puts nil EOL versions first' do
       expect(sorted.keys[0]).to eq('11')
@@ -395,6 +378,16 @@ RSpec.describe 'update_eol_dates' do
     it 'sorts different EOL dates descending' do
       expect(sorted.keys[3]).to eq('8')   # 2025-06-30
       expect(sorted.keys[4]).to eq('7')   # 2024-06-30
+    end
+
+    it 'sorts multiple nil EOL versions by version descending' do
+      versions = { '9' => nil, '10' => nil, '8' => '2025-01-01' }
+      result = sort_versions(versions)
+      expect(result.keys).to eq(%w[10 9 8])
+    end
+
+    it 'returns empty hash for empty input' do
+      expect(sort_versions({})).to eq({})
     end
   end
 

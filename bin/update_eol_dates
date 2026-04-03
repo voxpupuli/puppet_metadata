@@ -206,6 +206,26 @@ def handle_ubuntu(current_data)
   updated_data
 end
 
+def sort_versions(versions)
+  versions.sort do |a, b|
+    version_a, eol_a = a
+    version_b, eol_b = b
+
+    # Handle nil values (not yet EOL) - they go first
+    if eol_a.nil? && !eol_b.nil?
+      -1
+    elsif !eol_a.nil? && eol_b.nil?
+      1
+    elsif eol_a == eol_b
+      # Same EOL date (or both nil) - sort by version number descending
+      Gem::Version.new(version_b) <=> Gem::Version.new(version_a)
+    else
+      # Different EOL dates - sort by date descending (later date first)
+      eol_b <=> eol_a
+    end
+  end.to_h
+end
+
 def main
   data_file = File.expand_path('../data/eol_dates.json', __dir__)
 
@@ -231,26 +251,7 @@ def main
   end
 
   # Sort each OS's versions by EOL date (latest EOL first, then nulls)
-  sorted_data = {}
-  updated_data.each do |os_name, versions|
-    sorted_versions = versions.sort do |a, b|
-      version_a, eol_a = a
-      version_b, eol_b = b
-
-      # Handle nil values (not yet EOL) - they go first
-      return -1 if eol_a.nil? && !eol_b.nil?
-      return 1 if !eol_a.nil? && eol_b.nil?
-
-      if eol_a == eol_b
-        # Same EOL date (or both nil) - sort by version number descending
-        Gem::Version.new(version_b) <=> Gem::Version.new(version_a)
-      else
-        # Different EOL dates - sort by date descending (later date first)
-        (eol_b || '0000-00-00') <=> (eol_a || '0000-00-00')
-      end
-    end.to_h
-    sorted_data[os_name] = sorted_versions
-  end
+  sorted_data = updated_data.transform_values { |versions| sort_versions(versions) }
 
   File.write(data_file, "#{JSON.pretty_generate(sorted_data)}\n")
   puts "\nUpdated #{data_file}"
