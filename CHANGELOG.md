@@ -1,5 +1,17 @@
 # Changelog
 
+## [6.2.0](https://github.com/voxpupuli/puppet_metadata/tree/6.2.0) (2026-04-27)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/6.1.0...6.2.0)
+
+**Implemented enhancements:**
+
+- Add Ubuntu 26.04 support [\#228](https://github.com/voxpupuli/puppet_metadata/pull/228) ([bastelfreak](https://github.com/bastelfreak))
+
+**Fixed bugs:**
+
+- Fix sort block exiting early in update\_eol\_dates [\#227](https://github.com/voxpupuli/puppet_metadata/pull/227) ([melck](https://github.com/melck))
+
 ## [6.1.0](https://github.com/voxpupuli/puppet_metadata/tree/6.1.0) (2026-04-02)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/6.0.0...6.1.0)
