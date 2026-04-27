@@ -52,6 +52,12 @@ module PuppetMetadata
                                              '12' => 7..8,
                                              '13' => [8],
                                            },
+                                           'Ubuntu' => {
+                                             '20.04' => 7..8,
+                                             '22.04' => 7..8,
+                                             '24.04' => 7..8,
+                                             '26.04' => [8],
+                                           },
                                          }).freeze
 
     PUPPET_RUBY_VERSIONS = {
