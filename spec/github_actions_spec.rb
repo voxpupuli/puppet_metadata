@@ -43,7 +43,7 @@ describe PuppetMetadata::GithubActions do
         },
         {
           operatingsystem: 'Fedora',
-          operatingsystemrelease: %w[36 38 40],
+          operatingsystemrelease: %w[36 38 40 41 42 43 44],
         },
       ],
     }
@@ -105,6 +105,11 @@ describe PuppetMetadata::GithubActions do
           { name: 'Distro Puppet - Fedora 38', env: { 'BEAKER_PUPPET_COLLECTION' => 'none', 'BEAKER_SETFILE' => 'fedora38-64' } },
           { name: 'OpenVox 7 - Fedora 40', env: { 'BEAKER_PUPPET_COLLECTION' => 'openvox7', 'BEAKER_SETFILE' => 'fedora40-64{hostname=fedora40-64-openvox7}' } },
           { name: 'OpenVox 8 - Fedora 40', env: { 'BEAKER_PUPPET_COLLECTION' => 'openvox8', 'BEAKER_SETFILE' => 'fedora40-64{hostname=fedora40-64-openvox8}' } },
+          { name: 'OpenVox 7 - Fedora 41', env: { 'BEAKER_PUPPET_COLLECTION' => 'openvox7', 'BEAKER_SETFILE' => 'fedora41-64{hostname=fedora41-64-openvox7}' } },
+          { name: 'OpenVox 8 - Fedora 41', env: { 'BEAKER_PUPPET_COLLECTION' => 'openvox8', 'BEAKER_SETFILE' => 'fedora41-64{hostname=fedora41-64-openvox8}' } },
+          { name: 'OpenVox 8 - Fedora 42', env: { 'BEAKER_PUPPET_COLLECTION' => 'openvox8', 'BEAKER_SETFILE' => 'fedora42-64{hostname=fedora42-64-openvox8}' } },
+          { name: 'OpenVox 8 - Fedora 43', env: { 'BEAKER_PUPPET_COLLECTION' => 'openvox8', 'BEAKER_SETFILE' => 'fedora43-64{hostname=fedora43-64-openvox8}' } },
+          { name: 'OpenVox 8 - Fedora 44', env: { 'BEAKER_PUPPET_COLLECTION' => 'openvox8', 'BEAKER_SETFILE' => 'fedora44-64{hostname=fedora44-64-openvox8}' } },
           { name: 'Puppet 7 - CentOS 7', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'centos7-64{hostname=centos7-64-puppet7}' } },
           { name: 'Puppet 8 - CentOS 7', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet8', 'BEAKER_SETFILE' => 'centos7-64{hostname=centos7-64-puppet8}' } },
           { name: 'Puppet 7 - CentOS 8', env: { 'BEAKER_PUPPET_COLLECTION' => 'puppet7', 'BEAKER_SETFILE' => 'centos8-64{hostname=centos8-64-puppet7}' } },
