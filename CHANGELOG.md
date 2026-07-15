@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.3.0](https://github.com/voxpupuli/puppet_metadata/tree/6.3.0) (2026-07-15)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/6.2.0...6.3.0)
+
+**Merged pull requests:**
+
+- Add Openvox Fedora AIO releases [\#234](https://github.com/voxpupuli/puppet_metadata/pull/234) ([alexjfisher](https://github.com/alexjfisher))
+
 ## [6.2.0](https://github.com/voxpupuli/puppet_metadata/tree/6.2.0) (2026-04-27)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/6.1.0...6.2.0)
