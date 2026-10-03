@@ -60,7 +60,7 @@ module PuppetMetadata
       # we just want to pull a specific, unreleased, package from a webserver
       # and we only do this for AIO builds, because we don't have other packages
       collection = options[:collection]
-      collection = nil if collection&.empty?
+      collection = nil if collection && collection.empty?
       if collection == 'staging'
         latest = majors.first.dup
         latest[:collection] = 'staging'
