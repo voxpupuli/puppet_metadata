@@ -223,7 +223,7 @@ describe PuppetMetadata::Metadata do
         let(:desired_os) { 'Debian' }
 
         it 'with defaults' do
-          expect(subject.add_supported_operatingsystems).to eq({ 'CentOS' => ['10'], 'Debian' => ['11', '12', '13'], 'RedHat' => ['10'] })
+          expect(subject.add_supported_operatingsystems).to eq({ 'CentOS' => ['10'], 'Debian' => ['12', '13'], 'RedHat' => ['10'] })
         end
 
         context 'when Ubuntu metadata lacks latest LTS' do
@@ -271,7 +271,7 @@ describe PuppetMetadata::Metadata do
 
         it 'with OS' do
           # Only Debian should be in the added hash
-          expect(subject.add_supported_operatingsystems(nil, desired_os)).to eq({ 'Debian' => ['11', '12', '13'] })
+          expect(subject.add_supported_operatingsystems(nil, desired_os)).to eq({ 'Debian' => ['12', '13'] })
           # Other OSes should remain unchanged
           expect(subject.operatingsystems['CentOS']).to eq(['7', '8', '9'])
           expect(subject.operatingsystems['RedHat']).to eq(['7', '8', '9'])
