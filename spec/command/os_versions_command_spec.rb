@@ -63,10 +63,10 @@ describe OsVersionsCommand do
 
       it 'shows multiple operating systems' do
         output = capture_stdout { command.run }
-        expect(output).to match(/Archlinux:/)
-        expect(output).to match(/CentOS:/)
-        expect(output).to match(/Debian:/)
-        expect(output).to match(/Ubuntu:/)
+        expect(output).to include('Archlinux:')
+        expect(output).to include('CentOS:')
+        expect(output).to include('Debian:')
+        expect(output).to include('Ubuntu:')
       end
 
       it 'includes Archlinux with all versions support' do
@@ -78,9 +78,9 @@ describe OsVersionsCommand do
 
         it 'only shows the specified OS' do
           output = capture_stdout { command.run }
-          expect(output).to match(/Ubuntu:/)
-          expect(output).not_to match(/CentOS:/)
-          expect(output).not_to match(/Debian:/)
+          expect(output).to include('Ubuntu:')
+          expect(output).not_to include('CentOS:')
+          expect(output).not_to include('Debian:')
         end
       end
 
@@ -89,10 +89,10 @@ describe OsVersionsCommand do
 
         it 'only shows Archlinux' do
           output = capture_stdout { command.run }
-          expect(output).to match(/Archlinux:/)
-          expect(output).not_to match(/CentOS:/)
-          expect(output).not_to match(/Debian:/)
-          expect(output).not_to match(/Ubuntu:/)
+          expect(output).to include('Archlinux:')
+          expect(output).not_to include('CentOS:')
+          expect(output).not_to include('Debian:')
+          expect(output).not_to include('Ubuntu:')
         end
       end
     end
