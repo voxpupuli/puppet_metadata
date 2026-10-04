@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.4.0](https://github.com/voxpupuli/puppet_metadata/tree/6.4.0) (2026-10-04)
+
+[Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/6.3.0...6.4.0)
+
+**Implemented enhancements:**
+
+- Add OpenVox 9 data [\#236](https://github.com/voxpupuli/puppet_metadata/pull/236) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [6.3.0](https://github.com/voxpupuli/puppet_metadata/tree/6.3.0) (2026-07-15)
 
 [Full Changelog](https://github.com/voxpupuli/puppet_metadata/compare/6.2.0...6.3.0)
